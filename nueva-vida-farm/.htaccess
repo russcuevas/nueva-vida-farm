@@ -1,0 +1,9 @@
+Options -Indexes
+<Files "admin_login.php">
+    Allow from all
+</Files>
+
+<Files "connection.php">
+    Order Allow,Deny
+    Deny from all
+</Files>

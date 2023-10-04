@@ -1,0 +1,29 @@
+.col{
+    height: 640px !important;
+}
+
+@media (max-width: 768px) {
+    .col{
+        height: 300px !important;
+    }
+    
+    .mapouter{
+        height: 300px !important;
+    }
+}
+
+.col input, .col textarea{
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid #c8ec56;
+    font-family: 'Lato', sans-serif;
+}
+
+.col h5 span{
+    color:#c8ec56;
+    font-weight: bold;
+}
+
+.col h1, .col h5 span, .col h5{
+    font-family: 'Montserrat', sans-serif;
+}
