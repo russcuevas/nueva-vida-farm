@@ -28,6 +28,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!--===============================================================================================-->
     <link rel="shortcut icon" href="assets/favicon/egg.png" type="image/x-icon">
     <!--===============================================================================================-->
@@ -37,7 +38,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="assets/css/HoldOn.min.css">
 </head>
 
-<body>
+<body class="animate__animated animate__fadeIn">
 
     <nav class="navbar px-3 py-3 px-md-5">
         <h2>Nueva Vida Farm</h2>
@@ -96,34 +97,34 @@ foreach ($product as $products):
         $maxQuantity = $products['product_stocks'];
         $productSize = $products['product_size'];
         ?>
-																																																												<div class="col" data-product-size="<?php echo $productSize; ?>">
-																																																												    <form class="add-to-cart-form" action="functions/add_to_cart.php" method="POST">
-																																																												        <div class="d-flex flex-column">
-																																																												            <input type="hidden" name="product_id" value="<?php echo $products['product_id']; ?>">
-																																																												            <img src="assets/images/products/<?php echo $products['product_image']; ?>" alt="">
-																																																												            <div class="box d-column d-flex justify-content-center align-items-center py-2">
-																																																												                <h3 class="mt-2"><?php echo $products['product_name'] ?></h3>
-																																																												            </div>
-																																																												            <div class="box d-flex flex-column justify-content-around px-3">
-																																																												                <div class="d-flex flex-row gap-2">
-																																																												                    <h4>PRICE : </h4>
-																																																												                    <h3 style="color: red;">₱<?php echo $products['product_price'] ?></h3>
-																																																												                </div>
-																																																												                <div class="d-flex flex-row gap-2">
-																																																												                    <h4>SIZE : </h4>
-																																																												                    <input type="text" style="width: 133px; margin-bottom: 25px; font-weight: 900; cursor: default; background-color: black; border:none; font-size: 20px; color: white;" name="product_size[]" value="<?php echo $products['product_size']; ?>" readonly>
-																																																												                </div>
-																																																												                <div class="d-flex flex-row gap-2">
-																																																												                    <h4>Qty</h4>
-																																																												                    <input type="number" style="cursor: pointer" name="quantity" class="quantity" value="1" min="1" max="<?php echo min($maxQuantity, 999); ?>" onkeydown="preventTyping(event)">
-																																																												                </div>
-																																																												            </div>
-																																																												            <a href="buy_now.php?product_id=<?php echo $products['product_id']; ?>&quantity=1" class="buy_now_link" style="text-decoration: none; color: black;">BUY NOW</a>
-																																																												            <button type="submit">ADD TO CART</button>
-																																																												        </div>
-																																																												    </form>
-																																																												</div>
-																																																												<?php
+																																																																<div class="col" data-product-size="<?php echo $productSize; ?>">
+																																																																    <form class="add-to-cart-form" action="functions/add_to_cart.php" method="POST">
+																																																																        <div class="d-flex flex-column">
+																																																																            <input type="hidden" name="product_id" value="<?php echo $products['product_id']; ?>">
+																																																																            <img src="assets/images/products/<?php echo $products['product_image']; ?>" alt="">
+																																																																            <div class="box d-column d-flex justify-content-center align-items-center py-2">
+																																																																                <h3 class="mt-2"><?php echo $products['product_name'] ?></h3>
+																																																																            </div>
+																																																																            <div class="box d-flex flex-column justify-content-around px-3">
+																																																																                <div class="d-flex flex-row gap-2">
+																																																																                    <h4>PRICE : </h4>
+																																																																                    <h3 style="color: red;">₱<?php echo $products['product_price'] ?></h3>
+																																																																                </div>
+																																																																                <div class="d-flex flex-row gap-2">
+																																																																                    <h4>SIZE : </h4>
+																																																																                    <input type="text" style="width: 133px; margin-bottom: 25px; font-weight: 900; cursor: default; background-color: black; border:none; font-size: 20px; color: white;" name="product_size[]" value="<?php echo $products['product_size']; ?>" readonly>
+																																																																                </div>
+																																																																                <div class="d-flex flex-row gap-2">
+																																																																                    <h4>Qty</h4>
+																																																																                    <input type="number" style="cursor: pointer" name="quantity" class="quantity" value="1" min="1" max="<?php echo min($maxQuantity, 999); ?>" onkeydown="preventTyping(event)">
+																																																																                </div>
+																																																																            </div>
+																																																																            <a href="buy_now.php?product_id=<?php echo $products['product_id']; ?>&quantity=1" class="buy_now_link" style="text-decoration: none; color: black;">BUY NOW</a>
+																																																																            <button type="submit">ADD TO CART</button>
+																																																																        </div>
+																																																																    </form>
+																																																																</div>
+																																																																<?php
     endif;
 endforeach;
 ?>

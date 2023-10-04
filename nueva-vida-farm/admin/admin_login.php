@@ -48,6 +48,7 @@ if (isset($_POST['submit'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!--===============================================================================================-->
     <link
       rel="stylesheet"
@@ -55,7 +56,7 @@ if (isset($_POST['submit'])) {
     />
 </head>
 
-<body>
+<body class="animate__animated animate__fadeIn">
     <div class="vh-100 d-flex justify-content-center align-items-center" id="mainContainer">
         <div class="d-flex flex-row">
             <form method="POST" class="d-flex flex-column p-5" style="background-color: black;" id="loginContainer">

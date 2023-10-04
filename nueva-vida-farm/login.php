@@ -50,6 +50,7 @@ if (isset($_POST['submit'])) {
         crossorigin="anonymous"></script>
     <!--===============================================================================================-->
     <link rel="shortcut icon" href="assets/favicon/egg.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!--===============================================================================================-->
     <link
       rel="stylesheet"
@@ -57,7 +58,7 @@ if (isset($_POST['submit'])) {
     />
 </head>
 
-<body>
+<body class="animate__animated animate__fadeIn">
     <div class="vh-100 d-flex justify-content-center align-items-center" id="mainContainer">
         <div class="d-flex flex-row">
             <form method="POST" class="d-flex flex-column p-5" style="background-color: black;" id="loginContainer">

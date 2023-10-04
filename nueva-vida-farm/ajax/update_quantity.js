@@ -20,7 +20,7 @@ function updateDatabase(input) {
         if (response.ok) {
             setTimeout(function () {
                 location.reload();
-            }, 5);
+            }, 10);
         } else {
             console.error('Failed to update quantity.');
             return Promise.reject('Failed to update quantity.');

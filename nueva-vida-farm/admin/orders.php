@@ -62,10 +62,11 @@ foreach ($orders as $order) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <!--===============================================================================================-->
     <link rel="stylesheet" href="../assets/js/sweetalert2/dist/sweetalert2.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 </head>
 
-<body>
+<body class="animate__animated animate__fadeIn">
     <!--===============================================================================================-->
     <div class="d-flex flex-row justify-content-start align-items-start">
         <!--===============================================================================================-->
