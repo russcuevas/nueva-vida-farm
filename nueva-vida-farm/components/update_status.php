@@ -35,10 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit();
         } else {
-            echo "Error updating status.";
+            echo "<script>window.alert ('Error updating status');</script>";
+            echo "<script>window.location.href = ('../admin/orders.php');</script>";
+
         }
     } else {
-        echo "Order not found.";
+        echo "<script>window.alert ('Order not found');</script>";
+        echo "<script>window.location.href = ('../admin/orders.php');</script>";
+
     }
 } else {
     header('Location: ../admin/orders.php');

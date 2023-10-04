@@ -2,14 +2,14 @@
 include 'database/connection.php';
 session_start();
 
-// CHECK IF THE USER IS EXIST OR NOT
+// CHECK IF THE USER IS AUTH
 $customer_id = $_SESSION['customer_id'];
 if (!isset($customer_id)) {
     header('location: login.php');
     exit;
 }
 
-// SECURITY FOR URL
+// REDIRECT BACK IF THE USER WANTS TO EDIT THE URL
 if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
 
@@ -38,7 +38,7 @@ if (isset($_GET['product_id'])) {
     exit;
 }
 
-//REDIRECT IF USER WANT TO GO BUY_NOW.PHP LINK
+// USER CANT GO REDIRECT TO BUY_NOW.PHP
 if (!isset($_GET['product_id']) || !is_numeric($_GET['product_id'])) {
     header('location: shop.php');
     exit;
@@ -169,6 +169,7 @@ function generateReferenceNumber()
     <title>Checkout</title>
     <!--===============================================================================================-->
     <link rel="stylesheet" href="assets/css/checkout.css">
+    <link rel="shortcut icon" href="assets/favicon/egg.png" type="image/x-icon">
     <!--===============================================================================================-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">

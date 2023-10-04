@@ -1,11 +1,9 @@
 // AUTO UPDATE IF QUANTITY IS BEING CLICKED
-// AUTO UPDATE IF QUANTITY IS BEING CLICKED
 function updateDatabase(input) {
     const orderItemId = input.getAttribute('data-order-item-id');
     const productId = input.getAttribute('data-product-id');
     const newQuantity = input.value;
 
-    // Open the HoldOn "Please wait..." message
     HoldOn.open({
         theme: "sk-dot",
         message: "Please wait...",
@@ -20,10 +18,9 @@ function updateDatabase(input) {
     })
     .then(response => {
         if (response.ok) {
-            // Wait for 2 seconds before reloading the page
             setTimeout(function () {
                 location.reload();
-            }, 5); // 2000 milliseconds = 2 seconds
+            }, 5);
         } else {
             console.error('Failed to update quantity.');
             return Promise.reject('Failed to update quantity.');
@@ -45,7 +42,6 @@ function updateDatabase(input) {
         console.error('An error occurred:', error);
     })
     .finally(() => {
-        // Close the HoldOn message when the operation is completed
         HoldOn.close();
     });
 }
