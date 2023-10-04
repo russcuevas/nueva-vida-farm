@@ -2,14 +2,45 @@
 include 'database/connection.php';
 session_start();
 
-if (!isset($_GET['product_id']) || !is_numeric($_GET['product_id'])) {
+// CHECK IF THE USER IS EXIST OR NOT
+$customer_id = $_SESSION['customer_id'];
+if (!isset($customer_id)) {
+    header('location: login.php');
+    exit;
+}
+
+// SECURITY FOR URL
+if (isset($_GET['product_id'])) {
+    $product_id = $_GET['product_id'];
+
+    $sql = "SELECT * FROM `tbl_product` WHERE product_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$product_id]);
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$product) {
+        header('location: shop.php');
+        exit;
+    }
+
+    if (isset($_GET['quantity']) && is_numeric($_GET['quantity'])) {
+        $quantity = intval($_GET['quantity']);
+
+        if ($quantity < 1 || $quantity > $product['product_stocks']) {
+            header('location: shop.php');
+            exit;
+        }
+    } else {
+        $quantity = 1;
+    }
+} else {
     header('location: shop.php');
     exit;
 }
 
-$customer_id = $_SESSION['customer_id'];
-if (!isset($customer_id)) {
-    header('location: login.php');
+//REDIRECT IF USER WANT TO GO BUY_NOW.PHP LINK
+if (!isset($_GET['product_id']) || !is_numeric($_GET['product_id'])) {
+    header('location: shop.php');
     exit;
 }
 
