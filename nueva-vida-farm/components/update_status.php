@@ -4,7 +4,7 @@ include '../database/connection.php';
 session_start();
 $admin_id = $_SESSION['admin_id'];
 if (!isset($admin_id)) {
-    header('location: admin_login.php');
+    header('location: admin_login');
     exit();
 }
 
@@ -36,15 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             echo "<script>window.alert ('Error updating status');</script>";
-            echo "<script>window.location.href = ('../admin/orders.php');</script>";
+            echo "<script>window.location.href = ('../admin/orders');</script>";
 
         }
     } else {
         echo "<script>window.alert ('Order not found');</script>";
-        echo "<script>window.location.href = ('../admin/orders.php');</script>";
+        echo "<script>window.location.href = ('../admin/orders');</script>";
 
     }
 } else {
-    header('Location: ../admin/orders.php');
+    header('Location: ../admin/orders');
     exit();
 }

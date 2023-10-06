@@ -3,7 +3,7 @@ include 'database/connection.php';
 
 session_start();
 if (isset($_SESSION['customer_id'])) {
-    header('location: home.php');
+    header('location: home');
 }
 
 $registration_success = '';
@@ -26,8 +26,8 @@ if (isset($_POST['submit'])) {
         if ($count > 0) {
             $registration_email = 'Email is already taken';
         } else {
-            if (strlen($password) < 8) {
-                $registration_error = 'Password must contain 8 characters';
+            if (strlen($password) < 8 || strlen($password) > 12) {
+                $registration_error = 'Password must contain 8-12 characters';
             } else {
                 $stmt = $conn->prepare("INSERT INTO tbl_customer (first_name, last_name, email, password, address, phone) VALUES (?, ?, ?, ?, ?, ?)");
                 $stmt->execute([$first_name, $last_name, $email, $hashed_password, $address, $phone]);
@@ -75,26 +75,27 @@ if (isset($_POST['submit'])) {
                 <div class="d-flex justify-content-between flex-column flex-md-row gap-3 gap-md-4 flex-row">
                     <div class="d-flex flex-column w-100">
                         <label for="">First Name</label>
-                        <input type="text" name="first_name" placeholder="First Name" value="<?php echo isset($_POST['first_name']) ? $_POST['first_name'] : ''; ?>">
+                        <input type="text" name="first_name" placeholder="First Name" value="<?php echo isset($_POST['first_name']) ? $_POST['first_name'] : ''; ?>" required>
                     </div>
                     <div class="d-flex flex-column w-100">
                         <label for="">Last Name</label>
-                        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo isset($_POST['last_name']) ? $_POST['last_name'] : '' ?>">
+                        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo isset($_POST['last_name']) ? $_POST['last_name'] : '' ?>" required>
                     </div>
                 </div>
                 <label for="" class="mt-3">Email</label>
-                <input type="text" name="email" placeholder="Email" oninput="this.value = this.value.replace(/\s/g, '')"  value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
+                <input type="text" name="email" placeholder="Email" oninput="this.value = this.value.replace(/\s/g, '')"  value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>" required>
                 <label for="" class="mt-3">Password</label>
-                <input type="password" name="password" placeholder="Password" oninput="this.value = this.value.replace(/\s/g, '')">
+                <input type="password" name="password" id="password" placeholder="Password" oninput="this.value = this.value.replace(/\s/g, ''); checkPasswordLength();" required>
+                <div id="passwordMessage" class="password-message" style="color: red; font-weight: 900;"></div>
                 <label for="" class="mt-3">Address</label>
-                <input type="text" name="address" placeholder="Address" value="<?php echo isset($_POST['address']) ? $_POST['address'] : ''; ?>">
+                <input type="text" name="address" placeholder="Address" value="<?php echo isset($_POST['address']) ? $_POST['address'] : ''; ?>" required>
                 <label for="" class="mt-3">Phone</label>
-                <input type="text" name="phone" id="phone" placeholder="Phone" oninput="validatePhone(this)" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : '' ?>">
+                <input type="text" name="phone" id="phone" placeholder="Phone" oninput="validatePhone(this)" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : '' ?>" required>
 
 
                 <button type="submit" name="submit" class="mt-5">Submit</button>
                 <div class="d-flex justify-content-center mt-2">
-                    <a href="login.php">Already have an account? Login here...</a>
+                    <a href="login">Already have an account? Login here...</a>
                 </div>
             </form>
 
@@ -106,6 +107,7 @@ if (isset($_POST['submit'])) {
 
     <!--===============================================================================================-->
     <script src="assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="assets/js/form.js"></script>
     <?php if ($registration_success): ?>
     <script>
             Swal.fire({
@@ -136,7 +138,7 @@ if (isset($_POST['submit'])) {
     <script>
             Swal.fire({
             icon: "error",
-            title: "Password must contain 8 characters",
+            title: "Password must contain 8-12 characters",
             toast: true,
             position: "top-end",
             showConfirmButton: false,

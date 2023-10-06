@@ -4,7 +4,7 @@ include '../database/connection.php';
 session_start();
 $admin_id = $_SESSION['admin_id'];
 if (!isset($admin_id)) {
-    header('location: admin_login.php');
+    header('location: admin_login');
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['order_status'])) {
@@ -29,8 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['order_status'])) {
             echo "Error updating status for order ID $orderID: ";
         }
     } else {
-        header('location: orders.php');
+        header('location: orders');
     }
 } else {
-    header('location: orders.php');
+    header('location: orders');
 }

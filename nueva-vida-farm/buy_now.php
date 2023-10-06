@@ -11,7 +11,12 @@ if (!isset($customer_id)) {
 
 // REDIRECT BACK IF THE USER WANTS TO EDIT THE URL
 if (isset($_GET['product_id'])) {
-    $product_id = $_GET['product_id'];
+    $product_id = filter_var($_GET['product_id'], FILTER_VALIDATE_INT);
+
+    if ($product_id === false) {
+        header('location: shop.php');
+        exit;
+    }
 
     $sql = "SELECT * FROM `tbl_product` WHERE product_id = ?";
     $stmt = $conn->prepare($sql);
@@ -23,10 +28,10 @@ if (isset($_GET['product_id'])) {
         exit;
     }
 
-    if (isset($_GET['quantity']) && is_numeric($_GET['quantity'])) {
-        $quantity = intval($_GET['quantity']);
+    if (isset($_GET['quantity'])) {
+        $quantity = filter_var($_GET['quantity'], FILTER_VALIDATE_INT);
 
-        if ($quantity < 1 || $quantity > $product['product_stocks']) {
+        if ($quantity === false || $quantity < 1 || $quantity > $product['product_stocks']) {
             header('location: shop.php');
             exit;
         }
@@ -53,7 +58,7 @@ $product = null;
 $quantity = 1;
 
 if (isset($_GET['product_id'])) {
-    $product_id = $_GET['product_id'];
+    $product_id = filter_var($_GET['product_id'], FILTER_VALIDATE_INT);
 
     $sql = "SELECT * FROM `tbl_product` WHERE product_id = ?";
     $stmt = $conn->prepare($sql);
@@ -61,7 +66,7 @@ if (isset($_GET['product_id'])) {
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (isset($_GET['quantity'])) {
-        $quantity = intval($_GET['quantity']);
+        $quantity = filter_var($_GET['quantity'], FILTER_VALIDATE_INT);
     }
 }
 
@@ -137,7 +142,7 @@ if (isset($_POST['submit'])) {
         $stmt->bindParam(':order_id', $order_id);
 
         if ($stmt->execute()) {
-            header('location: order_status.php');
+            header('location: order_status');
             exit;
         } else {
             echo "<script>window.alert ('Failed to insert order status.');</script>";

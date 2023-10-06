@@ -5,7 +5,7 @@ session_start();
 if (isset($_SESSION['customer_id'])) {
     $customer_id = $_SESSION['customer_id'];
 } else {
-    header('location: login.php');
+    header('location: login');
 }
 
 // GET THE DETAILS OF THE CUSTOMER
@@ -40,7 +40,7 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
         ];
     }
 } else {
-    header('location: cart.php');
+    header('location: cart');
     exit;
 }
 
@@ -74,7 +74,7 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
         <span class="material-symbols-outlined" id="backButton">
             arrow_back
             </span>
-        <a href="cart.php" id="backText">Back to Cart</a>
+        <a href="cart" id="backText">Back to Cart</a>
     </div>
 
     <div class="d-flex flex-column gap-3 justify-content-center align-items-center mt-3 mt-md-0">
@@ -106,7 +106,7 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
             </div>
 
             <div class="d-flex justify-content-start align-items-center mt-2" id="viewCartBox">
-                <button><a href="cart.php">View Cart</a></button>
+                <button><a href="cart">View Cart</a></button>
             </div>
 
             </div>

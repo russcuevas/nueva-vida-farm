@@ -5,7 +5,7 @@ session_start();
 $response = array();
 
 if (!isset($_SESSION['customer_id'])) {
-    header('location: ../login.php');
+    header('location: ../login');
     header('Content-Type: application/json');
     echo json_encode($response);
     exit;
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 } else {
-    header('location: ../home.php');
+    header('location: ../home');
 }
 
 header('Content-Type: application/json');

@@ -13,8 +13,7 @@ if (isset($_SESSION['customer_id'])) {
     $response['status'] = 'success';
     $response['cart_count'] = $cartCount['cart_count'];
 } else {
-    $response['status'] = 'error';
-    $response['message'] = 'User is not logged in';
+    header('location: ../login');
 }
 
 header('Content-Type: application/json');

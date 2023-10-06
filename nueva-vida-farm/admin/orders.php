@@ -4,7 +4,7 @@ include '../database/connection.php';
 session_start();
 $admin_id = $_SESSION['admin_id'];
 if (!isset($admin_id)) {
-    header('location: admin_login.php');
+    header('location: admin_login');
 }
 
 $sql = "SELECT
@@ -72,19 +72,19 @@ foreach ($orders as $order) {
         <!--===============================================================================================-->
         <div class="d-none d-md-flex justify-content-start flex-column p-3 position-relative" id="sidebar">
             <div class="d-flex justify-content-center">
-                <img onclick="window.location.href = 'dashboard.php'" style="cursor: pointer;" src="../assets/images/dashboard/logo.png" alt="">
+                <img onclick="window.location.href = 'dashboard'" style="cursor: pointer;" src="../assets/images/dashboard/logo.png" alt="">
             </div>
             <div class="d-flex flex-column p-3 mt-2" id="lists">
-                <a href="dashboard.php"><span class="material-symbols-outlined">
+                <a href="dashboard"><span class="material-symbols-outlined">
                         home
                     </span>Dashboard</a>
-                <a href="products.php"><span class="material-symbols-outlined">
+                <a href="products"><span class="material-symbols-outlined">
                     shopping_bag
                 </span>Inventory</a>
-                <a href="orders.php"><span class="material-symbols-outlined">
+                <a href="orders"><span class="material-symbols-outlined">
                         groups
                     </span>Orders</a>
-                <a href="reports.php"><span class="material-symbols-outlined">
+                <a href="reports"><span class="material-symbols-outlined">
                         person
                     </span>Reports</a>
             </div>
@@ -106,7 +106,7 @@ foreach ($orders as $order) {
 
                     <div class="d-none flex-column position-absolute" id="profileDropdown">
                         <a href="#">Profile</a>
-                        <a href="../components/admin_logout.php">Logout</a>
+                        <a href="../functions/admin_logout.php">Logout</a>
                     </div>
                 </div>
             </nav>
@@ -118,7 +118,7 @@ foreach ($orders as $order) {
                         <h1>Orders</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="dashboard.php" style="text-decoration: none;">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard" style="text-decoration: none;">Dashboard</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Orders</li>
                             </ol>
                         </nav>

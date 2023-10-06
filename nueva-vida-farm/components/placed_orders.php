@@ -6,7 +6,7 @@ session_start();
 if (isset($_SESSION['customer_id'])) {
     $customer_id = $_SESSION['customer_id'];
 } else {
-    header('location: login.php');
+    header('location: login');
     exit;
 }
 
@@ -77,10 +77,10 @@ if (isset($_POST['placeorder'])) {
     $stmt->bindParam(':reference_number', $reference_number);
     $stmt->execute();
 
-    header('location: ../order_status.php');
+    header('location: ../order_status');
     exit;
 } else {
-    header('location: ../login.php');
+    header('location: ../login');
 }
 
 // GETTING PRICE IN DIFFERENT PRODUCTS

@@ -3,7 +3,7 @@ include 'database/connection.php';
 
 session_start();
 if (isset($_SESSION['customer_id'])) {
-    header('location: home.php');
+    header('location: home');
 }
 
 $warning_login = '';
@@ -24,9 +24,9 @@ if (isset($_POST['submit'])) {
             session_start();
             $_SESSION['customer_id'] = $customer['customer_id'];
             $_SESSION["login_success"] = true;
-            header('location: home.php');
+            header('location: home');
         } else {
-            $error_login = 'Incorrect email or password';
+            $error_login = 'Login failed';
         }
     }
 }
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 
                 <button type="submit" name="submit" class="mt-5">Submit</button>
                 <div class="d-flex justify-content-center mt-2">
-                    <a href="register.php">Dont have an account? Click here..</a>
+                    <a href="register">Dont have an account? Click here..</a>
                 </div>
             </form>
 
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
     <script>
             Swal.fire({
             icon: "error",
-            title: "Incorrect email or password",
+            title: "Login failed",
             toast: true,
             position: "top-end",
             showConfirmButton: false,

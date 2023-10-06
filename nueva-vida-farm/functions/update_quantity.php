@@ -68,5 +68,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     echo json_encode(array('status' => 'error', 'message' => 'Invalid request method.'));
-    header('location: ../login.php');
+    header('location: ../login');
 }

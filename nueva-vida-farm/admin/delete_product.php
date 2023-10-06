@@ -4,7 +4,7 @@ include '../database/connection.php';
 session_start();
 $admin_id = $_SESSION['admin_id'];
 if (!isset($admin_id)) {
-    header('location: admin_login.php');
+    header('location: admin_login');
     exit();
 }
 
@@ -107,5 +107,5 @@ if (isset($_GET['product_id']) && is_numeric($_GET['product_id']) && $_GET['prod
         echo 'error: ' . $e->getMessage();
     }
 } else {
-    header('location: products.php');
+    header('location: products');
 }

@@ -5,7 +5,7 @@ include '../database/connection.php';
 session_start();
 $admin_id = $_SESSION['admin_id'];
 if (!isset($admin_id)) {
-    header('location: admin_login.php');
+    header('location: admin_login');
 }
 
 $add_product = '';
@@ -63,6 +63,7 @@ if (isset($_POST['submit'])) {
 
 $update_product = '';
 $warning_update = '';
+$error_update = '';
 
 // UPDATE PRODUCT MODAL
 if (isset($_POST['update'])) {
@@ -73,50 +74,58 @@ if (isset($_POST['update'])) {
     $product_stocks = $_POST['product_stocks'];
     $product_status = '';
 
-    if ($product_stocks >= 5 && $product_stocks <= 1000000) {
-        $product_status = "Available";
-    } elseif ($product_stocks >= 1 && $product_stocks < 5) {
-        $product_status = "Low Stock";
-    } elseif ($product_stocks == 0) {
-        $product_status = "Not Available";
+    $check_product = $conn->prepare("SELECT COUNT(*) FROM `tbl_product` WHERE product_name = ? AND product_size = ?");
+    $check_product->execute([$product_name, $product_size]);
+    $product_count = $check_product->fetchColumn();
+
+    if ($product_count > 0) {
+        $error_update = 'Product already exist';
     } else {
-        $product_status = "Unknown";
-    }
-
-    if (!empty($_FILES['product_image']['name'])) {
-        $image_hash = md5(uniqid(rand(), true));
-        $file_extension = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
-
-        $new_image_name = $image_hash . '.' . $file_extension;
-
-        $product_folder = '../assets/images/products/' . $new_image_name;
-
-        $image_size = $_FILES['product_image']['size'];
-        $product_tmp_name = $_FILES['product_image']['tmp_name'];
-
-        if ($image_size > 2000000) {
-            $warning_update = 'Image size must be 2MB or less.';
+        if ($product_stocks >= 5 && $product_stocks <= 1000000) {
+            $product_status = "Available";
+        } elseif ($product_stocks >= 1 && $product_stocks < 5) {
+            $product_status = "Low Stock";
+        } elseif ($product_stocks == 0) {
+            $product_status = "Not Available";
         } else {
-            move_uploaded_file($product_tmp_name, $product_folder);
-            $stmt = $conn->prepare("SELECT product_image FROM `tbl_product` WHERE product_id = ?");
-            $stmt->execute([$product_id]);
-            $old_image = $stmt->fetchColumn();
-
-            if ($old_image && file_exists('../assets/images/products/' . $old_image)) {
-                unlink('../assets/images/products/' . $old_image);
-            }
-
-            $update_product = $conn->prepare("UPDATE `tbl_product` SET product_name=?, product_size=?, product_price=?, product_stocks=?, product_status=?, product_image=? WHERE product_id=?");
-            $update_product->execute([$product_name, $product_size, $product_price, $product_stocks, $product_status, $new_image_name, $product_id]);
+            $product_status = "Unknown";
         }
-    } else {
-        $product_image = $_POST['existing_product_image'];
 
-        $update_product = $conn->prepare("UPDATE `tbl_product` SET product_name=?, product_size=?, product_price=?, product_stocks=?, product_status=? WHERE product_id=?");
-        $update_product->execute([$product_name, $product_size, $product_price, $product_stocks, $product_status, $product_id]);
+        if (!empty($_FILES['product_image']['name'])) {
+            $image_hash = md5(uniqid(rand(), true));
+            $file_extension = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
+
+            $new_image_name = $image_hash . '.' . $file_extension;
+
+            $product_folder = '../assets/images/products/' . $new_image_name;
+
+            $image_size = $_FILES['product_image']['size'];
+            $product_tmp_name = $_FILES['product_image']['tmp_name'];
+
+            if ($image_size > 2000000) {
+                $warning_update = 'Image size must be 2MB or less.';
+            } else {
+                move_uploaded_file($product_tmp_name, $product_folder);
+                $stmt = $conn->prepare("SELECT product_image FROM `tbl_product` WHERE product_id = ?");
+                $stmt->execute([$product_id]);
+                $old_image = $stmt->fetchColumn();
+
+                if ($old_image && file_exists('../assets/images/products/' . $old_image)) {
+                    unlink('../assets/images/products/' . $old_image);
+                }
+
+                $update_product = $conn->prepare("UPDATE `tbl_product` SET product_name=?, product_size=?, product_price=?, product_stocks=?, product_status=?, product_image=? WHERE product_id=?");
+                $update_product->execute([$product_name, $product_size, $product_price, $product_stocks, $product_status, $new_image_name, $product_id]);
+            }
+        } else {
+            $product_image = $_POST['existing_product_image'];
+
+            $update_product = $conn->prepare("UPDATE `tbl_product` SET product_name=?, product_size=?, product_price=?, product_stocks=?, product_status=? WHERE product_id=?");
+            $update_product->execute([$product_name, $product_size, $product_price, $product_stocks, $product_status, $product_id]);
+        }
+
+        $update_product = "Product updated successfully";
     }
-
-    $update_product = "Product updated successfully";
 }
 
 // SELECT AND DISPLAY TO TABLE
@@ -157,19 +166,19 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!--===============================================================================================-->
         <div class="d-none d-md-flex justify-content-start flex-column p-3 position-relative" id="sidebar">
             <div class="d-flex justify-content-center">
-                <img onclick="window.location.href = 'dashboard.php'" style="cursor: pointer;" src="../assets/images/dashboard/logo.png" alt="">
+                <img onclick="window.location.href = 'dashboard'" style="cursor: pointer;" src="../assets/images/dashboard/logo.png" alt="">
             </div>
             <div class="d-flex flex-column p-3 mt-2" id="lists">
-                <a href="dashboard.php"><span class="material-symbols-outlined">
+                <a href="dashboard"><span class="material-symbols-outlined">
                         home
                     </span>Dashboard</a>
-                <a href="products.php"><span class="material-symbols-outlined">
+                <a href="products"><span class="material-symbols-outlined">
                     shopping_bag
                 </span>Inventory</a>
-                <a href="orders.php"><span class="material-symbols-outlined">
+                <a href="orders"><span class="material-symbols-outlined">
                         groups
                     </span>Orders</a>
-                <a href="reports.php"><span class="material-symbols-outlined">
+                <a href="reports"><span class="material-symbols-outlined">
                         person
                     </span>Reports</a>
             </div>
@@ -191,7 +200,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="d-none flex-column position-absolute" id="profileDropdown">
                         <a href="#">Profile</a>
-                        <a href="../components/admin_logout.php">Logout</a>
+                        <a href="../functions/admin_logout.php">Logout</a>
                     </div>
                 </div>
             </nav>
@@ -503,6 +512,19 @@ if ($products['product_status'] === 'Available') {
         </script>
     <?php endif?>
 
+    <?php if ($error_update): ?>
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "<?php echo $error_update; ?>",
+                timer: 3000,
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+            })
+        </script>
+    <?php endif?>
+
     <?php if ($warning_update): ?>
         <script>
             Swal.fire({
@@ -667,7 +689,7 @@ if ($products['product_status'] === 'Available') {
                 });
 
                 setTimeout(function () {
-                    window.location.href = "products.php";
+                    window.location.href = "products";
                 }, 2000);
             } else {
                 Swal.fire({

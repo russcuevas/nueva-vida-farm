@@ -7,3 +7,9 @@ Options -Indexes
     Order Allow,Deny
     Deny from all
 </Files>
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(([A-Za-z0-9\-]+/)*[A-Za-z0-9\-]+)?$ $1.php
+RewriteRule ^order_status$ order_status.php [NC,L]

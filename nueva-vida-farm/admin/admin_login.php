@@ -3,7 +3,7 @@ include '../database/connection.php';
 
 session_start();
 if (isset($_SESSION['admin_id'])) {
-    header('location: dashboard.php');
+    header('location: dashboard');
 }
 $warning_login = '';
 $error_login = '';
@@ -23,9 +23,9 @@ if (isset($_POST['submit'])) {
             session_start();
             $_SESSION['admin_id'] = $admin['staff_id'];
             $_SESSION["login_success"] = true;
-            header('location: dashboard.php');
+            header('location: dashboard');
         } else {
-            $error_login = 'Incorrect email or password';
+            $error_login = 'Login failed';
         }
     }
 }
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
     <script>
             Swal.fire({
             icon: "error",
-            title: "Incorrect email or password",
+            title: "Login failed",
             toast: true,
             position: "top-end",
             showConfirmButton: false,

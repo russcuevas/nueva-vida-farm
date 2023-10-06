@@ -5,12 +5,12 @@ session_start();
 $customer_id = $_SESSION['customer_id'];
 
 if (!isset($customer_id)) {
-    header('location: ../login.php');
+    header('location: ../login');
     exit;
 }
 
 if (!isset($_GET['order_id']) || !is_numeric($_GET['order_id'])) {
-    header('location: ../order_status.php');
+    header('location: ../order_status');
     exit;
 }
 
@@ -23,7 +23,7 @@ $stmt->execute();
 $removedOrder = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$removedOrder) {
-    header('location: ../order_status.php');
+    header('location: ../order_status');
     exit;
 }
 
@@ -84,7 +84,7 @@ try {
 
     $conn->commit();
 
-    header('location: ../order_status.php');
+    header('location: ../order_status');
     exit;
 } catch (Exception $e) {
     $conn->rollBack();

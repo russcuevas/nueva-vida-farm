@@ -5,7 +5,7 @@ session_start();
 $response = array();
 
 if (!isset($_SESSION['customer_id'])) {
-    header('location: ../login.php');
+    header('location: ../login');
 } elseif (isset($_GET['order_item_id'])) {
     $order_item_id = $_GET['order_item_id'];
 
@@ -59,7 +59,7 @@ if (!isset($_SESSION['customer_id'])) {
         }
     }
 } else {
-    header('location: ../home.php');
+    header('location: ../home');
 }
 
 header('Content-Type: application/json');
