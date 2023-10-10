@@ -64,7 +64,6 @@ if (isset($_POST['submit'])) {
 $update_product = '';
 $warning_update = '';
 $error_update = '';
-
 // UPDATE PRODUCT MODAL
 if (isset($_POST['update'])) {
     $product_id = $_POST['product_id'];
@@ -74,12 +73,12 @@ if (isset($_POST['update'])) {
     $product_stocks = $_POST['product_stocks'];
     $product_status = '';
 
-    $check_product = $conn->prepare("SELECT COUNT(*) FROM `tbl_product` WHERE product_name = ? AND product_size = ?");
-    $check_product->execute([$product_name, $product_size]);
-    $product_count = $check_product->fetchColumn();
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM `tbl_product` WHERE (product_name = ? AND product_size = ?) AND product_id <> ?");
+    $stmt->execute([$product_name, $product_size, $product_id]);
+    $count = $stmt->fetchColumn();
 
-    if ($product_count > 0) {
-        $error_update = 'Product already exist';
+    if ($count > 0) {
+        $error_update = 'Product is already exist';
     } else {
         if ($product_stocks >= 5 && $product_stocks <= 1000000) {
             $product_status = "Available";
@@ -199,7 +198,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </span>
 
                     <div class="d-none flex-column position-absolute" id="profileDropdown">
-                        <a href="#">Profile</a>
+                        <!-- <a href="#">Profile</a> -->
                         <a href="../functions/admin_logout.php">Logout</a>
                     </div>
                 </div>
@@ -459,6 +458,7 @@ if ($products['product_status'] === 'Available') {
     <!--===============================================================================================-->
     <script>new DataTable('#example');</script>
     <!--===============================================================================================-->
+    <script src="../ajax/admin_get_product.js"></script>
     <!-- SWEET ALERT -->
     <?php if ($add_product): ?>
         <script>

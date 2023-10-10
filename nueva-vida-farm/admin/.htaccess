@@ -1,6 +1,6 @@
 Options -Indexes
 RewriteEngine On
-RewriteBase /capstone/admin/
+RewriteBase /nueva-vida-farm/admin/
 
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([^/]+)/?$ $1.php [L]

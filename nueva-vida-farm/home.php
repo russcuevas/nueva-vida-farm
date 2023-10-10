@@ -61,7 +61,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </span>
 
                 <div class="d-none flex-column position-absolute" id="profileDropdown">
-                    <a href="#">Profile</a>
+                    <!-- <a href="#">Profile</a> -->
                     <a href="functions/logout.php">Logout</a>
                 </div>
             </div>

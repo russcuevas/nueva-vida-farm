@@ -2,7 +2,16 @@
 function updateDatabase(input) {
     const orderItemId = input.getAttribute('data-order-item-id');
     const productId = input.getAttribute('data-product-id');
-    const newQuantity = input.value;
+    let newQuantity = parseInt(input.value);
+    const maxQuantity = parseInt(input.getAttribute('max'));
+
+    if (!Number.isInteger(newQuantity) || newQuantity < 1) {
+        input.value = 1;
+        newQuantity = 1;
+    } else if (newQuantity > maxQuantity) {
+        input.value = maxQuantity;
+        newQuantity = maxQuantity;
+    }
 
     HoldOn.open({
         theme: "sk-dot",
@@ -45,6 +54,16 @@ function updateDatabase(input) {
         HoldOn.close();
     });
 }
+
+// PREVENTING THE SIGNS
+function preventTyping(event) {
+    const keyPressed = event.key;
+
+    if (!/^\d$/.test(keyPressed) && keyPressed !== "Backspace") {
+        event.preventDefault();
+    }
+}
+
 
 
     

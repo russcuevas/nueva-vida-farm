@@ -69,7 +69,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                 </span>
 
                 <div class="d-none flex-column position-absolute" id="profileDropdown">
-                    <a href="#">Profile</a>
+                    <!-- <a href="#">Profile</a> -->
                     <a href="functions/logout.php">Logout</a>
                 </div>
             </div>
@@ -125,38 +125,39 @@ foreach ($orderItems as $orderItem):
         $hasItemsInCart = true;
     }
     ?>
-																																																																                                        <tr>
-																																																																                                            <td>
-																																																																                                                <input class="product-checkbox" type="checkbox" name="selected_products[]" value="<?php echo $orderItem['product_id']; ?>">
-																																																																                                            </td>
-																																																																                                            <td><?php echo $orderItem['product_name']; ?></td>
-																																																																                                            <td><img src="assets/images/products/<?php echo $orderItem['product_image']; ?>" alt=""></td>
-																																																																                                            <td>₱<?php echo $orderItem['product_price']; ?></td>
-																																																																                                            <td><?php echo $orderItem['product_size']; ?></td>
-																																																																                                            <td>
-																																																													                                                            <input
-																								                                                                                                                                                                                                                type="number"
-																                                                                                                                                                                                                                                                style="cursor: pointer"
-																								                                                                                                                                                                                                                class="quantity-input"
-																								                                                                                                                                                                                                                name="product_quantity[<?php echo $orderItem['product_id']; ?>]"
-																								                                                                                                                                                                                                                value="<?php echo $orderItem['quantity']; ?>"
-																								                                                                                                                                                                                                                min="1"
-																								                                                                                                                                                                                                                max="<?php echo min($orderItem['quantity'] + $orderItem['product_stocks'], 999); ?>"
-																								                                                                                                                                                                                                                required
-																								                                                                                                                                                                                                                data-order-item-id="<?php echo $orderItem['order_item_id']; ?>"
-																								                                                                                                                                                                                                                data-product-id="<?php echo $orderItem['product_id']; ?>"
-																								                                                                                                                                                                                                                onchange="updateDatabase(this);"
-																								                                                                                                                                                                                                                onkeydown="preventTyping(event);"
-																								                                                                                                                                                                                                                >
-																																																																                                            </td>
-																																																																                                            <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo $subtotal; ?></span></td>
-																																																																                                            <td>
-																																																																                                                <a href="#" class="btn btn-danger btn-remove">Remove</a>
-												<input type="hidden" name="order_item_id" value="<?php echo $orderItem['order_item_id']; ?>">
+																																																																								                                        <tr>
+																																																																								                                            <td>
+																																																																								                                                <input class="product-checkbox" type="checkbox" name="selected_products[]" value="<?php echo $orderItem['product_id']; ?>">
+																																																																								                                            </td>
+																																																																								                                            <td><?php echo $orderItem['product_name']; ?></td>
+																																																																								                                            <td><img src="assets/images/products/<?php echo $orderItem['product_image']; ?>" alt=""></td>
+																																																																								                                            <td>₱<?php echo $orderItem['product_price']; ?></td>
+																																																																								                                            <td><?php echo $orderItem['product_size']; ?></td>
+																																																																<td>
+					    <input
+					        type="number"
+					        style="cursor: pointer"
+					        class="quantity-input"
+					        name="product_quantity[<?php echo $orderItem['product_id']; ?>]"
+					        value="<?php echo $orderItem['quantity']; ?>"
+					        min="1"
+					        max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>"
+					        required
+					        data-order-item-id="<?php echo $orderItem['order_item_id']; ?>"
+					        data-product-id="<?php echo $orderItem['product_id']; ?>"
+					        onchange="updateDatabase(this);"
+					        onkeydown="preventTyping(event, this);"
+					    >
+					</td>
 
-																																																																                                            </td>
-																																																																                                        </tr>
-																																																																                                        <?php endforeach;?>
+																																																																								                                            <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo $subtotal; ?></span></td>
+																																																																								                                            <td>
+																																																																								                                                <a href="#" class="btn btn-danger btn-remove">Remove</a>
+																				<input type="hidden" name="order_item_id" value="<?php echo $orderItem['order_item_id']; ?>">
+
+																																																																								                                            </td>
+																																																																								                                        </tr>
+																																																																								                                        <?php endforeach;?>
                             </tbody>
                             <tfoot style="border-bottom: 0px solid transparent !important;" id="tableFooter">
                                 <tr>
@@ -203,10 +204,7 @@ foreach ($orderItems as $orderItem):
     <!--===============================================================================================-->
     <!-- SWEETALERT FUNCTION -->
 <script>
-// PREVENTING AUTO TYPE IN QUANTITY
-function preventTyping(event) {
-    event.preventDefault();
-}
+
 
 // CANT REDIRECT IF EMPTY THE SELECTED PRODUCT
 function validateForm() {

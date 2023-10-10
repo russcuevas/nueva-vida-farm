@@ -131,7 +131,7 @@ $totalSalesResults = $stmtTotalSales->fetchAll(PDO::FETCH_ASSOC);
                     </span>
 
                     <div class="d-none flex-column position-absolute" id="profileDropdown">
-                        <a href="#">Profile</a>
+                        <!-- <a href="#">Profile</a> -->
                         <a href="../functions/admin_logout.php">Logout</a>
                     </div>
                 </div>
