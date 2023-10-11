@@ -6,37 +6,6 @@ if (isset($_SESSION['customer_id'])) {
     header('location: home');
 }
 
-$registration_success = '';
-$registration_error = '';
-$registration_email = '';
-if (isset($_POST['submit'])) {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $hashed_password = sha1($password);
-    $address = $_POST['address'];
-    $phone = $_POST['phone'];
-
-    if ($email) {
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM tbl_customer WHERE email = ?");
-        $stmt->execute([$email]);
-        $count = $stmt->fetchColumn();
-
-        if ($count > 0) {
-            $registration_email = 'Email is already taken';
-        } else {
-            if (strlen($password) < 8 || strlen($password) > 12) {
-                $registration_error = 'Password must contain 8-12 characters';
-            } else {
-                $stmt = $conn->prepare("INSERT INTO tbl_customer (first_name, last_name, email, password, address, phone) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$first_name, $last_name, $email, $hashed_password, $address, $phone]);
-                $registration_success = 'Registration successful';
-            }
-        }
-    }
-
-}
 ?>
 
 <!DOCTYPE html>
@@ -59,6 +28,7 @@ if (isset($_POST['submit'])) {
     <!--===============================================================================================-->
     <link rel="shortcut icon" href="assets/favicon/egg.png" type="image/x-icon">
     <!--===============================================================================================-->
+    <link rel="stylesheet" href="assets/css/HoldOn.min.css">
     <link
       rel="stylesheet"
       href="assets/js/sweetalert2/dist/sweetalert2.css"
@@ -68,7 +38,7 @@ if (isset($_POST['submit'])) {
 <body class="animate__animated animate__fadeIn">
     <div class="vh-100 d-flex justify-content-center align-items-center" id="mainContainer">
         <div class="d-flex flex-row">
-            <form method="POST" action="" class="d-flex flex-column p-5" style="background-color: black;" id="loginContainer">
+            <form method="POST" action="" class="d-flex flex-column p-5 registerForm" style="background-color: black;" id="loginContainer">
                 <h1>Welcome to Nueva Vida Farm</h1>
                 <h2>Sign up an Account.</h2>
 
@@ -93,7 +63,7 @@ if (isset($_POST['submit'])) {
                 <input type="text" name="phone" id="phone" placeholder="Phone" oninput="validatePhone(this)" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : '' ?>" required>
 
 
-                <button type="submit" name="submit" class="mt-5">Submit</button>
+                <button type="submit" class="mt-5">Submit</button>
                 <div class="d-flex justify-content-center mt-2">
                     <a href="login">Already have an account? Login here...</a>
                 </div>
@@ -106,46 +76,11 @@ if (isset($_POST['submit'])) {
     </div>
 
     <!--===============================================================================================-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="assets/js/HoldOn.min.js"></script>
+    <script src="ajax/register.js"></script>
     <script src="assets/js/form.js"></script>
-    <?php if ($registration_success): ?>
-    <script>
-            Swal.fire({
-            icon: "success",
-            title: "Registration successfully",
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-        });
-    </script>
-    <?php endif?>
-
-    <?php if ($registration_email): ?>
-    <script>
-            Swal.fire({
-            icon: "error",
-            title: "Email is already taken",
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-        });
-    </script>
-    <?php endif?>
-
-    <?php if ($registration_error): ?>
-    <script>
-            Swal.fire({
-            icon: "error",
-            title: "Password must contain 8-12 characters",
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-        });
-    </script>
-    <?php endif?>
 
     <script>
         function validatePhone(input) {

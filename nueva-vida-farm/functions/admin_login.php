@@ -27,6 +27,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             $response['message'] = 'Invalid credentials';
         }
     }
+} else {
+    header('location: ../home');
 }
 
 header("Content-type: application/json");
