@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2023 at 09:08 PM
+-- Generation Time: Oct 11, 2023 at 08:33 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -56,16 +56,6 @@ CREATE TABLE `tbl_customer` (
   `address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_customer`
---
-
-INSERT INTO `tbl_customer` (`customer_id`, `first_name`, `last_name`, `email`, `password`, `phone`, `address`) VALUES
-(5, 'Russel Vincent', 'Cuevas', 'russelcuevas0@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '09495748302', 'Calingatan Mataasnakahoy Batangas'),
-(6, 'Russ', 'Pogi', 'russelpogi@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '09495748302', 'Calingatan Mataasnakahoy Batangas'),
-(7, 'Russel', 'Pogi', 'russpogi@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '09495748302', 'Calingatan Mataasnakahoy Batangas'),
-(8, 'Russel', 'Pogi', 'russpogii@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '09495748301', 'Calingatan Mataasnakahoy Batangas');
-
 -- --------------------------------------------------------
 
 --
@@ -83,13 +73,6 @@ CREATE TABLE `tbl_order` (
   `product_id` int(11) DEFAULT NULL,
   `total_quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_order`
---
-
-INSERT INTO `tbl_order` (`order_id`, `reference_number`, `payment_method`, `customer_id`, `order_date`, `total_amount`, `total_products`, `product_id`, `total_quantity`) VALUES
-(364, 'ORDER202310040250431924', 'CASH ON PICKUP', 5, '2023-10-03 18:50:43', '101.00', 'Hello World', 108, 5);
 
 -- --------------------------------------------------------
 
@@ -117,13 +100,6 @@ CREATE TABLE `tbl_orderstatus` (
   `order_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_orderstatus`
---
-
-INSERT INTO `tbl_orderstatus` (`status_id`, `status`, `update_date`, `order_id`) VALUES
-(313, 'Completed', '2023-10-03 18:51:00', 364);
-
 -- --------------------------------------------------------
 
 --
@@ -139,13 +115,6 @@ CREATE TABLE `tbl_product` (
   `product_stocks` int(11) NOT NULL,
   `product_status` varchar(255) NOT NULL DEFAULT 'Available'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_product`
---
-
-INSERT INTO `tbl_product` (`product_id`, `product_name`, `product_image`, `product_size`, `product_price`, `product_stocks`, `product_status`) VALUES
-(112, 'Hello', '286ed7fccaf856c8c5706fabf571ae51.jpg', 'SMALL', '23', 2, 'Low Stock');
 
 --
 -- Indexes for dumped tables
@@ -205,31 +174,31 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
-  MODIFY `customer_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `customer_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=371;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=507;
 
 --
 -- AUTO_INCREMENT for table `tbl_orderitem`
 --
 ALTER TABLE `tbl_orderitem`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=642;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=753;
 
 --
 -- AUTO_INCREMENT for table `tbl_orderstatus`
 --
 ALTER TABLE `tbl_orderstatus`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=320;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=456;
 
 --
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `product_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `product_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
 -- Constraints for dumped tables
