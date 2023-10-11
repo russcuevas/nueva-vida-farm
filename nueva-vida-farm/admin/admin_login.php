@@ -5,30 +5,6 @@ session_start();
 if (isset($_SESSION['admin_id'])) {
     header('location: dashboard');
 }
-$warning_login = '';
-$error_login = '';
-if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    if (empty($email) || empty($password)) {
-        $warning_login = 'Please fill up all fields';
-    } else {
-        // CHECK IF THE LOGIN REQUEST IS ADMIN
-        $stmt = $conn->prepare("SELECT * FROM `tbl_admin` WHERE email = ?");
-        $stmt->execute([$email]);
-        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($admin && sha1($password) === $admin['password']) {
-            session_start();
-            $_SESSION['admin_id'] = $admin['staff_id'];
-            $_SESSION["login_success"] = true;
-            header('location: dashboard');
-        } else {
-            $error_login = 'Login failed';
-        }
-    }
-}
 
 ?>
 <!DOCTYPE html>
@@ -50,6 +26,7 @@ if (isset($_POST['submit'])) {
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!--===============================================================================================-->
+    <link rel="stylesheet" href="../assets/css/HoldOn.min.css">
     <link
       rel="stylesheet"
       href="../assets/js/sweetalert2/dist/sweetalert2.css"
@@ -59,7 +36,7 @@ if (isset($_POST['submit'])) {
 <body class="animate__animated animate__fadeIn">
     <div class="vh-100 d-flex justify-content-center align-items-center" id="mainContainer">
         <div class="d-flex flex-row">
-            <form method="POST" class="d-flex flex-column p-5" style="background-color: black;" id="loginContainer">
+            <form action="../functions/admin_login.php" method="POST" class="d-flex flex-column p-5 loginForm" style="background-color: black;" id="loginContainer">
                 <h1>Welcome to Nueva Vida Farm</h1>
                 <h2>Admin Panel</h2>
 
@@ -68,7 +45,7 @@ if (isset($_POST['submit'])) {
                 <label for="" class="mt-3">Password</label>
                 <input type="password" name="password" placeholder="Password">
 
-                <button type="submit" name="submit" class="mt-5">Submit</button>
+                <button type="submit" class="mt-5">Submit</button>
                 <div class="d-flex justify-content-center mt-2">
                     <h4 style="color: red; font-size: 20px">ONLY AUTHORIZED PERSON CAN ACCESS THIS</h4>
                 </div>
@@ -80,31 +57,10 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
     <!--===============================================================================================-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
-    <?php if ($error_login): ?>
-    <script>
-            Swal.fire({
-            icon: "error",
-            title: "Login failed",
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 2000,
-        });
-    </script>
-    <?php endif?>
-    <?php if ($warning_login): ?>
-    <script>
-            Swal.fire({
-            icon: "warning",
-            title: "Please fill up all fields",
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 2000,
-        });
-    </script>
-    <?php endif?>
+    <script src="../assets/js/HoldOn.min.js"></script>
+    <script src="../ajax/admin_login.js"></script>
 </body>
 
 </html>

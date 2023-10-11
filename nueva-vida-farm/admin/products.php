@@ -543,7 +543,7 @@ if ($products['product_status'] === 'Available') {
 
     // VIEW MODAL
     $(document).ready(function () {
-        $(".view-product-link").click(function () {
+        $("#example").on("click", ".view-product-link", function () {
             const productId = $(this).data("id-product");
             const productName = $(this).data("product-name");
             const productImage = $(this).data("product-image");
