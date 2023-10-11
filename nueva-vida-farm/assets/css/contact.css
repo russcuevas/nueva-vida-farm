@@ -1,5 +1,5 @@
 .col{
-    height: 640px !important;
+    height: 700px !important;
 }
 
 @media (max-width: 768px) {
@@ -26,4 +26,17 @@
 
 .col h1, .col h5 span, .col h5{
     font-family: 'Montserrat', sans-serif;
+}
+
+.col button{
+    padding: 5px;
+    width: 100px;
+    border-radius: 15px;
+    border: 2px solid #c8ec56;
+    background-color: #c8ec56;
+}
+
+.col button:hover{
+    background-color: #8ba33b;
+    border: 2px solid #8ba33b;
 }

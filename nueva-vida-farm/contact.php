@@ -5,7 +5,7 @@ session_start();
 if (isset($_SESSION['customer_id'])) {
     $customer_id = $_SESSION['customer_id'];
 } else {
-    header('location: login');
+    header('location: login.php');
 }
 
 // DISPLAY CARTS COUNTS
@@ -36,6 +36,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="assets/css/HoldOn.min.css">
     <link rel="stylesheet" href="assets/js/sweetalert2/dist/sweetalert2.css" />
     <link rel="stylesheet" href="assets/css/contact.css">
 </head>
@@ -46,7 +47,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
         <h2>Nueva Vida Farm</h2>
 
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
-            <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
+            <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart.php';">
                 <span style="position: absolute; right: -10px; top: -5px; font-size: 12px; font-style: normal; color: red;">
                     (<?=$cartCount['cart_count']?>)
                 </span>
@@ -57,8 +58,8 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                 </span>
 
                 <div class="d-none flex-column position-absolute" id="profileDropdown">
-                    <!-- <a href="#">Profile</a> -->
-                    <a href="functions/logout.php">Logout</a>
+                    <a href="#">Profile</a>
+                    <a href="components/logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -66,11 +67,11 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
     </nav>
 
     <ul class="d-flex flex-wrap py-3 px-3 gap-4 py-md-0 px-md-5 mt-0 mt-md-3" id="lists">
-        <li><a href="home">Home</a></li>
-        <li><a href="contact">Contact</a></li>
-        <li><a href="shop">Shop</a></li>
-        <li><a href="cart">Cart</a></li>
-        <li><a href="order_status">Order Status</a></li>
+        <li><a href="home.php">Home</a></li>
+        <li><a href="contact.php">Contact</a></li>
+        <li><a href="shop.php">Shop</a></li>
+        <li><a href="cart.php">Cart</a></li>
+        <li><a href="order_status.php">Order Status</a></li>
     </ul>
 
     <div class="container-md d-flex justify-content-center align-items-center flex-column flex-lg-row p-0 p-md-5">
@@ -98,6 +99,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                 </style>
             </div>
         </div>
+        <form action="functions/contact.php" method="POST" id="contactForm">
         <div class="col w-100 bg-white">
             <div class="d-flex flex-column px-3 py-5 p-md-5 gap-4">
                 <h1>CONTACT US</h1>
@@ -105,13 +107,21 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                     <h5><span style="margin-right: 5px;"><i class="fa-solid fa-location-dot"></i></span>nuevavidafarmsinc@gmail.com</h5>
                     <h5><span style="margin-right: 5px;"><i class="fa-solid fa-phone"></i></span>123-456-789</h5>
                 </div>
-                <input type="text" name="" id="" placeholder="Name...">
-                <input type="text" name="" id="" placeholder="Email...">
-                <textarea name="" id="" cols="30" rows="10" placeholder="Message..."></textarea>
+                <input type="text" name="name" id="name" placeholder="Your name">
+                <input type="text" id="mobile" name="mobile" placeholder="Your mobile number">
+                <textarea name="message" id="message" cols="30" rows="10" placeholder="Your message"></textarea>
+                <div class="d-flex justify-content-end">
+                <button type="submit">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
     <!--===============================================================================================-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="assets/js/HoldOn.min.js"></script>
+    <script src="assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="ajax/contact.js"></script>
     <script src="assets/js/home.js"></script>
     <!--===============================================================================================-->
 
