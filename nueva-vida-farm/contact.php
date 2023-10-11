@@ -47,7 +47,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
         <h2>Nueva Vida Farm</h2>
 
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
-            <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart.php';">
+            <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
                 <span style="position: absolute; right: -10px; top: -5px; font-size: 12px; font-style: normal; color: red;">
                     (<?=$cartCount['cart_count']?>)
                 </span>
@@ -58,8 +58,8 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                 </span>
 
                 <div class="d-none flex-column position-absolute" id="profileDropdown">
-                    <a href="#">Profile</a>
-                    <a href="components/logout.php">Logout</a>
+                    <!-- <a href="#">Profile</a> -->
+                    <a href="functions/logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -67,11 +67,11 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
     </nav>
 
     <ul class="d-flex flex-wrap py-3 px-3 gap-4 py-md-0 px-md-5 mt-0 mt-md-3" id="lists">
-        <li><a href="home.php">Home</a></li>
-        <li><a href="contact.php">Contact</a></li>
-        <li><a href="shop.php">Shop</a></li>
-        <li><a href="cart.php">Cart</a></li>
-        <li><a href="order_status.php">Order Status</a></li>
+        <li><a href="home">Home</a></li>
+        <li><a href="contact">Contact</a></li>
+        <li><a href="shop">Shop</a></li>
+        <li><a href="cart">Cart</a></li>
+        <li><a href="order_status">Order Status</a></li>
     </ul>
 
     <div class="container-md d-flex justify-content-center align-items-center flex-column flex-lg-row p-0 p-md-5">
