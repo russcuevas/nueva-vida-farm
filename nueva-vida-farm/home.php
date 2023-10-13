@@ -52,7 +52,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
                 <span style="position: absolute; right: -10px; top: -5px; font-size: 12px; font-style: normal;">
-                    (<?=$cartCount['cart_count']?>)
+                    (<?= $cartCount['cart_count'] ?>)
                 </span>
             </i>
             <div class="d-flex flex-column position-relative">
@@ -94,12 +94,12 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
         <div class="py-3 px-3 px-md-5">
-            <?php if (empty($product)): ?>
+            <?php if (empty($product)) : ?>
                 <div style="text-align: center; color: red; font-size: 40px;">No Products Available</div>
-            <?php else: ?>
+            <?php else : ?>
                 <div class="swiper">
                     <div class="swiper-wrapper">
-                        <?php foreach ($product as $products): ?>
+                        <?php foreach ($product as $products) : ?>
                             <div class="swiper-slide">
                                 <img src="assets/images/products/<?php echo $products['product_image']; ?>" alt="">
                                 <div class="swiper-content">
@@ -107,10 +107,10 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <h4 style="color: red;">₱<?php echo $products['product_price']; ?></h4>
                                 </div>
                             </div>
-                        <?php endforeach?>
+                        <?php endforeach ?>
                     </div>
                 </div>
-            <?php endif?>
+            <?php endif ?>
         </div>
 
 
@@ -183,7 +183,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     showConfirmButton: false,
                     timer: 2000,
                 });
-                <?php $_SESSION["login_success"] = false;?>
+                <?php $_SESSION["login_success"] = false; ?>
             }
         }
 

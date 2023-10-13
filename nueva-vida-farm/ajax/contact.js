@@ -19,7 +19,7 @@ $(document).ready(function() {
 
         HoldOn.open({
             theme: 'sk-dot',
-            message: 'Please wait...'
+            message: 'Submitting please wait..'
         });
 
         $.ajax({

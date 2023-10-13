@@ -49,7 +49,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
                 <span style="position: absolute; right: -10px; top: -5px; font-size: 12px; font-style: normal; color: red;">
-                    (<?=$cartCount['cart_count']?>)
+                    (<?= $cartCount['cart_count'] ?>)
                 </span>
             </i>
             <div class="d-flex flex-column position-relative">
@@ -100,22 +100,22 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
             </div>
         </div>
         <form action="functions/contact.php" method="POST" id="contactForm">
-        <div class="col w-100 bg-white">
-            <div class="d-flex flex-column px-3 py-5 p-md-5 gap-4">
-                <h1>CONTACT US</h1>
-                <div class="d-flex flex-column flex-md-row justify-content-start justify-content-md-between">
-                    <h5><span style="margin-right: 5px;"><i class="fa-solid fa-location-dot"></i></span>nuevavidafarmsinc@gmail.com</h5>
-                    <h5><span style="margin-right: 5px;"><i class="fa-solid fa-phone"></i></span>123-456-789</h5>
-                </div>
-                <input type="text" name="name" id="name" placeholder="Your name">
-                <input type="text" id="mobile" name="mobile" placeholder="Your mobile number">
-                <textarea name="message" id="message" cols="30" rows="10" placeholder="Your message"></textarea>
-                <div class="d-flex justify-content-end">
-                <button type="submit">Submit</button>
+            <div class="col w-100 bg-white">
+                <div class="d-flex flex-column px-3 py-5 p-md-5 gap-4">
+                    <h1>CONTACT US</h1>
+                    <div class="d-flex flex-column flex-md-row justify-content-start justify-content-md-between">
+                        <h5><span style="margin-right: 5px;"><i class="fa-solid fa-location-dot"></i></span>nuevavidafarmsinc@gmail.com</h5>
+                        <h5><span style="margin-right: 5px;"><i class="fa-solid fa-phone"></i></span>123-456-789</h5>
+                    </div>
+                    <input type="text" name="name" id="name" placeholder="Your name">
+                    <input type="text" id="mobile" name="mobile" placeholder="Your mobile number">
+                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Your message"></textarea>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit">Submit</button>
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     </form>
     <!--===============================================================================================-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

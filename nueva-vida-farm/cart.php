@@ -60,7 +60,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
                 <span style="position: absolute; right: -10px; top: -5px; font-size: 12px; font-style: normal; color: red;">
-                    (<?=$cartCount['cart_count']?>)
+                    (<?= $cartCount['cart_count'] ?>)
                 </span>
             </i>
             <div class="d-flex flex-column position-relative">
@@ -100,64 +100,58 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                             <thead class="table-success">
                                 <tr>
                                     <th>Select all
-                                    <input type="checkbox" id="select-all">
+                                        <input type="checkbox" id="select-all">
                                     </th>
                                     <th>Product Name</th>
                                     <th>Product Image</th>
                                     <th>Product Price</th>
                                     <th>Product Size</th>
                                     <th>Product Quantity</th>
+                                    <th>Available Stocks</th>
                                     <th>Product Subtotal</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <?php
-$subtotals = [];
-$hasItemsInCart = false;
+                                $subtotals = [];
+                                $hasItemsInCart = false;
 
-foreach ($orderItems as $orderItem):
-    $subtotal = $orderItem['quantity'] * $orderItem['product_price'];
-    $subtotals[] = $subtotal;
+                                foreach ($orderItems as $orderItem) :
+                                    $subtotal = $orderItem['quantity'] * $orderItem['product_price'];
+                                    $subtotals[] = $subtotal;
 
-    if ($orderItem['quantity'] > 0) {
-        $hasItemsInCart = true;
-    }
-    ?>
-																																																																								                                        <tr>
-																																																																								                                            <td>
-																																																																								                                                <input class="product-checkbox" type="checkbox" name="selected_products[]" value="<?php echo $orderItem['product_id']; ?>">
-																																																																								                                            </td>
-																																																																								                                            <td><?php echo $orderItem['product_name']; ?></td>
-																																																																								                                            <td><img src="assets/images/products/<?php echo $orderItem['product_image']; ?>" alt=""></td>
-																																																																								                                            <td>₱<?php echo $orderItem['product_price']; ?></td>
-																																																																								                                            <td><?php echo $orderItem['product_size']; ?></td>
-																																																																<td>
-					    <input
-					        type="number"
-					        style="cursor: pointer"
-					        class="quantity-input"
-					        name="product_quantity[<?php echo $orderItem['product_id']; ?>]"
-					        value="<?php echo $orderItem['quantity']; ?>"
-					        min="1"
-					        max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>"
-					        required
-					        data-order-item-id="<?php echo $orderItem['order_item_id']; ?>"
-					        data-product-id="<?php echo $orderItem['product_id']; ?>"
-					        onchange="updateDatabase(this);"
-					        onkeydown="preventTyping(event, this);"
-					    >
-					</td>
+                                    if ($orderItem['quantity'] > 0) {
+                                        $hasItemsInCart = true;
+                                    }
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <input class="product-checkbox" type="checkbox" name="selected_products[]" value="<?php echo $orderItem['product_id']; ?>">
+                                        </td>
+                                        <td><?php echo $orderItem['product_name']; ?></td>
+                                        <td><img src="assets/images/products/<?php echo $orderItem['product_image']; ?>" alt=""></td>
+                                        <td>₱<?php echo $orderItem['product_price']; ?></td>
+                                        <td><?php echo $orderItem['product_size']; ?></td>
+                                        <td>
+                                            <input type="number" style="cursor: pointer" class="quantity-input" 
+                                            name="product_quantity[<?php echo $orderItem['product_id']; ?>]" 
+                                            value="<?php echo $orderItem['quantity']; ?>" 
+                                            min="1" max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>" required 
+                                            data-order-item-id="<?php echo $orderItem['order_item_id']; ?>" 
+                                            data-product-id="<?php echo $orderItem['product_id']; ?>" 
+                                            onchange="updateDatabase(this);" 
+                                            onkeydown="preventTyping(event, this);">
+                                        </td>
+                                        <td><?php echo $orderItem['product_stocks'] ?></td>
+                                        <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo $subtotal; ?></span></td>
+                                        <td>
+                                            <a href="#" class="btn btn-danger btn-remove">Remove</a>
+                                            <input type="hidden" name="order_item_id" value="<?php echo $orderItem['order_item_id']; ?>">
 
-																																																																								                                            <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo $subtotal; ?></span></td>
-																																																																								                                            <td>
-																																																																								                                                <a href="#" class="btn btn-danger btn-remove">Remove</a>
-																				<input type="hidden" name="order_item_id" value="<?php echo $orderItem['order_item_id']; ?>">
-
-																																																																								                                            </td>
-																																																																								                                        </tr>
-																																																																								                                        <?php endforeach;?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                             <tfoot style="border-bottom: 0px solid transparent !important;" id="tableFooter">
                                 <tr>
@@ -165,18 +159,18 @@ foreach ($orderItems as $orderItem):
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <?php if ($hasItemsInCart): ?>
-                                    <td>
-                                        <div class="d-flex justify-content-end mt-2">
-                                            <h3>Total Price:</h3>
-                                        </div>
-                                    </td>
-                                    <td style="font-size: 30px; font-weight: <?php echo array_sum($subtotals) > 0 ? '800' : 'normal'; ?>; color: <?php echo array_sum($subtotals) > 0 ? '#dc3545' : 'black'; ?>">
-                                        ₱<?php echo number_format(array_sum($subtotals), 2); ?></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
-                                    </td>
-                                    <?php endif;?>
+                                    <?php if ($hasItemsInCart) : ?>
+                                        <td>
+                                            <div class="d-flex justify-content-end mt-2">
+                                                <h3>Total Price:</h3>
+                                            </div>
+                                        </td>
+                                        <td style="font-size: 30px; font-weight: <?php echo array_sum($subtotals) > 0 ? '800' : 'normal'; ?>; color: <?php echo array_sum($subtotals) > 0 ? '#dc3545' : 'black'; ?>">
+                                            ₱<?php echo number_format(array_sum($subtotals), 2); ?></td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+                                        </td>
+                                    <?php endif; ?>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -203,53 +197,51 @@ foreach ($orderItems as $orderItem):
     <script src="assets/js/cart_datatable.js"></script>
     <!--===============================================================================================-->
     <!-- SWEETALERT FUNCTION -->
-<script>
+    <script>
+        // CANT REDIRECT IF EMPTY THE SELECTED PRODUCT
+        function validateForm() {
+            const form = document.querySelector("#checkout-form");
+            const productCheckboxes = document.querySelectorAll(".product-checkbox");
 
+            const isAnyProductSelected = Array.from(productCheckboxes).some(checkbox => checkbox.checked);
 
-// CANT REDIRECT IF EMPTY THE SELECTED PRODUCT
-function validateForm() {
-    const form = document.querySelector("#checkout-form");
-    const productCheckboxes = document.querySelectorAll(".product-checkbox");
+            if (!isAnyProductSelected) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please select atleast one product to proceed",
+                    timer: 3000,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                });
+                return false;
+            }
 
-    const isAnyProductSelected = Array.from(productCheckboxes).some(checkbox => checkbox.checked);
+            return true;
+        }
 
-    if (!isAnyProductSelected) {
-        Swal.fire({
-            icon: "warning",
-            title: "Please select atleast one product to proceed",
-            timer: 3000,
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
+        document.querySelector("#checkout-form").addEventListener("submit", function(event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
         });
-        return false;
-    }
-
-    return true;
-}
-
-document.querySelector("#checkout-form").addEventListener("submit", function (event) {
-    if (!validateForm()) {
-        event.preventDefault();
-    }
-});
 
 
 
-// SELECT ALL PRODUCT IN CART
-document.addEventListener("DOMContentLoaded", function () {
-    const selectAllCheckbox = document.getElementById("select-all");
-    const productCheckboxes = document.querySelectorAll(".product-checkbox");
+        // SELECT ALL PRODUCT IN CART
+        document.addEventListener("DOMContentLoaded", function() {
+            const selectAllCheckbox = document.getElementById("select-all");
+            const productCheckboxes = document.querySelectorAll(".product-checkbox");
 
-    selectAllCheckbox.addEventListener("change", function () {
-    const isChecked = this.checked;
+            selectAllCheckbox.addEventListener("change", function() {
+                const isChecked = this.checked;
 
-    productCheckboxes.forEach(function (checkbox) {
-            checkbox.checked = isChecked;
+                productCheckboxes.forEach(function(checkbox) {
+                    checkbox.checked = isChecked;
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
 
 </body>
 

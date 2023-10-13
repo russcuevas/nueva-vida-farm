@@ -5,7 +5,7 @@ session_start();
 // CHECK IF THE USER IS AUTH
 $customer_id = $_SESSION['customer_id'];
 if (!isset($customer_id)) {
-    header('location: login.php');
+    header('location: login');
     exit;
 }
 
@@ -14,7 +14,7 @@ if (isset($_GET['product_id'])) {
     $product_id = filter_var($_GET['product_id'], FILTER_VALIDATE_INT);
 
     if ($product_id === false) {
-        header('location: shop.php');
+        header('location: shop');
         exit;
     }
 
@@ -24,7 +24,7 @@ if (isset($_GET['product_id'])) {
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$product) {
-        header('location: shop.php');
+        header('location: shop');
         exit;
     }
 
@@ -32,20 +32,20 @@ if (isset($_GET['product_id'])) {
         $quantity = filter_var($_GET['quantity'], FILTER_VALIDATE_INT);
 
         if ($quantity === false || $quantity < 1 || $quantity > $product['product_stocks']) {
-            header('location: shop.php');
+            header('location: shop');
             exit;
         }
     } else {
         $quantity = 1;
     }
 } else {
-    header('location: shop.php');
+    header('location: shop');
     exit;
 }
 
-// USER CANT GO REDIRECT TO BUY_NOW.PHP
+// USER CANT GO REDIRECT TO BUY_NOW
 if (!isset($_GET['product_id']) || !is_numeric($_GET['product_id'])) {
-    header('location: shop.php');
+    header('location: shop');
     exit;
 }
 
@@ -176,16 +176,12 @@ function generateReferenceNumber()
     <link rel="stylesheet" href="assets/css/checkout.css">
     <link rel="shortcut icon" href="assets/favicon/egg.png" type="image/x-icon">
     <!--===============================================================================================-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!--===============================================================================================-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="assets/css/HoldOn.min.css">
 </head>
 
@@ -195,7 +191,7 @@ function generateReferenceNumber()
         <span class="material-symbols-outlined" id="backButton">
             arrow_back
         </span>
-        <a href="shop.php" id="backText">Back to shop</a>
+        <a href="shop" id="backText">Back to shop</a>
     </div>
 
     <div class="d-flex flex-column gap-3 justify-content-center align-items-center mt-3 mt-md-0">
@@ -209,62 +205,62 @@ function generateReferenceNumber()
                         <h3 style="color: white;">Selected Item</h3>
                     </div>
 
-                    <?php if (isset($product)): ?>
+                    <?php if (isset($product)) : ?>
                         <input type="hidden" name="quantity" id="quantity" value="<?php echo $quantity; ?>" />
                         <input type="hidden" name="total_products" value="<?php echo $product['product_name']; ?> <?php echo $product['product_size']; ?> x <?php echo $quantity; ?>">
                         <div class="d-flex flex-row justify-content-between">
                             <h4 style="color: #777777;"><?php echo $product['product_name']; ?></h4>
-                            <h4 style="color: #049547;">₱<?php echo number_format($product['product_price'] * $quantity, 2); ?></h4>
+                            <h4 style="color: #049547;">₱<?php echo $product['product_price']; ?> x <?php echo $quantity ?></h4>
                         </div>
 
                         <div class="d-flex flex-row justify-content-between align-items-center px-3 py-1 bg-white">
                             <h4 class="mt-1" style="color: #777777;">Total Price :</h4>
                             <h4 class="mt-1">₱<?php echo number_format($product['product_price'] * $quantity, 2); ?></h4>
                         </div>
-                    <?php else: ?>
+                    <?php else : ?>
                         <div>
                             <p>Product not found.</p>
                         </div>
-                    <?php endif;?>
+                    <?php endif; ?>
                 </div>
 
 
-                    <div class="d-flex justify-content-center align-items-center p-2 my-3" id="informationBox">
-                        <h3 class="mt-1">My Information</h3>
-                    </div>
-
-                    <div class="d-flex justify-content-start gap-1" style="width: 100%;">
-                        <span class="material-symbols-outlined">
-                            person
-                        </span>
-                        <h4><?php echo $customer['first_name'] . ' ' . $customer['last_name']; ?></h4>
-                    </div>
-                    <div class="d-flex justify-content-start gap-1" style="width: 100%;">
-                        <span class="material-symbols-outlined">
-                            call
-                        </span>
-                        <h4><?php echo $customer['phone']; ?></h4>
-                    </div>
-                    <div class="d-flex justify-content-start gap-1" style="width: 100%;">
-                        <span class="material-symbols-outlined">
-                            mail
-                        </span>
-                        <h4><?php echo $customer['email']; ?></h4>
-                    </div>
-                    <div class="d-flex justify-content-start gap-1" style="width: 100%;">
-                        <span class="material-symbols-outlined">
-                            location_on
-                        </span>
-                        <h4><?php echo $customer['address']; ?></h4>
-                    </div>
-
-                    <select name="payment_method" id="" class="mt-3 mb-3">
-                        <option value="CASH ON PICKUP" selected>CASH ON PICKUP</option>
-                    </select>
-
-
-                    <button type="submit" name="submit" class="placeOrder">Buy now</button>
+                <div class="d-flex justify-content-center align-items-center p-2 my-3" id="informationBox">
+                    <h3 class="mt-1">My Information</h3>
                 </div>
+
+                <div class="d-flex justify-content-start gap-1" style="width: 100%;">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                    <h4><?php echo $customer['first_name'] . ' ' . $customer['last_name']; ?></h4>
+                </div>
+                <div class="d-flex justify-content-start gap-1" style="width: 100%;">
+                    <span class="material-symbols-outlined">
+                        call
+                    </span>
+                    <h4><?php echo $customer['phone']; ?></h4>
+                </div>
+                <div class="d-flex justify-content-start gap-1" style="width: 100%;">
+                    <span class="material-symbols-outlined">
+                        mail
+                    </span>
+                    <h4><?php echo $customer['email']; ?></h4>
+                </div>
+                <div class="d-flex justify-content-start gap-1" style="width: 100%;">
+                    <span class="material-symbols-outlined">
+                        location_on
+                    </span>
+                    <h4><?php echo $customer['address']; ?></h4>
+                </div>
+
+                <select name="payment_method" id="" class="mt-3 mb-3">
+                    <option value="CASH ON PICKUP" selected>CASH ON PICKUP</option>
+                </select>
+
+
+                <button type="submit" name="submit" class="placeOrder">Buy now</button>
+            </div>
         </form>
     </div>
 

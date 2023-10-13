@@ -53,11 +53,9 @@ foreach ($orders as $order) {
     <!--===============================================================================================-->
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!--===============================================================================================-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <!--===============================================================================================-->
@@ -85,8 +83,8 @@ foreach ($orders as $order) {
                         home
                     </span>Dashboard</a>
                 <a href="products"><span class="material-symbols-outlined">
-                    shopping_bag
-                </span>Inventory</a>
+                        shopping_bag
+                    </span>Inventory</a>
                 <a href="orders"><span class="material-symbols-outlined">
                         groups
                     </span>Orders</a>
@@ -135,38 +133,38 @@ foreach ($orders as $order) {
                             <div class="d-flex flex-row justify-content-between">
                                 <h6 style="font-size: 20px;">Month and year : </h6>
 
-                            <div class="d-flex gap-1">
-                                <button id="export-pdf" class="btn btn-primary">Export <i class="fa-regular fa-file-pdf"></i></button>
-                                <button id="export-excel" class="btn btn-success">Export <i class="fa-regular fa-file-excel"></i></button>
-                            </div>
+                                <div class="d-flex gap-1">
+                                    <button id="export-pdf" class="btn btn-primary">Export <i class="fa-regular fa-file-pdf"></i></button>
+                                    <button id="export-excel" class="btn btn-success">Export <i class="fa-regular fa-file-excel"></i></button>
+                                </div>
 
 
                             </div>
                             <div class="d-flex gap-1">
                                 <select id="filterMonth">
-                                        <option value="">All Months</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                        <option value="March">March</option>
-                                        <option value="April">April</option>
-                                        <option value="May">May</option>
-                                        <option value="June">June</option>
-                                        <option value="July">July</option>
-                                        <option value="August">August</option>
-                                        <option value="September">September</option>
-                                        <option value="October">October</option>
-                                        <option value="November">November</option>
-                                        <option value="December">December</option>
+                                    <option value="">All Months</option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
                                 </select>
                                 <select id="filterYear">
-                                        <option value="">All Years</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
+                                    <option value="">All Years</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
                                 </select>
                             </div>
 
                             <div class="d-flex gap-2 mt-2">
-                                    <button style="display: none;" class="btn btn-primary" onclick="applyFilters()">Filter by</button>
+                                <button style="display: none;" class="btn btn-primary" onclick="applyFilters()">Filter by</button>
                             </div>
 
                         </div>
@@ -187,31 +185,31 @@ foreach ($orders as $order) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach ($groupedOrders as $reference_number => $ordersGroup): ?>
-                                    <?php if (reset($ordersGroup)['order_status'] === 'Completed'): ?>
-                                        <tr>
-                                            <td style="color: #BB2525; font-weight: 900"><?php echo $reference_number; ?></td>
-                                            <td><?php echo reset($ordersGroup)['payment_method']; ?></td>
-                                            <td><?php echo reset($ordersGroup)['customer_name']; ?></td>
-                                            <td class="no-line-breaks">
-                                                <?php foreach ($ordersGroup as $order): ?>
-                                                    <?php if ($order === end($ordersGroup)): ?>
-                                                        <?php echo $order['total_products'] . '<br>'; ?>
-                                                    <?php endif;?>
-                                                <?php endforeach;?>
-                                            </td>
-                                            <td>
-                                            <?php
-$orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
-$formattedDate = date('F/d/Y', $orderDateTimestamp);
-echo $formattedDate;
-?>
-                                            </td>
-                                            <td><?php echo reset($ordersGroup)['total_amount']; ?></td>
-                                            <td style="color: #004225; font-weight: 900;"><?php echo reset($ordersGroup)['order_status']; ?></td>
-                                        </tr>
-                                    <?php endif;?>
-                                <?php endforeach;?>
+                                    <?php foreach ($groupedOrders as $reference_number => $ordersGroup) : ?>
+                                        <?php if (reset($ordersGroup)['order_status'] === 'Completed') : ?>
+                                            <tr>
+                                                <td style="color: #BB2525; font-weight: 900"><?php echo $reference_number; ?></td>
+                                                <td><?php echo reset($ordersGroup)['payment_method']; ?></td>
+                                                <td><?php echo reset($ordersGroup)['customer_name']; ?></td>
+                                                <td class="no-line-breaks">
+                                                    <?php foreach ($ordersGroup as $order) : ?>
+                                                        <?php if ($order === end($ordersGroup)) : ?>
+                                                            <?php echo $order['total_products'] . '<br>'; ?>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
+                                                    $formattedDate = date('F/d/Y', $orderDateTimestamp);
+                                                    echo $formattedDate;
+                                                    ?>
+                                                </td>
+                                                <td><?php echo reset($ordersGroup)['total_amount']; ?></td>
+                                                <td style="color: #004225; font-weight: 900;"><?php echo reset($ordersGroup)['order_status']; ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -220,8 +218,8 @@ echo $formattedDate;
             </div>
         </div>
 
-        </div>
-        <!--===============================================================================================-->
+    </div>
+    <!--===============================================================================================-->
     </div>
     <!--===============================================================================================-->
     <script src="../assets/js/dashboard.js"></script>
@@ -238,9 +236,9 @@ echo $formattedDate;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="../assets/js/reports.js"></script>
 
-<script>
-    window.jsPDF = window.jspdf.jsPDF;
-</script>
+    <script>
+        window.jsPDF = window.jspdf.jsPDF;
+    </script>
 
 </body>
 

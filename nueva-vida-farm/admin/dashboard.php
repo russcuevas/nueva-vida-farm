@@ -79,17 +79,13 @@ $totalSalesResults = $stmtTotalSales->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="shortcut icon" href="../assets/favicon/egg.png" type="image/x-icon">
     <!--===============================================================================================-->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!--===============================================================================================-->
-    <link
-      rel="stylesheet"
-      href="../assets/js/sweetalert2/dist/sweetalert2.css"
-    />
+    <link rel="stylesheet" href="../assets/js/sweetalert2/dist/sweetalert2.css" />
 </head>
 
 <body class="animate__animated animate__fadeIn">
@@ -105,8 +101,8 @@ $totalSalesResults = $stmtTotalSales->fetchAll(PDO::FETCH_ASSOC);
                         home
                     </span>Dashboard</a>
                 <a href="products"><span class="material-symbols-outlined">
-                    shopping_bag
-                </span>Inventory</a>
+                        shopping_bag
+                    </span>Inventory</a>
                 <a href="orders"><span class="material-symbols-outlined">
                         groups
                     </span>Orders</a>
@@ -161,15 +157,15 @@ $totalSalesResults = $stmtTotalSales->fetchAll(PDO::FETCH_ASSOC);
 
 
                     <?php
-$totalSum = 0;
-$totalSalesHTML = '';
+                    $totalSum = 0;
+                    $totalSalesHTML = '';
 
-foreach ($totalSalesResults as $totalSalesResult) {
-    $totalSales = $totalSalesResult['total_sales'];
-    $totalSum += $totalSales;
-    $referenceNumber = $totalSalesResult['reference_number'];
-}
-?>
+                    foreach ($totalSalesResults as $totalSalesResult) {
+                        $totalSales = $totalSalesResult['total_sales'];
+                        $totalSum += $totalSales;
+                        $referenceNumber = $totalSalesResult['reference_number'];
+                    }
+                    ?>
 
                     <div class="col">
                         <div class="box d-flex justify-content-between flex-column p-3 bg-white rounded">
@@ -208,31 +204,31 @@ foreach ($totalSalesResults as $totalSalesResult) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($groupedOrders as $reference_number => $ordersGroup): ?>
+                                    <?php foreach ($groupedOrders as $reference_number => $ordersGroup) : ?>
                                         <tr>
                                             <td style="color: #BB2525; font-weight: 900;"><?php echo $reference_number; ?></td>
                                             <td><?php echo reset($ordersGroup)['payment_method']; ?></td>
                                             <td><?php echo reset($ordersGroup)['customer_name']; ?></td>
                                             <td>
-                                                <?php foreach ($ordersGroup as $order): ?>
-                                                    <?php if ($order === end($ordersGroup)): ?>
+                                                <?php foreach ($ordersGroup as $order) : ?>
+                                                    <?php if ($order === end($ordersGroup)) : ?>
                                                         <?php echo $order['total_products'] . '<br>'; ?>
-                                                    <?php endif;?>
-                                                <?php endforeach;?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
                                             </td>
                                             <td>₱<?php echo reset($ordersGroup)['total_amount']; ?></td>
                                             <?php
-$orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
-$formattedDate = date('F/d/Y', $orderDateTimestamp);
-$formattedTime = date('h:i A', $orderDateTimestamp);
-?>
+                                            $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
+                                            $formattedDate = date('F/d/Y', $orderDateTimestamp);
+                                            $formattedTime = date('h:i A', $orderDateTimestamp);
+                                            ?>
                                             <td>
                                                 <?php echo $formattedDate; ?><br>
                                                 <?php echo $formattedTime; ?>
                                             </td>
                                             <td style="color: #FF9B50; font-weight: 900;"><?php echo reset($ordersGroup)['order_status']; ?>⌛</td>
                                         </tr>
-                                    <?php endforeach;?>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -252,28 +248,30 @@ $formattedTime = date('h:i A', $orderDateTimestamp);
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script>new DataTable('#example');</script>
+    <script>
+        new DataTable('#example');
+    </script>
     <!--===============================================================================================-->
     <script src="../assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
     <!--===============================================================================================-->
     <script>
-    window.onload = function () {
-        const login_success =
-        '<?php echo isset($_SESSION["login_success"]) ? $_SESSION["login_success"] : "" ?>';
+        window.onload = function() {
+            const login_success =
+                '<?php echo isset($_SESSION["login_success"]) ? $_SESSION["login_success"] : "" ?>';
 
-        if (login_success) {
-        Swal.fire({
-            icon: "success",
-            text: "Login successfully!",
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-        });
+            if (login_success) {
+                Swal.fire({
+                    icon: "success",
+                    text: "Login successfully!",
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
 
-        <?php $_SESSION["login_success"] = false;?>
-        }
-    };
+                <?php $_SESSION["login_success"] = false; ?>
+            }
+        };
     </script>
 </body>
 

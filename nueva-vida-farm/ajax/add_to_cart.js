@@ -53,6 +53,9 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 2000,
                     });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                 }
             },
             error: function(errorThrown) {
@@ -60,7 +63,7 @@ $(document).ready(function() {
                     HoldOn.close();
                 }, 3000);
                 
-                alert("Error: " + errorThrown);
+                alert("Try again : " + errorThrown);
             }
         });
     });

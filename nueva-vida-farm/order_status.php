@@ -68,7 +68,7 @@ foreach ($orders as $order) {
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
                 <span style="position: absolute; right: -10px; top: -5px; font-size: 12px; font-style: normal; color: red;">
-                    (<?=$cartCount['cart_count']?>)
+                    (<?= $cartCount['cart_count'] ?>)
                 </span>
             </i>
             <div class="d-flex flex-column position-relative">
@@ -122,49 +122,49 @@ foreach ($orders as $order) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($groupedOrders as $reference_number => $ordersGroup): ?>
-                                <?php if (reset($ordersGroup)['status'] !== 'Completed'): ?>
+                            <?php foreach ($groupedOrders as $reference_number => $ordersGroup) : ?>
+                                <?php if (reset($ordersGroup)['status'] !== 'Completed') : ?>
                                     <tr data-status="<?php echo reset($ordersGroup)['status']; ?>">
                                         <td style="color: #BB2525; font-weight: 900;"><?php echo $reference_number ?></td>
                                         <td>₱<?php echo reset($ordersGroup)['total_amount'] ?></td>
                                         <td>
-                                        <?php
-$latestOrder = end($ordersGroup);
-echo $latestOrder['total_products'];
-?>
+                                            <?php
+                                            $latestOrder = end($ordersGroup);
+                                            echo $latestOrder['total_products'];
+                                            ?>
                                         </td>
                                         <td style="font-weight: <?php echo reset($ordersGroup)['status'] === 'Pending' ? '900' : 'normal'; ?>; color:
                                         <?php echo reset($ordersGroup)['status'] === 'Pending' ? '#BB2525' : '#79AC78'; ?>">
-                                            <?php if (reset($ordersGroup)['status'] === 'Ready to pick'): ?>
+                                            <?php if (reset($ordersGroup)['status'] === 'Ready to pick') : ?>
                                                 <span style="font-weight: 900; color: inherit;"><?php echo reset($ordersGroup)['status'] . '📦 ' ?></span>
-                                            <?php elseif (reset($ordersGroup)['status'] === 'Pending'): ?>
+                                            <?php elseif (reset($ordersGroup)['status'] === 'Pending') : ?>
                                                 <span style="font-weight: 900; color: inherit;"><?php echo reset($ordersGroup)['status'] . '⌛ ' ?></span>
-                                            <?php else: ?>
+                                            <?php else : ?>
                                                 <?php echo reset($ordersGroup)['status'] ?>
-                                            <?php endif;?>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?php $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);?>
-                                            <?php $formattedDate = date('F j, Y', $orderDateTimestamp);?>
-                                            <?php $formattedTime = date('h:i A', $orderDateTimestamp);?>
+                                            <?php $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']); ?>
+                                            <?php $formattedDate = date('F j, Y', $orderDateTimestamp); ?>
+                                            <?php $formattedTime = date('h:i A', $orderDateTimestamp); ?>
                                             <?php echo $formattedDate . '<br>' . $formattedTime; ?>
                                         </td>
                                         <td>
-                                            <?php if (reset($ordersGroup)['status'] !== 'Pending'): ?>
-                                                <?php $updateDateTimestamp = strtotime(reset($ordersGroup)['update_date']);?>
-                                                <?php $formattedDate = date('F j, Y', $updateDateTimestamp);?>
-                                                <?php $formattedTime = date('h:i A', $updateDateTimestamp);?>
+                                            <?php if (reset($ordersGroup)['status'] !== 'Pending') : ?>
+                                                <?php $updateDateTimestamp = strtotime(reset($ordersGroup)['update_date']); ?>
+                                                <?php $formattedDate = date('F j, Y', $updateDateTimestamp); ?>
+                                                <?php $formattedTime = date('h:i A', $updateDateTimestamp); ?>
                                                 <?php echo $formattedDate . '<br>' . $formattedTime; ?>
-                                            <?php endif;?>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?php if (reset($ordersGroup)['status'] !== 'Ready to pick'): ?>
+                                            <?php if (reset($ordersGroup)['status'] !== 'Ready to pick') : ?>
                                                 <a class="btn btn-danger" href="components/remove_order.php?order_id=<?php echo reset($ordersGroup)['order_id'] ?>">Cancel Orders</a>
-                                            <?php endif;?>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
-                                <?php endif;?>
-                            <?php endforeach;?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -186,8 +186,8 @@ echo $latestOrder['total_products'];
         }, 1200);
     </script>
     <?php
-if (isset($_SESSION['remove_orders'])) {
-    echo '<script>
+    if (isset($_SESSION['remove_orders'])) {
+        echo '<script>
                     Swal.fire({
                         icon: "success",
                         title: "Cancel order succesfully",
@@ -198,9 +198,9 @@ if (isset($_SESSION['remove_orders'])) {
                     });
                 </script>';
 
-    unset($_SESSION['remove_orders']);
-}
-?>
+        unset($_SESSION['remove_orders']);
+    }
+    ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const statusFilter = document.getElementById('statusFilter');

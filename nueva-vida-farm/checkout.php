@@ -56,15 +56,11 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
     <!--===============================================================================================-->
     <link rel="stylesheet" href="assets/css/checkout.css">
     <!--===============================================================================================-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!--===============================================================================================-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!--===============================================================================================-->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 
@@ -73,7 +69,7 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
     <div class="d-flex flex-row align-items-center p-2" id="navigation">
         <span class="material-symbols-outlined" id="backButton">
             arrow_back
-            </span>
+        </span>
         <a href="cart" id="backText">Back to Cart</a>
     </div>
 
@@ -83,33 +79,32 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
 
         <form action="components/placed_orders.php" method="POST">
             <div class="d-flex flex-column justify-content-center align-items-center p-3" id="checkoutBox">
-            <div class="d-flex flex-column justify-content-center gap-1 p-3"
-                style="background-color: black; width: 100%;">
-                <div class="d-flex justify-content-center">
-                    <h3 style="color: white;">Cart Items</h3>
+                <div class="d-flex flex-column justify-content-center gap-1 p-3" style="background-color: black; width: 100%;">
+                    <div class="d-flex justify-content-center">
+                        <h3 style="color: white;">Cart Items</h3>
+                    </div>
+
+                    <?php foreach ($selectedProductsInfo as $product) : ?>
+                        <div class="d-flex flex-row justify-content-between">
+                            <input type="hidden" name="selected_products[]" value="<?php echo $product['product_id'] ?>">
+                            <input type="hidden" name="product_quantity[<?php echo $product['product_id'] ?>]" value="<?php echo $product['quantity'] ?>">
+                            <input type="hidden" name="product_size[<?php echo $product['product_id'] ?>]" value="<?php echo $product['product_size'] ?>">
+                            <h4 style="color: #777777;"><?php echo $product['product_name']; ?></h4>
+                            <h4 style="color: #049547;">₱<?php echo $product['product_price']; ?> x <?php echo $product['quantity']; ?></h4>
+                        </div>
+                    <?php endforeach; ?>
+
+
+                    <div class="d-flex flex-row justify-content-between align-items-center px-3 py-1 bg-white">
+                        <h4 class="mt-1" style="color: #777777;">Total price</h4>
+                        <h4 class="mt-1" style="color: #049547;">₱<?php echo number_format($totalPrice, 2); ?></h4>
+                    </div>
+
+                    <div class="d-flex justify-content-start align-items-center mt-2" id="viewCartBox">
+                        <button><a href="cart">View Cart</a></button>
+                    </div>
+
                 </div>
-
-            <?php foreach ($selectedProductsInfo as $product): ?>
-                <div class="d-flex flex-row justify-content-between">
-                    <input type="hidden" name="selected_products[]" value="<?php echo $product['product_id'] ?>">
-                    <input type="hidden" name="product_quantity[<?php echo $product['product_id'] ?>]" value="<?php echo $product['quantity'] ?>">
-                    <input type="hidden" name="product_size[<?php echo $product['product_id'] ?>]" value="<?php echo $product['product_size'] ?>">
-                    <h4 style="color: #777777;"><?php echo $product['product_name']; ?></h4>
-                    <h4 style="color: #049547;">₱<?php echo $product['product_price']; ?> x <?php echo $product['quantity']; ?></h4>
-                </div>
-            <?php endforeach;?>
-
-
-            <div class="d-flex flex-row justify-content-between align-items-center px-3 py-1 bg-white">
-                <h4 class="mt-1" style="color: #777777;">Total price</h4>
-                <h4 class="mt-1" style="color: #049547;">₱<?php echo number_format($totalPrice, 2); ?></h4>
-            </div>
-
-            <div class="d-flex justify-content-start align-items-center mt-2" id="viewCartBox">
-                <button><a href="cart">View Cart</a></button>
-            </div>
-
-            </div>
 
                 <div class="d-flex justify-content-center align-items-center p-2 my-3" id="informationBox">
                     <h3 class="mt-1">My Information</h3>
@@ -153,4 +148,5 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
 
     <script src="checkout.js"></script>
 </body>
+
 </html>

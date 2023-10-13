@@ -36,7 +36,6 @@ if (isset($_GET['product_id']) && is_numeric($_GET['product_id']) && $_GET['prod
                 if ($status === 'Completed') {
                     $disable_fk_checks_query = $conn->prepare("SET FOREIGN_KEY_CHECKS = 0");
                     $disable_fk_checks_query->execute();
-
                 } elseif ($status === 'Pending' || $status === 'Ready to pick') {
                     $enable_fk_checks_query = $conn->prepare("SET FOREIGN_KEY_CHECKS = 1");
                     $enable_fk_checks_query->execute();
@@ -75,7 +74,6 @@ if (isset($_GET['product_id']) && is_numeric($_GET['product_id']) && $_GET['prod
                     $delete_order = $conn->prepare("DELETE FROM tbl_order WHERE order_id = ?");
                     $delete_order->execute([$order_id]);
                 }
-
             }
         }
 
@@ -101,7 +99,6 @@ if (isset($_GET['product_id']) && is_numeric($_GET['product_id']) && $_GET['prod
         }
 
         $conn->commit();
-
     } catch (PDOException $e) {
         $conn->rollback();
         echo 'error: ' . $e->getMessage();

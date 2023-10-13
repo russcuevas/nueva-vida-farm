@@ -79,8 +79,8 @@ foreach ($orders as $order) {
                         home
                     </span>Dashboard</a>
                 <a href="products"><span class="material-symbols-outlined">
-                    shopping_bag
-                </span>Inventory</a>
+                        shopping_bag
+                    </span>Inventory</a>
                 <a href="orders"><span class="material-symbols-outlined">
                         groups
                     </span>Orders</a>
@@ -146,64 +146,64 @@ foreach ($orders as $order) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($groupedOrders as $reference_number => $ordersGroup): ?>
-                                        <?php if (reset($ordersGroup)['order_status'] !== 'Completed'): ?>
+                                    <?php foreach ($groupedOrders as $reference_number => $ordersGroup) : ?>
+                                        <?php if (reset($ordersGroup)['order_status'] !== 'Completed') : ?>
                                             <tr>
                                                 <td style="color: #BB2525; font-weight: 900"><?php echo $reference_number; ?></td>
                                                 <td style="font-weight: 900; color: <?php echo (reset($ordersGroup)['order_status'] === 'Pending') ? '#E55604' : ((reset($ordersGroup)['order_status'] === 'Ready to pick') ? '#3D0C11' : ''); ?>">
-                                                    <?php if (reset($ordersGroup)['order_status'] === 'Pending'): ?>
+                                                    <?php if (reset($ordersGroup)['order_status'] === 'Pending') : ?>
                                                         <?php echo reset($ordersGroup)['order_status']; ?> ⌛
-                                                    <?php elseif (reset($ordersGroup)['order_status'] === 'Ready to pick'): ?>
+                                                    <?php elseif (reset($ordersGroup)['order_status'] === 'Ready to pick') : ?>
                                                         <?php echo reset($ordersGroup)['order_status']; ?> 📦
-                                                    <?php endif;?>
+                                                    <?php endif; ?>
                                                 </td>
                                                 <td><?php echo reset($ordersGroup)['payment_method']; ?></td>
                                                 <td><?php echo reset($ordersGroup)['customer_name']; ?></td>
                                                 <td>₱<?php echo reset($ordersGroup)['total_amount']; ?></td>
                                                 <td>
-                                                <?php foreach ($ordersGroup as $order): ?>
-                                                    <?php if ($order === end($ordersGroup)): ?>
-                                                        <?php echo $order['total_products'] . '<br>'; ?>
-                                                    <?php endif;?>
-                                                <?php endforeach;?>
+                                                    <?php foreach ($ordersGroup as $order) : ?>
+                                                        <?php if ($order === end($ordersGroup)) : ?>
+                                                            <?php echo $order['total_products'] . '<br>'; ?>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
                                                 </td>
                                                 <!-- DATE -->
                                                 <td>
                                                     <?php
-$currentStatus = reset($ordersGroup)['order_status'];
-$orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
+                                                    $currentStatus = reset($ordersGroup)['order_status'];
+                                                    $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
 
-if ($currentStatus === 'Pending') {
-    $formattedDate = date('F/d/Y', $orderDateTimestamp);
-    $formattedTime = date('h:i A', $orderDateTimestamp);
-    echo $formattedDate . '<br>' . $formattedTime;
-} elseif ($currentStatus === 'Ready to pick') {
-    $updatedDateTimestamp = strtotime(reset($ordersGroup)['update_date']);
-    $formattedDate = date('F/d/Y', $updatedDateTimestamp);
-    $formattedTime = date('h:i A', $updatedDateTimestamp);
-    echo $formattedDate . '<br>' . $formattedTime;
-}
-?>
+                                                    if ($currentStatus === 'Pending') {
+                                                        $formattedDate = date('F/d/Y', $orderDateTimestamp);
+                                                        $formattedTime = date('h:i A', $orderDateTimestamp);
+                                                        echo $formattedDate . '<br>' . $formattedTime;
+                                                    } elseif ($currentStatus === 'Ready to pick') {
+                                                        $updatedDateTimestamp = strtotime(reset($ordersGroup)['update_date']);
+                                                        $formattedDate = date('F/d/Y', $updatedDateTimestamp);
+                                                        $formattedTime = date('h:i A', $updatedDateTimestamp);
+                                                        echo $formattedDate . '<br>' . $formattedTime;
+                                                    }
+                                                    ?>
                                                 </td>
                                                 <form action="../components/update_status.php" method="POST">
                                                     <td>
                                                         <select name="order_status" style="border: none; background-color: #91ca9e; padding: 10px; border-radius: 10px; font-weight: 900;" class="drop-down" onchange="this.form.submit()">
-                                                            <?php $currentStatus = reset($ordersGroup)['order_status'];?>
-                                                            <?php if ($currentStatus === 'Pending'): ?>
+                                                            <?php $currentStatus = reset($ordersGroup)['order_status']; ?>
+                                                            <?php if ($currentStatus === 'Pending') : ?>
                                                                 <option value="Pending" selected>Pending</option>
                                                                 <option value="Ready to pick">Ready to pick</option>
-                                                            <?php elseif ($currentStatus === 'Ready to pick'): ?>
+                                                            <?php elseif ($currentStatus === 'Ready to pick') : ?>
                                                                 <option value="Ready to pick" selected>Ready to pick</option>
                                                                 <option value="Pending">Pending</option>
                                                                 <option value="Completed">Completed</option>
-                                                            <?php endif;?>
+                                                            <?php endif; ?>
                                                         </select>
                                                         <input type="hidden" name="order_id" value="<?php echo reset($ordersGroup)['order_id']; ?>">
                                                     </td>
                                                 </form>
                                             </tr>
-                                        <?php endif;?>
-                                    <?php endforeach;?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
 
 
 
@@ -257,8 +257,8 @@ if ($currentStatus === 'Pending') {
     <script src="../assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
     <!--===============================================================================================-->
     <?php
-if (isset($_SESSION['update_status'])) {
-    echo '<script>
+    if (isset($_SESSION['update_status'])) {
+        echo '<script>
                             Swal.fire({
                                 icon: "success",
                                 title: "' . $_SESSION['update_status'] . '",
@@ -268,9 +268,9 @@ if (isset($_SESSION['update_status'])) {
                                 showConfirmButton: false
                             });
                         </script>';
-    unset($_SESSION['update_status']);
-}
-?>
+        unset($_SESSION['update_status']);
+    }
+    ?>
 </body>
 
 </html>

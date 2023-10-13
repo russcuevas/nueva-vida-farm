@@ -89,47 +89,51 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 m-2 m-md-0 my-md-4" id="gridCards">
-<?php
-$productsAvailable = false;
-foreach ($product as $products):
-    if ($products['product_status'] !== 'Not Available'):
-        $maxQuantity = $products['product_stocks'];
-        $productSize = $products['product_size'];
-        ?>
-																																																																																<div class="col" data-product-size="<?php echo $productSize; ?>">
-																																																																																    <form class="add-to-cart-form" action="functions/add_to_cart.php" method="POST">
-																																																																																        <div class="d-flex flex-column">
-																																																																																            <input type="hidden" name="product_id" value="<?php echo $products['product_id']; ?>">
-																																																																																            <img src="assets/images/products/<?php echo $products['product_image']; ?>" alt="">
-																																																																																            <div class="box d-column d-flex justify-content-center align-items-center py-2">
-																																																																																                <h3 class="mt-2"><?php echo $products['product_name'] ?></h3>
-																																																																																            </div>
-																																																																																            <div class="box d-flex flex-column justify-content-around px-3">
-																																																																																                <div class="d-flex flex-row gap-2">
-																																																																																                    <h4>PRICE : </h4>
-																																																																																                    <h3 style="color: red;">₱<?php echo $products['product_price'] ?></h3>
-																																																																																                </div>
-																																																																																                <div class="d-flex flex-row gap-2">
-																																																																																                    <h4>SIZE : </h4>
-																																																																																                    <input type="text" style="width: 133px; margin-bottom: 25px; font-weight: 900; cursor: default; background-color: black; border:none; font-size: 20px; color: white;" name="product_size[]" value="<?php echo $products['product_size']; ?>" readonly>
-																																																																																                </div>
-																																																																																                <div class="d-flex flex-row gap-2">
-																																																																																                    <h4>Qty</h4>
-																																																																																                    <input type="number" style="cursor: pointer" name="quantity" class="quantity" value="1" min="1" max="<?php echo min($maxQuantity, 999); ?>" onkeydown="preventTyping(event)">
-																																																																																                </div>
-																																																																																            </div>
-																																																																																            <a href="buy_now.php?product_id=<?php echo $products['product_id']; ?>&quantity=1" class="buy_now_link" style="text-decoration: none; color: black;">BUY NOW</a>
-																																																																																            <button type="submit">ADD TO CART</button>
-																																																																																        </div>
-																																																																																    </form>
-																																																																																</div>
-																																																																																<?php
-    endif;
-endforeach;
-?>
-<?php if (!$productsAvailable): ?>
-<!-- NO PRODUCT AVAIL -->
-<?php endif;?>
+            <?php
+            $productsAvailable = false;
+            foreach ($product as $products) :
+                if ($products['product_status'] !== 'Not Available') :
+                    $maxQuantity = $products['product_stocks'];
+                    $productSize = $products['product_size'];
+            ?>
+                    <div class="col" data-product-size="<?php echo $productSize; ?>">
+                        <form class="add-to-cart-form" action="functions/add_to_cart.php" method="POST">
+                            <div class="d-flex flex-column">
+                                <input type="hidden" name="product_id" value="<?php echo $products['product_id']; ?>">
+                                <img src="assets/images/products/<?php echo $products['product_image']; ?>" alt="">
+                                <div class="box d-column d-flex justify-content-center align-items-center py-2">
+                                    <h3 class="mt-2"><?php echo $products['product_name'] ?></h3>
+                                </div>
+                                <div class="box d-flex flex-column justify-content-around px-3">
+                                    <div class="d-flex flex-row gap-2">
+                                        <h4>AVAILABLE : </h4>
+                                        <h3><?php echo $products['product_stocks'] ?></h3>
+                                    </div>
+                                    <div class="d-flex flex-row gap-2">
+                                        <h4>PRICE : </h4>
+                                        <h3 style="color: red;">₱<?php echo $products['product_price'] ?></h3>
+                                    </div>
+                                    <div class="d-flex flex-row gap-2">
+                                        <h4>SIZE : </h4>
+                                        <input type="text" style="width: 133px; margin-bottom: 25px; font-weight: 900; cursor: default; background-color: black; border:none; font-size: 20px; color: white;" name="product_size[]" value="<?php echo $products['product_size']; ?>" readonly>
+                                    </div>
+                                    <div class="d-flex flex-row gap-2">
+                                        <h4>Qty</h4>
+                                        <input type="number" style="cursor: pointer" name="quantity" class="quantity" value="1" min="1" max="<?php echo min($maxQuantity, 999); ?>" onkeydown="preventTyping(event)">
+                                    </div>
+                                </div>
+                                <a href="buy_now?product_id=<?php echo $products['product_id']; ?>&quantity=1" class="buy_now_link" style="text-decoration: none; color: black;">BUY NOW</a>
+                                <button type="submit">ADD TO CART</button>
+                            </div>
+                        </form>
+                    </div>
+            <?php
+                endif;
+            endforeach;
+            ?>
+            <?php if (!$productsAvailable) : ?>
+                <!-- NO PRODUCT AVAIL -->
+            <?php endif; ?>
 
         </div>
     </div>
@@ -145,10 +149,10 @@ endforeach;
     <!--===============================================================================================-->
     <script src="assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
     <script>
-    // PREVENTING AUTO TYPE IN QUANTITY
-    function preventTyping(event) {
-        event.preventDefault();
-    }
+        // PREVENTING AUTO TYPE IN QUANTITY
+        function preventTyping(event) {
+            event.preventDefault();
+        }
     </script>
 
 
@@ -161,7 +165,7 @@ endforeach;
                 const parentForm = this.closest('form');
                 const productId = parentForm.querySelector('[name="product_id"]').value;
                 const buyNowLink = parentForm.querySelector('.buy_now_link');
-                const buyNowUrl = `buy_now.php?product_id=${productId}&quantity=${quantity}`;
+                const buyNowUrl = `buy_now?product_id=${productId}&quantity=${quantity}`;
                 buyNowLink.href = buyNowUrl;
             });
         });
@@ -196,4 +200,5 @@ endforeach;
     </script>
 
 </body>
+
 </html>

@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->send();
             $response = [
                 'success' => true,
-                'message' => 'Message sent!',
+                'message' => 'Thankyou for contacting us!',
             ];
             header('Content-Type: application/json');
             echo json_encode($response);

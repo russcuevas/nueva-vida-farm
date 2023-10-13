@@ -11,5 +11,6 @@ Options -Indexes
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(([A-Za-z0-9\-]+/)*[A-Za-z0-9\-]+)?$ $1.php
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
 RewriteRule ^order_status$ order_status.php [NC,L]
+RewriteRule ^buy_now$ buy_now.php [NC,L]
