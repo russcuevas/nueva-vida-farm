@@ -1,0 +1,325 @@
+body {
+    background-color: rgba(240, 240, 240, 1) !important;
+    font-family: Roboto, sans-serif !important;
+}
+
+/* <!--===============================================================================================--> */
+#sidebar {
+    width: 400px;
+    height: 100vh;
+    background-color: white;
+    border-bottom-right-radius: 15px;
+}
+
+#sidebar img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
+
+.backButton {
+    display: none !important;
+    position: absolute;
+    left: 15px;
+    top: 18px;
+    font-size: 30px !important;
+    cursor: pointer;
+}
+
+.backButton:hover {
+    color: #049547;
+}
+
+@media (max-width:576px) {
+    #sidebar {
+        position: fixed !important;
+        width: 100%;
+        z-index: 9999;
+    }
+
+    .backButton {
+        display: flex !important;
+    }
+}
+
+/* <!--===============================================================================================--> */
+#lists {
+    position: relative;
+    background-color: rgba(240, 240, 240, 1);
+    height: 100%;
+    border-radius: 15px;
+    gap: 10px 0px;
+    overflow: hidden;
+}
+
+#lists::before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 150px;
+    background-color: #00632e;
+    opacity: 10%;
+    bottom: 0;
+    border-radius: 100% 0% 0% 100% / 100% 0% 100% 0%;
+}
+
+#lists::after{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 200px;
+    background-color: #00632e;
+    opacity: 10%;
+    left: -100px;
+    bottom: 0px;
+    border-radius: 0% 100% 0% 100% / 100% 100% 0% 0% ;
+}
+
+#lists a {
+    text-decoration: none;
+    display: flex;
+    gap: 0px 5px;
+    color: black;
+    font-size: 20px;
+    padding: 10px;
+}
+
+
+#lists a span {
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+
+#lists a:hover {
+    color: #049547;
+    background-color: white;
+    border-radius: 15px;
+}
+
+#inventoryDropdown a{
+    margin-left: 35px !important;
+}
+
+#inventoryButton:hover{
+    cursor: pointer;
+}
+
+#inventoryButton a:hover{
+    cursor: pointer;
+}
+/* <!--===============================================================================================--> */
+#navbar {
+    background-color: white;
+}
+
+#navbar span {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+#navbar span:hover {
+    color: #049547;
+}
+
+/* <!--===============================================================================================--> */
+#profileDropdown {
+    right: 0;
+    top: 60px;
+    width: 200px;
+    background-color: white;
+    border: 1px solid;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 9999;
+}
+
+#profileDropdown {
+    gap: 10px 0px;
+}
+
+#profileDropdown a {
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+#profileDropdown a:hover {
+    color: #049547;
+}
+
+/* <!--===============================================================================================--> */
+.col h1 {
+    color: #049547;
+}
+
+.box {
+    overflow: hidden;
+    position: relative;
+    height: 200px;
+    box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    -webkit-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    -moz-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    border-radius: 100% 0% 0% 100% / 100% 0% 100% 0%;
+    background-color: #049547;
+    right: -200px;
+    opacity: 10%;
+}
+
+.box a {
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.box a:hover {
+    text-decoration: underline;
+}
+
+/* <!--===============================================================================================--> */
+#tableContainer {
+    box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    -webkit-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    -moz-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+#tableTitle {
+    background-color: white;
+    border-bottom: 2px solid rgba(240, 240, 240, 1);
+    position: relative;
+}
+
+#tableTitle::before{
+    width: 250px;
+    height: 100%;
+    right: 0;
+    top: -20px;
+    content: '';
+    position: absolute;
+    background-color: #049547;
+    opacity: 10%;
+    border-radius: 0% 100% 0% 100% / 0% 0% 100% 100% ;
+}
+
+#tableTitle h1 {
+    color: #049547;
+}
+
+#tableAddItem button{
+    background-color: #049547;
+    border-radius: 15px;
+    padding: 10px;
+    width: auto;
+    color: white;
+    font-size: 18px;
+    border: 2px solid transparent;
+}
+
+#tableAddItem button:hover{
+    background-color: #00632e;
+}
+
+#view{
+    padding: 8px;
+    background-color: #00d262;
+    box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    -webkit-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    -moz-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    border-radius: 50%;
+}
+
+table img{
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+}
+
+table td{
+    height: auto;
+    min-height: 100%;
+}
+
+
+#actionLists span{
+    cursor: pointer;
+}
+
+#view:hover{
+    background-color: #00632e;
+}
+
+#settings{
+    padding: 8px;
+    background-color: lightblue;
+    box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    -webkit-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    -moz-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.09);
+    border-radius: 50%;
+}
+
+#settings:hover{
+    background-color: rgb(114, 141, 150);
+}
+
+#delete{
+    padding: 8px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+#delete:hover{
+    background-color: rgb(106, 0, 0);
+}
+/* <!--===============================================================================================--> */
+.modal-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body label{
+    font-size: 20px;
+}
+
+.modal-body input{
+    padding: 5px;
+    border: 1px solid black;
+}
+/* <!--===============================================================================================--> */
+.page-item.active .page-link{
+    background-color: #c3e6cb !important;
+    border: 1px solid #c3e6cb !important;
+    color: black;
+}
+
+.page-item.active .page-link:hover{
+    background-color: #98b39e !important;
+    border: 1px solid #98b39e !important;
+}
+
+.page-item .page-link{
+    color: #98b39e;
+}
+
+.page-item .page-link:hover{
+    background-color: #98b39e;
+    color: black;
+}
+
+.paginate_button.page-item.previous.disabled .page-link{
+    background-color: rgba(195, 230, 203, 0.1)
+    ;
+}
+
+.paginate_button.page-item.next.disabled .page-link{
+    background-color: rgba(195, 230, 203, 0.1)
+    ;
+}

@@ -1,0 +1,67 @@
+body {
+  background-color: #404040 !important;
+}
+
+/* <!--===============================================================================================--> */
+#loginContainer h1,
+#loginContainer h2,
+#loginContainer label,
+p {
+  color: white !important;
+}
+
+#loginContainer h1 {
+  font-family: Century Gothic;
+  font-weight: bold;
+}
+
+#loginContainer h2 {
+  font-weight: lighter;
+}
+
+#loginContainer input {
+  background-color: black;
+  border: 1px solid white;
+  padding: 5px;
+  color: white;
+}
+
+#loginContainer button {
+  padding: 8px;
+  background-color: #c8ec56;
+  transition: background-color 0.1s ease-in;
+}
+
+#loginContainer button:hover {
+  background-color: #879e39;
+}
+
+#loginContainer {
+  height: 800px;
+  width: 550px;
+  min-width: 500px !important;
+}
+
+@media (max-width: 768px) {
+  #loginContainer {
+    min-width: 100% !important;
+    width: unset;
+  }
+
+  #mainContainer {
+    padding: 0px 10px !important;
+  }
+}
+
+/* <!--===============================================================================================--> */
+#imageCard {
+  width: 500px;
+  height: 800px;
+  overflow: hidden;
+}
+
+#imageCard img {
+  object-fit: cover;
+  width: 500px;
+  height: 800px;
+}
