@@ -29,67 +29,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         if (isset($_SESSION['customer_id'])) {
             $customer_id = $_SESSION['customer_id'];
-            $sqlProduct = "SELECT product_stocks FROM `tbl_product` WHERE product_id = :product_id";
-            $stmtProduct = $conn->prepare($sqlProduct);
-            $stmtProduct->bindParam(':product_id', $product_id);
-            $stmtProduct->execute();
-            $productData = $stmtProduct->fetch(PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM `tbl_orderitem` WHERE customer_id = :customer_id AND product_id = :product_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':customer_id', $customer_id);
+            $stmt->bindParam(':product_id', $product_id);
+            $stmt->execute();
+            $existingItem = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($productData) {
-                $availableStock = $productData['product_stocks'];
-
-                if ($quantity > $availableStock) {
-                    $response['status'] = 'error';
-                    $response['message'] = 'Product is out of stock';
-                } else {
-                    $sql = "SELECT * FROM `tbl_orderitem` WHERE customer_id = :customer_id AND product_id = :product_id";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bindParam(':customer_id', $customer_id);
-                    $stmt->bindParam(':product_id', $product_id);
-                    $stmt->execute();
-                    $existingItem = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                    if ($existingItem) {
-                        $newQuantity = $existingItem['quantity'] + $quantity;
+            if ($existingItem) {
+                $newQuantity = $existingItem['quantity'] + $quantity;
+                $sql = "UPDATE `tbl_orderitem` SET quantity = :quantity WHERE customer_id = :customer_id AND product_id = :product_id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':quantity', $newQuantity);
+                $stmt->bindParam(':customer_id', $customer_id);
+                $stmt->bindParam(':product_id', $product_id);
+                if ($stmt->execute()) {
+                    $sqlUpdateStock = "UPDATE `tbl_product` SET product_stocks = product_stocks - :quantity WHERE product_id = :product_id";
+                    $stmtUpdateStock = $conn->prepare($sqlUpdateStock);
+                    $stmtUpdateStock->bindParam(':quantity', $quantity);
+                    $stmtUpdateStock->bindParam(':product_id', $product_id);
+                    if ($stmtUpdateStock->execute()) {
+                        updateProductStatus($product_id, $conn);
+                        $response['status'] = 'success';
+                        $response['message'] = 'Product quantity updated';
                     } else {
-                        $newQuantity = $quantity;
-                    }
-                    if ($newQuantity > $availableStock) {
                         $response['status'] = 'error';
-                        $response['message'] = 'Product is out of stock';
-                    } else {
-                        if ($existingItem) {
-                            $sql = "UPDATE `tbl_orderitem` SET quantity = :quantity WHERE customer_id = :customer_id AND product_id = :product_id";
-                        } else {
-                            $sql = "INSERT INTO `tbl_orderitem` (customer_id, product_id, quantity) VALUES (:customer_id, :product_id, :quantity)";
-                        }
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bindParam(':quantity', $newQuantity);
-                        $stmt->bindParam(':customer_id', $customer_id);
-                        $stmt->bindParam(':product_id', $product_id);
-
-                        if ($stmt->execute()) {
-                            $sqlUpdateStock = "UPDATE `tbl_product` SET product_stocks = product_stocks - :quantity WHERE product_id = :product_id";
-                            $stmtUpdateStock = $conn->prepare($sqlUpdateStock);
-                            $stmtUpdateStock->bindParam(':quantity', $quantity);
-                            $stmtUpdateStock->bindParam(':product_id', $product_id);
-                            if ($stmtUpdateStock->execute()) {
-                                updateProductStatus($product_id, $conn);
-                                $response['status'] = 'success';
-                                $response['message'] = 'Added to cart successfully';
-                            } else {
-                                $response['status'] = 'error';
-                                $response['message'] = 'Failed to update product quantity';
-                            }
-                        } else {
-                            $response['status'] = 'error';
-                            $response['message'] = 'Failed to add to cart';
-                        }
+                        $response['message'] = 'Failed to update product quantity';
                     }
+                } else {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Failed to update product quantity';
                 }
             } else {
-                $response['status'] = 'error';
-                $response['message'] = 'Product not found';
+                $sql = "INSERT INTO `tbl_orderitem` (customer_id, product_id, quantity) VALUES (:customer_id, :product_id, :quantity)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':customer_id', $customer_id);
+                $stmt->bindParam(':product_id', $product_id);
+                $stmt->bindParam(':quantity', $quantity);
+
+                if ($stmt->execute()) {
+                    $sqlUpdateStock = "UPDATE `tbl_product` SET product_stocks = product_stocks - :quantity WHERE product_id = :product_id";
+                    $stmtUpdateStock = $conn->prepare($sqlUpdateStock);
+                    $stmtUpdateStock->bindParam(':quantity', $quantity);
+                    $stmtUpdateStock->bindParam(':product_id', $product_id);
+                    if ($stmtUpdateStock->execute()) {
+                        updateProductStatus($product_id, $conn);
+                        $response['status'] = 'success';
+                        $response['message'] = 'Added to cart successfully';
+                    } else {
+                        $response['status'] = 'error';
+                        $response['message'] = 'Failed to add to cart';
+                    }
+                } else {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Failed to add to cart';
+                }
             }
         } else {
             $response['status'] = 'error';
