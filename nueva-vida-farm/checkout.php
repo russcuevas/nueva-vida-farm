@@ -84,15 +84,15 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
                         <h3 style="color: white;">Cart Items</h3>
                     </div>
 
-                    <?php foreach ($selectedProductsInfo as $product) : ?>
+                    <?php foreach ($selectedProductsInfo as $product): ?>
                         <div class="d-flex flex-row justify-content-between">
                             <input type="hidden" name="selected_products[]" value="<?php echo $product['product_id'] ?>">
                             <input type="hidden" name="product_quantity[<?php echo $product['product_id'] ?>]" value="<?php echo $product['quantity'] ?>">
                             <input type="hidden" name="product_size[<?php echo $product['product_id'] ?>]" value="<?php echo $product['product_size'] ?>">
-                            <h4 style="color: #777777;"><?php echo $product['product_name']; ?></h4>
+                            <h4 style="color: #777777;"><?php echo $product['product_name']; ?> (<?php echo $product['product_size'] ?>)</h4>
                             <h4 style="color: #049547;">₱<?php echo $product['product_price']; ?> x <?php echo $product['quantity']; ?></h4>
                         </div>
-                    <?php endforeach; ?>
+                    <?php endforeach;?>
 
 
                     <div class="d-flex flex-row justify-content-between align-items-center px-3 py-1 bg-white">

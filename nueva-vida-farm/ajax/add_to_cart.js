@@ -3,11 +3,6 @@ $(document).ready(function() {
     $(".add-to-cart-form").submit(function(event) {
         event.preventDefault();
 
-        HoldOn.open({
-            theme: "sk-dot",
-            message: "Please wait...",
-        });
-
         var formData = new FormData(this);
 
         $.ajax({
@@ -24,6 +19,10 @@ $(document).ready(function() {
                 }, 3000);
 
                 if (response.status === "success") {
+                    HoldOn.open({
+                        theme: "sk-dot",
+                        message: "Please wait...",
+                    });
                     Swal.fire({
                         icon: "success",
                         title: response.message,
@@ -32,6 +31,9 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 2000,
                     });
+                    setTimeout(function () {
+                        HoldOn.close();
+                    }, 2000);
                     setTimeout(function() {
                         location.reload();
                     }, 2000);
@@ -53,6 +55,9 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 2000,
                     });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 200);
                 }
             },
             error: function(errorThrown) {
@@ -60,7 +65,7 @@ $(document).ready(function() {
                     HoldOn.close();
                 }, 3000);
                 
-                alert("Error: " + errorThrown);
+                alert("Try again : " + errorThrown);
             }
         });
     });

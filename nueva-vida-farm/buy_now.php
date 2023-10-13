@@ -205,11 +205,11 @@ function generateReferenceNumber()
                         <h3 style="color: white;">Selected Item</h3>
                     </div>
 
-                    <?php if (isset($product)) : ?>
+                    <?php if (isset($product)): ?>
                         <input type="hidden" name="quantity" id="quantity" value="<?php echo $quantity; ?>" />
                         <input type="hidden" name="total_products" value="<?php echo $product['product_name']; ?> <?php echo $product['product_size']; ?> x <?php echo $quantity; ?>">
                         <div class="d-flex flex-row justify-content-between">
-                            <h4 style="color: #777777;"><?php echo $product['product_name']; ?></h4>
+                            <h4 style="color: #777777;"><?php echo $product['product_name']; ?> (<?php echo $product['product_size'] ?>)</h4>
                             <h4 style="color: #049547;">₱<?php echo $product['product_price']; ?> x <?php echo $quantity ?></h4>
                         </div>
 
@@ -217,11 +217,11 @@ function generateReferenceNumber()
                             <h4 class="mt-1" style="color: #777777;">Total Price :</h4>
                             <h4 class="mt-1">₱<?php echo number_format($product['product_price'] * $quantity, 2); ?></h4>
                         </div>
-                    <?php else : ?>
+                    <?php else: ?>
                         <div>
                             <p>Product not found.</p>
                         </div>
-                    <?php endif; ?>
+                    <?php endif;?>
                 </div>
 
 
