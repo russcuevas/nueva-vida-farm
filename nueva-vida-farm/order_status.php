@@ -158,7 +158,7 @@ foreach ($orders as $order) {
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?php if (reset($ordersGroup)['status'] !== 'Ready to pick') : ?>
+                                            <?php if (reset($ordersGroup)['status'] !== 'Completed') : ?>
                                                 <a class="btn btn-danger" href="components/remove_order.php?order_id=<?php echo reset($ordersGroup)['order_id'] ?>">Cancel Orders</a>
                                             <?php endif; ?>
                                         </td>
