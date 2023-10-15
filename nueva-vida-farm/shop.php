@@ -119,7 +119,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                     <div class="d-flex flex-row gap-2">
                                         <h4>Qty</h4>
-                                        <input type="number" style="cursor: pointer" name="quantity" class="quantity" value="1" min="1" max="<?php echo min($maxQuantity, 999); ?>" onkeydown="preventTyping(event)" oninput="handleInput(this)">
+                                        <input type="number" style="cursor: pointer; border: 3px solid green; border-radius: 10px;" name="quantity" class="quantity" value="1" min="1" max="<?php echo min($maxQuantity, 999); ?>" onkeydown="preventTyping(event)" oninput="handleInput(this)">
                                     </div>
                                 </div>
                                 <a href="buy_now?product_id=<?php echo $products['product_id']; ?>&quantity=1" class="buy_now_link" style="text-decoration: none; color: black;">BUY NOW</a>

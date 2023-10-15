@@ -221,9 +221,6 @@ foreach ($orders as $order) {
                                             </tr>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
-
-
-
                                 </tbody>
                             </table>
                         </div>
