@@ -6,15 +6,18 @@ tbl_customer
 tbl_orderitem
 tbl_orderstatus
 tbl_order
+tbl_reports
+tbl_user_reports
 
 Admin page:
 Log in as admin
 Can update the inventory
 Can update the order status
 View monthly reports
+Generate PDF and Excel reports
 
 Customers page: 
 Log in
 View products available 
 Add to cart and quantity 
-Order details then tracking ready to pick pending and hide if completed
+Order details then tracking ready to pick pending and notify when it is completed

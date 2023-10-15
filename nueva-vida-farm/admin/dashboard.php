@@ -92,7 +92,7 @@ $totalAmountSum = $totalAmountSumResult['total_sum'];
                 <img onclick="window.location.href = 'dashboard'" style="cursor: pointer;" src="../assets/images/dashboard/logo.png" alt="">
             </div>
             <div class="d-flex flex-column p-3 mt-2" id="lists">
-                <a href="dashboard"><span class="material-symbols-outlined">
+                <a href="dashboard" class="active"><span class="material-symbols-outlined">
                         home
                     </span>Dashboard</a>
                 <a href="products"><span class="material-symbols-outlined">

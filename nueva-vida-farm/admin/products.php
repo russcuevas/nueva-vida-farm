@@ -165,7 +165,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <a href="dashboard"><span class="material-symbols-outlined">
                         home
                     </span>Dashboard</a>
-                <a href="products"><span class="material-symbols-outlined">
+                <a href="products" class="active"><span class="material-symbols-outlined">
                         shopping_bag
                     </span>Inventory</a>
                 <a href="orders"><span class="material-symbols-outlined">

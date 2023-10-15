@@ -127,9 +127,9 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="d-flex flex-column flex-lg-row">
                 <div class="col d-flex justify-content-center flex-column align-items-center bg-black p-4 p-lg-0">
                     <h1>Come on down to the farm!</h1>
-                    <h3 style="color: white;">Lorem ipsum dolor, sit amet consectetur</h3>
+                    <h3 style="color: white;">"Cracking freshness everyday"</h3>
                     <h5 style="color: white;" class="mt-5">Email : nuevavidafarmsinc@gmail.com</h5>
-                    <h5 style="color: white;">Phone Number : 123-456-789</h5>
+                    <h5 style="color: white;">Phone number : 09177036751</h5>
                 </div>
                 <div class="col d-flex justify-content-center align-items-center">
                     <img src="assets/images/homepage/eggtray.jpg" alt="">

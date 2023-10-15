@@ -33,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($order_status === 'Ready to pick') {
             $user_entered_datetime = $_POST['update_date'];
-
             $timestamp = strtotime($user_entered_datetime);
             $newUpdateDate = date('Y-m-d H:i:s A', $timestamp);
         } elseif ($order_status === 'Pending') {
@@ -69,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $total_products = $total_products_row['total_products'];
 
                 $insert_report_sql = "INSERT INTO tbl_reports (order_id, reference_number, payment_method, customer_id, order_date, total_amount, total_products, total_quantity, status, update_date) 
-        VALUES (:order_id, :reference_number, :payment_method, :customer_id, :order_date, :total_amount, :total_products, :total_quantity, :status, :update_date)";
+                VALUES (:order_id, :reference_number, :payment_method, :customer_id, :order_date, :total_amount, :total_products, :total_quantity, :status, :update_date)";
                 $insert_report_stmt = $conn->prepare($insert_report_sql);
                 $insert_report_stmt->bindParam(':order_id', $latest_order_id);
                 $insert_report_stmt->bindParam(':reference_number', $reference_number);
@@ -83,23 +82,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $insert_report_stmt->bindParam(':update_date', $newUpdateDate);
 
                 if ($insert_report_stmt->execute()) {
-                    $delete_orderstatus_sql = "DELETE FROM tbl_orderstatus WHERE order_id IN (
-                        SELECT order_id FROM tbl_order WHERE reference_number = :reference_number
-                    )";
-                    $delete_orderstatus_stmt = $conn->prepare($delete_orderstatus_sql);
-                    $delete_orderstatus_stmt->bindParam(':reference_number', $reference_number);
-                    $delete_orderstatus_stmt->execute();
+                    $insert_user_report_sql = "INSERT INTO tbl_user_reports (order_id, reference_number, payment_method, customer_id, order_date, total_amount, total_products, is_Seen, status, update_date) 
+                    VALUES (:order_id, :reference_number, :payment_method, :customer_id, :order_date, :total_amount, :total_products, 0, :status, :update_date)";
+                    $insert_user_report_stmt = $conn->prepare($insert_user_report_sql);
+                    $insert_user_report_stmt->bindParam(':order_id', $latest_order_id);
+                    $insert_user_report_stmt->bindParam(':reference_number', $reference_number);
+                    $insert_user_report_stmt->bindParam(':payment_method', $payment_method);
+                    $insert_user_report_stmt->bindParam(':customer_id', $customer_id);
+                    $insert_user_report_stmt->bindParam(':order_date', $order_date);
+                    $insert_user_report_stmt->bindParam(':total_amount', $total_amount);
+                    $insert_user_report_stmt->bindParam(':total_products', $total_products);
+                    $insert_user_report_stmt->bindParam(':status', $order_status);
+                    $insert_user_report_stmt->bindParam(':update_date', $newUpdateDate);
 
-                    $delete_order_sql = "DELETE FROM tbl_order WHERE reference_number = :reference_number";
-                    $delete_order_stmt = $conn->prepare($delete_order_sql);
-                    $delete_order_stmt->bindParam(':reference_number', $reference_number);
-                    $delete_order_stmt->execute();
+                    if ($insert_user_report_stmt->execute()) {
+                        $delete_orderstatus_sql = "DELETE FROM tbl_orderstatus WHERE order_id IN (
+                            SELECT order_id FROM tbl_order WHERE reference_number = :reference_number
+                        )";
+                        $delete_orderstatus_stmt = $conn->prepare($delete_orderstatus_sql);
+                        $delete_orderstatus_stmt->bindParam(':reference_number', $reference_number);
+                        $delete_orderstatus_stmt->execute();
 
-                    $conn->commit();
+                        $delete_order_sql = "DELETE FROM tbl_order WHERE reference_number = :reference_number";
+                        $delete_order_stmt = $conn->prepare($delete_order_sql);
+                        $delete_order_stmt->bindParam(':reference_number', $reference_number);
+                        $delete_order_stmt->execute();
 
-                    $_SESSION['update_status'] = 'Status updated successfully';
-                    header('Location: ' . $_SERVER['HTTP_REFERER']);
-                    exit();
+                        $conn->commit();
+
+                        $_SESSION['update_status'] = 'Status updated successfully';
+                        header('Location: ' . $_SERVER['HTTP_REFERER']);
+                        exit();
+                    } else {
+                        $conn->rollback();
+                        echo "<script>window.alert ('Error inserting into user reports');</script>";
+                        echo "<script>window.location.href = ('../admin/orders');</script>";
+                    }
                 } else {
                     $conn->rollback();
                     echo "<script>window.alert ('Error inserting into reports');</script>";

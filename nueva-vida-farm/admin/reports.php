@@ -82,7 +82,7 @@ foreach ($reports as $report) {
                 <a href="orders"><span class="material-symbols-outlined">
                         groups
                     </span>Orders</a>
-                <a href="reports"><span class="material-symbols-outlined">
+                <a href="reports" class="active"><span class="material-symbols-outlined">
                         person
                     </span>Reports</a>
             </div>

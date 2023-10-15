@@ -13,24 +13,10 @@ $getCartCount = "SELECT COUNT(*) AS cart_count FROM `tbl_orderitem` WHERE `custo
 $stmtCartCount = $conn->query($getCartCount);
 $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
 
-// QUERY TO DISPLAY THE ORDERS
-$query = "SELECT o.*, os.status, os.update_date, p.product_name, p.product_size
-          FROM tbl_order o
-          LEFT JOIN tbl_orderstatus os ON o.order_id = os.order_id
-          LEFT JOIN tbl_product p ON o.product_id = p.product_id
-          WHERE o.customer_id = ?";
-$stmt = $conn->prepare($query);
+$getUserReports = "SELECT * FROM `tbl_user_reports` WHERE customer_id = ?";
+$stmt = $conn->prepare($getUserReports);
 $stmt->execute([$customer_id]);
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$groupedOrders = [];
-foreach ($orders as $order) {
-    $reference_number = $order['reference_number'];
-    if (!isset($groupedOrders[$reference_number])) {
-        $groupedOrders[$reference_number] = [];
-    }
-    $groupedOrders[$reference_number][] = $order;
-}
+$userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -96,25 +82,10 @@ foreach ($orders as $order) {
     <div class="p-0 p-sm-3 p-md-5 overflow-hidden" id="cart">
         <div class="col">
             <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3" style="background-color: #404040; color: white;">
-                <h1>Order Status</h1>
+                <h1>Completed Orders</h1>
             </div>
 
             <div class="p-3 m-0" style="background-color: #404040; color: white;">
-
-                <label for="statusFilter">Filter by Status:</label>
-                <select id="statusFilter">
-                    <option value="">Show All</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Ready to pick">Ready to pick</option>
-                </select>
-
-                <br>
-
-                <span id="completedOrdersLink">
-                    <a href="javascript:void(0);" style="text-decoration: none;" id="markAsSeenLink">Completed Orders:
-                        <span id="completedUnread" class="badge" style="font-size: 15px;"></span>
-                    </a>
-                </span>
 
                 <div class="table-responsive">
                     <table id="example" class="table table-dark table-hover table-striped position-relative">
@@ -124,59 +95,34 @@ foreach ($orders as $order) {
                                 <th>Total Amount</th>
                                 <th>Product Ordered</th>
                                 <th>Order Status</th>
-                                <th>Order Date</th>
-                                <th>Pick up Date</th>
+                                <th>Date Ordered</th>
+                                <th>Date Completed</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($groupedOrders as $reference_number => $ordersGroup) : ?>
-                                <?php if (reset($ordersGroup)['status'] !== 'Completed') : ?>
-                                    <tr data-status="<?php echo reset($ordersGroup)['status']; ?>">
-                                        <td style="color: #BB2525; font-weight: 900;"><?php echo $reference_number ?></td>
-                                        <td>₱<?php echo reset($ordersGroup)['total_amount'] ?></td>
-                                        <td>
-                                            <?php
-                                            $latestOrder = end($ordersGroup);
-                                            echo $latestOrder['total_products'];
-                                            ?>
-                                        </td>
-                                        <td style="font-weight: <?php echo reset($ordersGroup)['status'] === 'Pending' ? '900' : 'normal'; ?>; color:
-                                        <?php echo reset($ordersGroup)['status'] === 'Pending' ? '#BB2525' : '#79AC78'; ?>">
-                                            <?php if (reset($ordersGroup)['status'] === 'Ready to pick') : ?>
-                                                <span style="font-weight: 900; color: inherit;"><?php echo reset($ordersGroup)['status'] . '📦 ' ?></span>
-                                            <?php elseif (reset($ordersGroup)['status'] === 'Pending') : ?>
-                                                <span style="font-weight: 900; color: inherit;"><?php echo reset($ordersGroup)['status'] . '⌛ ' ?></span>
-                                            <?php else : ?>
-                                                <?php echo reset($ordersGroup)['status'] ?>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <?php $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']); ?>
-                                            <?php $formattedDate = date('F j, Y', $orderDateTimestamp); ?>
-                                            <?php $formattedTime = date('h:i A', $orderDateTimestamp); ?>
-                                            <?php echo $formattedDate . '<br>' . $formattedTime; ?>
-                                        </td>
-                                        <td>
-                                            <?php if (reset($ordersGroup)['status'] == 'Ready to pick') : ?>
-                                                <?php $updateDateTimestamp = strtotime(reset($ordersGroup)['update_date']); ?>
-                                                <?php $formattedDate = date('F j, Y', $updateDateTimestamp); ?>
-                                                <?php $formattedTime = date('h:i A', $updateDateTimestamp); ?>
-                                                <?php echo $formattedDate . '<br>' . $formattedTime; ?>
-                                            <?php else : ?>
-                                                <?php if (reset($ordersGroup)['status'] == 'Pending') : ?>
-                                                    <span style="color: #BB2525; font-weight: 900;">Please wait <br> for the pick up date</span>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-
-                                        </td>
-                                        <td>
-                                            <?php if (reset($ordersGroup)['status'] !== 'Completed') : ?>
-                                                <a class="btn btn-danger" href="components/remove_order.php?order_id=<?php echo reset($ordersGroup)['order_id'] ?>">Cancel Orders</a>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
+                            <?php foreach ($userReports as $reports) : ?>
+                                <tr>
+                                    <td style="color: #BB2525; font-weight: 900;"><?php echo $reports['reference_number'] ?></td>
+                                    <td>₱<?php echo $reports['total_amount'] ?></td>
+                                    <td><?php echo $reports['total_products'] ?></td>
+                                    <td style="color: #96C291; font-weight: 900;"><?php echo $reports['status'] ?> ✅</td>
+                                    <td>
+                                        <?php $orderDateTimestamp = strtotime(($reports)['order_date']); ?>
+                                        <?php $formattedDate = date('F j, Y', $orderDateTimestamp); ?>
+                                        <?php $formattedTime = date('h:i A', $orderDateTimestamp); ?>
+                                        <?php echo $formattedDate . '<br>' . $formattedTime; ?>
+                                    </td>
+                                    <td>
+                                        <?php $orderDateTimestamp = strtotime(($reports)['update_date']); ?>
+                                        <?php $formattedDate = date('F j, Y', $orderDateTimestamp); ?>
+                                        <?php $formattedTime = date('h:i A', $orderDateTimestamp); ?>
+                                        <?php echo $formattedDate . '<br>' . $formattedTime; ?>
+                                    </td>
+                                    <td>
+                                        <a href="functions/delete_completed.php" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -193,8 +139,6 @@ foreach ($orders as $order) {
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <!--===============================================================================================-->
     <script src="assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="ajax/unseen_completed.js"></script>
-    <script src="ajax/seen_completed.js"></script>
     <script>
         setTimeout(() => {
             document.querySelector('#spinnerContainer').style.display = 'none';

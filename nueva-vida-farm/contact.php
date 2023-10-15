@@ -105,7 +105,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                     <h1>CONTACT US</h1>
                     <div class="d-flex flex-column flex-md-row justify-content-start justify-content-md-between">
                         <h5><span style="margin-right: 5px;"><i class="fa-solid fa-location-dot"></i></span>nuevavidafarmsinc@gmail.com</h5>
-                        <h5><span style="margin-right: 5px;"><i class="fa-solid fa-phone"></i></span>123-456-789</h5>
+                        <h5><span style="margin-right: 5px;"><i class="fa-solid fa-phone"></i></span>09177036751</h5>
                     </div>
                     <input type="text" name="name" id="name" placeholder="Your name">
                     <input type="text" id="mobile" name="mobile" placeholder="Your mobile number">

@@ -81,7 +81,7 @@ foreach ($orders as $order) {
                 <a href="products"><span class="material-symbols-outlined">
                         shopping_bag
                     </span>Inventory</a>
-                <a href="orders"><span class="material-symbols-outlined">
+                <a href="orders" class="active"><span class="material-symbols-outlined">
                         groups
                     </span>Orders</a>
                 <a href="reports"><span class="material-symbols-outlined">
