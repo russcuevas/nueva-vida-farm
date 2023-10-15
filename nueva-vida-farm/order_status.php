@@ -150,12 +150,17 @@ foreach ($orders as $order) {
                                             <?php echo $formattedDate . '<br>' . $formattedTime; ?>
                                         </td>
                                         <td>
-                                            <?php if (reset($ordersGroup)['status'] !== 'Pending') : ?>
+                                            <?php if (reset($ordersGroup)['status'] == 'Ready to pick') : ?>
                                                 <?php $updateDateTimestamp = strtotime(reset($ordersGroup)['update_date']); ?>
                                                 <?php $formattedDate = date('F j, Y', $updateDateTimestamp); ?>
                                                 <?php $formattedTime = date('h:i A', $updateDateTimestamp); ?>
                                                 <?php echo $formattedDate . '<br>' . $formattedTime; ?>
+                                            <?php else : ?>
+                                                <?php if (reset($ordersGroup)['status'] == 'Pending') : ?>
+                                                    <span style="color: #BB2525; font-weight: 900;">Please wait <br> for the pick up date</span>
+                                                <?php endif; ?>
                                             <?php endif; ?>
+
                                         </td>
                                         <td>
                                             <?php if (reset($ordersGroup)['status'] !== 'Completed') : ?>

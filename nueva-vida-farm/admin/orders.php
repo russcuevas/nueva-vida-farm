@@ -141,7 +141,7 @@ foreach ($orders as $order) {
                                         <th>Customer Name</th>
                                         <th>Total Amount</th>
                                         <th>Total Product</th>
-                                        <th>Order Date</th>
+                                        <th>Ordered Date</th>
                                         <th>Pick Up Date</th>
                                         <th>Manage Order</th>
                                     </tr>
