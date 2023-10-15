@@ -142,6 +142,7 @@ foreach ($orders as $order) {
                                         <th>Total Amount</th>
                                         <th>Total Product</th>
                                         <th>Order Date</th>
+                                        <th>Pick Up Date</th>
                                         <th>Manage Order</th>
                                     </tr>
                                 </thead>
@@ -172,15 +173,21 @@ foreach ($orders as $order) {
                                                     <?php
                                                     $currentStatus = reset($ordersGroup)['order_status'];
                                                     $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
+                                                    $formattedDate = date('F/d/Y', $orderDateTimestamp);
+                                                    $formattedTime = date('h:i A', $orderDateTimestamp);
+                                                    echo $formattedDate . '<br>' . $formattedTime;
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    $currentStatus = reset($ordersGroup)['order_status'];
+                                                    $updatedDateTimestamp = strtotime(reset($ordersGroup)['update_date']);
+                                                    $formattedDate = date('F/d/Y', $updatedDateTimestamp);
+                                                    $formattedTime = date('h:i A', $updatedDateTimestamp);
 
-                                                    if ($currentStatus === 'Pending') {
-                                                        $formattedDate = date('F/d/Y', $orderDateTimestamp);
-                                                        $formattedTime = date('h:i A', $orderDateTimestamp);
-                                                        echo $formattedDate . '<br>' . $formattedTime;
-                                                    } elseif ($currentStatus === 'Ready to pick') {
-                                                        $updatedDateTimestamp = strtotime(reset($ordersGroup)['update_date']);
-                                                        $formattedDate = date('F/d/Y', $updatedDateTimestamp);
-                                                        $formattedTime = date('h:i A', $updatedDateTimestamp);
+                                                    if ($currentStatus === "Pending") {
+                                                        echo '<span style="color: #BB2525; font-weight: 900;">No date</span>';
+                                                    } else {
                                                         echo $formattedDate . '<br>' . $formattedTime;
                                                     }
                                                     ?>
