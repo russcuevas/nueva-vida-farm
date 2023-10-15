@@ -111,7 +111,7 @@ foreach ($orders as $order) {
                 <br>
 
                 <span id="completedOrdersLink">
-                    <a href="javascript:void(0);" style="text-decoration: none;" id="markAsSeenLink">Completed Orders:
+                    <a href="javascript:void(0);" style="text-decoration: none;" id="markAsSeenLink">Completed Orders
                         <span id="completedUnread" class="badge" style="font-size: 15px;"></span>
                     </a>
                 </span>

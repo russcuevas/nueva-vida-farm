@@ -12,7 +12,7 @@ function updatecompletedUnread() {
                 badge.text('(' + count + ') Unread');
             } else {
                 badge.css('color', 'white');
-                badge.text('(0) Unread');
+                badge.text('');
             }
 
             updatecompletedUnread();
