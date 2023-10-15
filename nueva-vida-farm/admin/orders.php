@@ -185,9 +185,9 @@ foreach ($orders as $order) {
                                                     }
                                                     ?>
                                                 </td>
-                                                <form action="../components/update_status.php" method="POST">
+                                                <form action="../components/update_status.php" method="POST" class="orderForm">
                                                     <td>
-                                                        <select name="order_status" style="border: none; background-color: #91ca9e; padding: 10px; border-radius: 10px; font-weight: 900;" class="drop-down" onchange="this.form.submit()">
+                                                        <select name="order_status" style="border: none; background-color: #91ca9e; padding: 10px; border-radius: 10px; font-weight: 900;" class="drop-down orderStatusSelect">
                                                             <?php $currentStatus = reset($ordersGroup)['order_status']; ?>
                                                             <?php if ($currentStatus === 'Pending') : ?>
                                                                 <option value="Pending" selected>Pending</option>
@@ -199,6 +199,16 @@ foreach ($orders as $order) {
                                                             <?php endif; ?>
                                                         </select>
                                                         <input type="hidden" name="order_id" value="<?php echo reset($ordersGroup)['order_id']; ?>">
+
+                                                        <div class="datetimeLocalContainer" style="display: none;">
+                                                            <label for="update_date">Pick up date:</label>
+                                                            <input type="datetime-local" class="form-control" name="update_date" class="update_date">
+                                                            <button type="submit" class="btn btn-success mt-1">Submit</button>
+                                                        </div>
+
+                                                        <div class="pendingSubmitButton">
+                                                            <button type="submit" class="btn btn-success mt-1">Submit</button>
+                                                        </div>
                                                     </td>
                                                 </form>
                                             </tr>
@@ -228,6 +238,23 @@ foreach ($orders as $order) {
     <!--===============================================================================================-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!--===============================================================================================-->
+    <script>
+        const orderStatusSelects = document.querySelectorAll('.orderStatusSelect');
+        const datetimeLocalContainers = document.querySelectorAll('.datetimeLocalContainer');
+        const pendingSubmitButtons = document.querySelectorAll('.pendingSubmitButton');
+
+        orderStatusSelects.forEach((select, index) => {
+            select.addEventListener('change', () => {
+                if (select.value === 'Ready to pick') {
+                    datetimeLocalContainers[index].style.display = 'block';
+                    pendingSubmitButtons[index].style.display = 'none';
+                } else {
+                    datetimeLocalContainers[index].style.display = 'none';
+                    pendingSubmitButtons[index].style.display = 'block';
+                }
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             var table = $('#example').DataTable({

@@ -8,36 +8,30 @@ if (!isset($admin_id)) {
 }
 
 $sql = "SELECT
-            o.order_id,
-            o.reference_number,
-            o.payment_method,
-            CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
-            o.total_amount,
-            o.order_date,
-            os.status AS order_status,
-            os.update_date,
-            od.product_id,
-            p.product_name,
-            p.product_size,
-            SUM(od.total_quantity) AS total_quantity,
-            o.total_products
-        FROM tbl_order o
-        LEFT JOIN tbl_orderstatus os ON o.order_id = os.order_id
-        LEFT JOIN tbl_customer c ON o.customer_id = c.customer_id
-        LEFT JOIN tbl_order od ON o.order_id = od.order_id
-        LEFT JOIN tbl_product p ON od.product_id = p.product_id
-        GROUP BY o.order_id, od.product_id";
-
+    report_id,
+    order_id,
+    reference_number,
+    payment_method,
+    CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
+    order_date,
+    total_amount,
+    total_products,
+    total_quantity,
+    status,
+    update_date
+FROM tbl_reports r
+LEFT JOIN tbl_customer c ON r.customer_id = c.customer_id;
+";
 $stmt = $conn->query($sql);
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$groupedOrders = [];
-foreach ($orders as $order) {
-    $reference_number = $order['reference_number'];
-    if (!isset($groupedOrders[$reference_number])) {
-        $groupedOrders[$reference_number] = [];
+$groupedReports = [];
+foreach ($reports as $report) {
+    $reference_number = $report['reference_number'];
+    if (!isset($groupedReports[$reference_number])) {
+        $groupedReports[$reference_number] = [];
     }
-    $groupedOrders[$reference_number][] = $order;
+    $groupedReports[$reference_number][] = $report;
 }
 
 ?>
@@ -179,37 +173,38 @@ foreach ($orders as $order) {
                                         <th>Payment Method</th>
                                         <th>Customer Name</th>
                                         <th>Total Product</th>
-                                        <th>Order Date</th>
+                                        <th>Date Completed</th>
                                         <th>Total Amount</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($groupedOrders as $reference_number => $ordersGroup) : ?>
-                                        <?php if (reset($ordersGroup)['order_status'] === 'Completed') : ?>
+                                    <?php foreach ($groupedReports as $reference_number => $reportsGroup) : ?>
+                                        <?php if (reset($reportsGroup)['status'] === 'Completed') : ?>
                                             <tr>
                                                 <td style="color: #BB2525; font-weight: 900"><?php echo $reference_number; ?></td>
-                                                <td><?php echo reset($ordersGroup)['payment_method']; ?></td>
-                                                <td><?php echo reset($ordersGroup)['customer_name']; ?></td>
+                                                <td><?php echo reset($reportsGroup)['payment_method']; ?></td>
+                                                <td><?php echo reset($reportsGroup)['customer_name']; ?></td>
                                                 <td class="no-line-breaks">
-                                                    <?php foreach ($ordersGroup as $order) : ?>
-                                                        <?php if ($order === end($ordersGroup)) : ?>
-                                                            <?php echo $order['total_products'] . '<br>'; ?>
+                                                    <?php foreach ($reportsGroup as $report) : ?>
+                                                        <?php if ($report === end($reportsGroup)) : ?>
+                                                            <?php echo $report['total_products'] . '<br>'; ?>
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </td>
                                                 <td>
                                                     <?php
-                                                    $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
+                                                    $orderDateTimestamp = strtotime(reset($reportsGroup)['update_date']);
                                                     $formattedDate = date('F/d/Y', $orderDateTimestamp);
                                                     echo $formattedDate;
                                                     ?>
                                                 </td>
-                                                <td><?php echo reset($ordersGroup)['total_amount']; ?></td>
-                                                <td style="color: #004225; font-weight: 900;"><?php echo reset($ordersGroup)['order_status']; ?></td>
+                                                <td><?php echo reset($reportsGroup)['total_amount']; ?></td>
+                                                <td style="color: #004225; font-weight: 900;"><?php echo reset($reportsGroup)['status']; ?></td>
                                             </tr>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
+
                                 </tbody>
                             </table>
                         </div>

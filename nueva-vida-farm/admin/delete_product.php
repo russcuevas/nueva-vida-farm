@@ -33,13 +33,13 @@ if (isset($_GET['product_id']) && is_numeric($_GET['product_id']) && $_GET['prod
                 $order_id = $order['order_id'];
                 $status = $order['status'];
 
-                if ($status === 'Completed') {
-                    $disable_fk_checks_query = $conn->prepare("SET FOREIGN_KEY_CHECKS = 0");
-                    $disable_fk_checks_query->execute();
-                } elseif ($status === 'Pending' || $status === 'Ready to pick') {
-                    $enable_fk_checks_query = $conn->prepare("SET FOREIGN_KEY_CHECKS = 1");
-                    $enable_fk_checks_query->execute();
-                }
+                // if ($status === 'Completed') {
+                //     $disable_fk_checks_query = $conn->prepare("SET FOREIGN_KEY_CHECKS = 0");
+                //     $disable_fk_checks_query->execute();
+                // } elseif ($status === 'Pending' || $status === 'Ready to pick') {
+                //     $enable_fk_checks_query = $conn->prepare("SET FOREIGN_KEY_CHECKS = 1");
+                //     $enable_fk_checks_query->execute();
+                // }
 
                 if ($status === 'Pending' || $status === 'Ready to pick') {
                     $fetch_total_quantity = $conn->prepare("SELECT total_quantity FROM tbl_order WHERE order_id = ?");

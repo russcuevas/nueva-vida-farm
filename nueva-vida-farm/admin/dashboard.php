@@ -55,17 +55,12 @@ $stmtTotalProducts->execute();
 $resultTotalProducts = $stmtTotalProducts->fetch(PDO::FETCH_ASSOC);
 $totalProducts = $resultTotalProducts['total_products'];
 
-$sqlTotalSales = "SELECT
-    o.reference_number,
-    SUM(DISTINCT o.total_amount) AS total_sales
-FROM tbl_order o
-INNER JOIN tbl_orderstatus os ON o.order_id = os.order_id
-WHERE os.status = 'Completed'
-GROUP BY o.reference_number";
+$sqlTotalAmountSum = "SELECT SUM(total_amount) AS total_sum FROM tbl_reports";
+$stmtTotalAmountSum = $conn->prepare($sqlTotalAmountSum);
+$stmtTotalAmountSum->execute();
+$totalAmountSumResult = $stmtTotalAmountSum->fetch(PDO::FETCH_ASSOC);
+$totalAmountSum = $totalAmountSumResult['total_sum'];
 
-$stmtTotalSales = $conn->prepare($sqlTotalSales);
-$stmtTotalSales->execute();
-$totalSalesResults = $stmtTotalSales->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -155,28 +150,17 @@ $totalSalesResults = $stmtTotalSales->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
 
-
-                    <?php
-                    $totalSum = 0;
-                    $totalSalesHTML = '';
-
-                    foreach ($totalSalesResults as $totalSalesResult) {
-                        $totalSales = $totalSalesResult['total_sales'];
-                        $totalSum += $totalSales;
-                        $referenceNumber = $totalSalesResult['reference_number'];
-                    }
-                    ?>
-
                     <div class="col">
                         <div class="box d-flex justify-content-between flex-column p-3 bg-white rounded">
                             <div class="d-flex flex-column">
                                 <h1>Total sales</h1>
                                 <!-- Display the total sum here -->
-                                <h3 style="color: #BB2525; font-weight: 900;">₱<?php echo number_format($totalSum, 2); ?></h3>
+                                <h3 style="color: #BB2525; font-weight: 900;">₱<?php echo number_format($totalAmountSum, 2); ?></h3>
                             </div>
                             <!-- <a href="#">View</a> -->
                         </div>
                     </div>
+
                 </div>
             </div>
 

@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 
     $reference_number = generateReferenceNumber();
     $payment_method = $_POST['payment_method'];
-    $order_date = date('Y-m-d H:i:s');
+    $order_date = date('Y-m-d H:i:s A');
     $total_quantity = $quantity;
 
     $insertOrderSQL = "INSERT INTO tbl_order (reference_number, payment_method, customer_id, order_date, total_amount, product_id, total_quantity, total_products)
@@ -136,10 +136,13 @@ if (isset($_POST['submit'])) {
         $order_id = $conn->lastInsertId();
 
         $initialStatus = "Pending";
-        $insertStatusQuery = "INSERT INTO tbl_orderstatus (status, order_id) VALUES (:status, :order_id)";
+        $insertStatusQuery = "INSERT INTO tbl_orderstatus (status, order_id, update_date) VALUES (:status, :order_id, :update_date)";
         $stmt = $conn->prepare($insertStatusQuery);
         $stmt->bindParam(':status', $initialStatus);
         $stmt->bindParam(':order_id', $order_id);
+        $update_date = date('Y-m-d H:i:s A');
+        $stmt->bindParam(':update_date', $update_date);
+
 
         if ($stmt->execute()) {
             header('location: order_status');
@@ -205,7 +208,7 @@ function generateReferenceNumber()
                         <h3 style="color: white;">Selected Item</h3>
                     </div>
 
-                    <?php if (isset($product)): ?>
+                    <?php if (isset($product)) : ?>
                         <input type="hidden" name="quantity" id="quantity" value="<?php echo $quantity; ?>" />
                         <input type="hidden" name="total_products" value="<?php echo $product['product_name']; ?> <?php echo $product['product_size']; ?> x <?php echo $quantity; ?>">
                         <div class="d-flex flex-row justify-content-between">
@@ -217,11 +220,11 @@ function generateReferenceNumber()
                             <h4 class="mt-1" style="color: #777777;">Total Price :</h4>
                             <h4 class="mt-1">₱<?php echo number_format($product['product_price'] * $quantity, 2); ?></h4>
                         </div>
-                    <?php else: ?>
+                    <?php else : ?>
                         <div>
                             <p>Product not found.</p>
                         </div>
-                    <?php endif;?>
+                    <?php endif; ?>
                 </div>
 
 
