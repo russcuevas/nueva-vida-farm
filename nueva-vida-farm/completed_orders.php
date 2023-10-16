@@ -120,7 +120,7 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <?php echo $formattedDate . '<br>' . $formattedTime; ?>
                                     </td>
                                     <td>
-                                        <a href="functions/delete_completed.php" class="btn btn-danger">Delete</a>
+                                        <a href="functions/remove_completed.php?report_id=<?php echo $reports['report_id'] ?>" onclick="return confirm('Are you sure you want to delete this order?')" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -145,11 +145,11 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }, 1200);
     </script>
     <?php
-    if (isset($_SESSION['remove_orders'])) {
+    if (isset($_SESSION['delete_completed'])) {
         echo '<script>
                     Swal.fire({
                         icon: "success",
-                        title: "Cancel order succesfully",
+                        title: "Order deleted successfully",
                         timer: 3000,
                         toast: true,
                         position: "top-end",
@@ -157,7 +157,7 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     });
                 </script>';
 
-        unset($_SESSION['remove_orders']);
+        unset($_SESSION['delete_completed']);
     }
     ?>
     <script>

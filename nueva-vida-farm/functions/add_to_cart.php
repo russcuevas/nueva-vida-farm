@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if ($stmtUpdateStock->execute()) {
                             updateProductStatus($product_id, $conn);
                             $response['status'] = 'success';
-                            $response['message'] = 'Product quantity updated';
+                            $response['message'] = 'Added to cart successfully';
                         } else {
                             $response['status'] = 'error';
                             $response['message'] = 'Failed to update product quantity';
