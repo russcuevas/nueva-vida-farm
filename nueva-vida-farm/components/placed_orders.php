@@ -30,7 +30,7 @@ if (isset($_POST['placeorder'])) {
 
         $product_name = getProductName($product_id, $conn);
         $product_size = $_POST['product_size'][$product_id];
-        $orderedProductInfo = "$product_name $product_size ($quantity)";
+        $orderedProductInfo = "$product_name $product_size ($quantity) x $product_price";
 
         $orderedProductNames[] = $orderedProductInfo;
 

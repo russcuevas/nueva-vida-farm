@@ -130,7 +130,8 @@ if (isset($_POST['submit'])) {
     $insertOrderStmt->bindParam(':total_quantity', $total_quantity);
     $insertOrderStmt->bindParam(':total_products', $total_products);
 
-    $total_products = $product['product_name'] . ' ' . $product['product_size'] . ' (' . $quantity . ')';
+    $total_products = $product['product_name'] . ' ' . $product['product_size'] . ' (' . $quantity . ') x ' . $product['product_price'];
+
 
     if ($insertOrderStmt->execute()) {
         $order_id = $conn->lastInsertId();
