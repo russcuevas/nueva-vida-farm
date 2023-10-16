@@ -10,6 +10,7 @@ if (!isset($admin_id)) {
 $add_product = '';
 $error_add = '';
 $warning_add = '';
+$warning_pic = '';
 
 // ADD PRODUCT MODAL
 if (isset($_POST['submit'])) {
@@ -30,7 +31,9 @@ if (isset($_POST['submit'])) {
 
     $product_folder = '../assets/images/products/' . $new_image_name;
 
-    if ($image_size > 2000000) {
+    if (!in_array($file_extension, ['jpg', 'jpeg', 'png'])) {
+        $warning_pic = 'ONLY JPEG, JPG, PNG files are allowed.';
+    } elseif ($image_size > 2000000) {
         $warning_add = 'Image size must be 2MB or less.';
     } else {
         $check_product = $conn->prepare("SELECT COUNT(*) FROM `tbl_product` WHERE product_name = ? AND product_size = ?");
@@ -62,6 +65,7 @@ if (isset($_POST['submit'])) {
 
 $update_product = '';
 $warning_update = '';
+$warning_picture = '';
 $error_update = '';
 // UPDATE PRODUCT MODAL
 if (isset($_POST['update'])) {
@@ -100,7 +104,9 @@ if (isset($_POST['update'])) {
             $image_size = $_FILES['product_image']['size'];
             $product_tmp_name = $_FILES['product_image']['tmp_name'];
 
-            if ($image_size > 2000000) {
+            if (!in_array($file_extension, ['jpg', 'jpeg', 'png'])) {
+                $warning_picture = 'ONLY JPEG, JPG, PNG files are allowed.';
+            } elseif ($image_size > 2000000) {
                 $warning_update = 'Image size must be 2MB or less.';
             } else {
                 move_uploaded_file($product_tmp_name, $product_folder);
@@ -473,6 +479,19 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </script>
         <?php endif ?>
 
+        <?php if ($warning_pic) : ?>
+            <script>
+                Swal.fire({
+                    icon: "warning",
+                    title: "<?php echo $warning_pic; ?>",
+                    timer: 3000,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                });
+            </script>
+        <?php endif ?>
+
         <?php if ($error_add) : ?>
             <script>
                 Swal.fire({
@@ -522,6 +541,19 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     position: "top-end",
                     showConfirmButton: false,
                 });
+            </script>
+        <?php endif ?>
+
+        <?php if ($warning_picture) : ?>
+            <script>
+                Swal.fire({
+                    icon: "warning",
+                    title: "<?php echo $warning_picture ?>",
+                    timer: 3000,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                })
             </script>
         <?php endif ?>
         <script>

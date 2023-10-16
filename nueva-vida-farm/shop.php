@@ -36,6 +36,11 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!--===============================================================================================-->
     <link rel="stylesheet" href="assets/js/sweetalert2/dist/sweetalert2.css" />
     <link rel="stylesheet" href="assets/css/HoldOn.min.css">
+    <style>
+        .hidden-product {
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="animate__animated animate__fadeIn">
@@ -106,8 +111,8 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="box d-flex flex-column justify-content-around px-3">
                                     <div class="d-flex flex-row gap-2">
-                                        <h4>AVAILABLE : </h4>
-                                        <h3><?php echo $products['product_stocks'] ?></h3>
+                                        <h4>AVAILABLE: </h4>
+                                        <h3 id="productStocksValue_<?php echo $products['product_id'] ?>"><?php echo $products['product_stocks'] ?></h3>
                                     </div>
                                     <div class="d-flex flex-row gap-2">
                                         <h4>PRICE : </h4>

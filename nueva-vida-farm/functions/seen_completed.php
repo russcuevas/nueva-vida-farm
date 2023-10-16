@@ -3,6 +3,11 @@ include '../database/connection.php';
 
 session_start();
 
+if (!isset($_SERVER['HTTP_REFERER'])) {
+    header('location: ../home');
+    exit();
+}
+
 if (isset($_SESSION['customer_id'])) {
     $customer_id = $_SESSION['customer_id'];
 

@@ -1,6 +1,40 @@
+// AVAILABLE STOCK
+function updateAvailableStock(productID, stock) {
+    var productElement = $(`#productStocksValue_${productID}`);
+    productElement.text(stock);
+
+    if (parseInt(stock) === 0) {
+        productElement.closest(".col").addClass("hidden-product");
+    } else {
+        productElement.closest(".col").removeClass("hidden-product");
+    }
+}
+
+function fetchAllAvailableStock() {
+    $.ajax({
+        url: 'functions/get_product_stocks.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            data.forEach(function (product) {
+                updateAvailableStock(product.product_id, product.product_stocks);
+            });
+        },
+        error: function () {
+            console.log('Reload your page');
+            alert('Reload your page');
+        }
+    });
+}
+
+setInterval(fetchAllAvailableStock, 1500);
+fetchAllAvailableStock();
+
+
+
 // ADD TO CART FUNCTION
-$(document).ready(function() {
-    $(".add-to-cart-form").submit(function(event) {
+$(document).ready(function () {
+    $(".add-to-cart-form").submit(function (event) {
         event.preventDefault();
 
         var formData = new FormData(this);
@@ -12,17 +46,10 @@ $(document).ready(function() {
             processData: false,
             contentType: false,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-                setTimeout(function() {
-                    HoldOn.close();
-                }, 3000);
 
                 if (response.status === "success") {
-                    HoldOn.open({
-                        theme: "sk-dot",
-                        message: "Please wait...",
-                    });
                     Swal.fire({
                         icon: "success",
                         title: response.message,
@@ -32,9 +59,6 @@ $(document).ready(function() {
                         timer: 2000,
                     });
                     setTimeout(function () {
-                        HoldOn.close();
-                    }, 2000);
-                    setTimeout(function() {
                         location.reload();
                     }, 2000);
                 } else if (response.status === "warning") {
@@ -55,16 +79,16 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 2000,
                     });
-                    setTimeout(function() {
+                    setTimeout(function () {
                         location.reload();
-                    }, 200);
+                    }, 2000);
                 }
             },
-            error: function(errorThrown) {
-                setTimeout(function() {
+            error: function (errorThrown) {
+                setTimeout(function () {
                     HoldOn.close();
                 }, 3000);
-                
+
                 alert("Try again : " + errorThrown);
             }
         });
