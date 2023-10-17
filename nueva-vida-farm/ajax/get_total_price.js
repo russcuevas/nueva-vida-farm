@@ -11,29 +11,30 @@ $(document).ready(function () {
             hasSelectedProducts = true;
         });
 
-        var $totalPriceElement = $('#tableFooter td:eq(5)');
-        var $totalPriceLabelElement = $('#tableFooter td:eq(4)');
-
-        if (hasSelectedProducts && total > 0) {
+        var $totalPriceElement = $('#total-price');
+        if (hasSelectedProducts) {
             $totalPriceElement.text('₱' + total.toFixed(2));
-            $totalPriceLabelElement.show();
             $totalPriceElement.css({
                 'font-size': '30px',
                 'font-weight': '800',
                 'color': '#dc3545'
             });
         } else {
-            $totalPriceElement.text('');
-            $totalPriceLabelElement.hide();
+            $totalPriceElement.text('₱0.00');
+            $totalPriceElement.css({
+                'font-size': '30px',
+                'font-weight': '800',
+                'color': '#dc3545'
+            });
         }
     }
 
-    $('#select-all').on('change', function () {
-        $('.product-checkbox').prop('checked', this.checked);
+    $('.product-checkbox, .quantity-input').on('change', function () {
         updateTotalPrice();
     });
 
-    $('.product-checkbox, .quantity-input').on('change', function () {
+    $('#select-all').on('change', function () {
+        $('.product-checkbox').prop('checked', this.checked);
         updateTotalPrice();
     });
 

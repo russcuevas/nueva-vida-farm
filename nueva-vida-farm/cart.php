@@ -94,13 +94,12 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
 
             <div class="p-3 m-0" style="background-color: #404040; color: white;">
 
-                <div class="table-responsive">
-                    <form id="checkout-form" action="checkout" method="POST">
+                <form id="checkout-form" action="checkout" method="POST">
+                    <div class="table-responsive" style="overflow: auto; height: 400px;">
                         <table id="example" class="table table-dark table-hover table-striped position-relative">
                             <thead class="table-success">
                                 <tr>
-                                    <th>Select all
-                                        <input type="checkbox" id="select-all">
+                                    <th>Select
                                     </th>
                                     <th>Product Name</th>
                                     <th>Product Image</th>
@@ -145,35 +144,25 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
-                            <tfoot style="border-bottom: 0px solid transparent !important;" id="tableFooter">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <?php if ($hasItemsInCart) : ?>
-                                        <td>
-                                            <div class="d-flex justify-content-end mt-2">
-                                                <h3>Total Price:</h3>
-                                            </div>
-                                        </td>
-                                        <td style="font-size: 30px; font-weight: 
-                                        <?php echo array_sum($subtotals) > 0 ? '800' : 'normal'; ?>; color: 
-                                        <?php echo array_sum($subtotals) > 0 ? '#dc3545' : 'black'; ?>">
-
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" id="delete-all-button" class="btn btn-danger" style="display: none;">Remove All</a>
-                                            <button type="submit" class="btn btn-primary" id="checkout-button">Proceed to Checkout</button>
-                                        </td>
-                                    <?php endif; ?>
-                                    </td>
-                                </tr>
-                            </tfoot>
-
                         </table>
-                    </form>
-                </div>
+                    </div>
+                    <div class="">
+                        <?php if ($hasItemsInCart) : ?>
+                            <div class="text-center mt-2">
+                                <h3>Total Price: <span id="total-price" style="font-size: 30px; font-weight: normal; color: black;">₱0.00</span></h3>
+                            </div>
+                            <td style="font-size: 30px; font-weight: 
+                                <?php echo array_sum($subtotals) > 0 ? '800' : 'normal'; ?>; color: 
+                                <?php echo array_sum($subtotals) > 0 ? '#dc3545' : 'black'; ?>">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="checkout-button">Proceed to Checkout</button>
+                                <a href="javascript:void(0);" id="delete-all-button" class="btn btn-danger" style="display: none;">Remove All</a>
+                                <span>Select all : <input type="checkbox" id="select-all"></span>
+                            </td>
+                        <?php endif; ?>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
