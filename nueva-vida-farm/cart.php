@@ -134,21 +134,13 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                         <td>₱<?php echo $orderItem['product_price']; ?></td>
                                         <td><?php echo $orderItem['product_size']; ?></td>
                                         <td>
-                                            <input type="number" style="cursor: pointer" class="quantity-input" 
-                                            name="product_quantity[<?php echo $orderItem['product_id']; ?>]" 
-                                            value="<?php echo $orderItem['quantity']; ?>" 
-                                            min="1" max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>" required 
-                                            data-order-item-id="<?php echo $orderItem['order_item_id']; ?>" 
-                                            data-product-id="<?php echo $orderItem['product_id']; ?>" 
-                                            onchange="updateDatabase(this);" 
-                                            onkeydown="preventTyping(event, this);">
+                                            <input type="number" style="cursor: pointer" class="quantity-input" name="product_quantity[<?php echo $orderItem['product_id']; ?>]" value="<?php echo $orderItem['quantity']; ?>" min="1" max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>" required data-order-item-id="<?php echo $orderItem['order_item_id']; ?>" data-product-id="<?php echo $orderItem['product_id']; ?>" onchange="updateDatabase(this);" onkeydown="preventTyping(event, this);">
                                         </td>
                                         <td><?php echo $orderItem['product_stocks'] ?></td>
                                         <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo $subtotal; ?></span></td>
                                         <td>
                                             <a href="#" class="btn btn-danger btn-remove">Remove</a>
                                             <input type="hidden" name="order_item_id" value="<?php echo $orderItem['order_item_id']; ?>">
-
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -165,10 +157,14 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                                 <h3>Total Price:</h3>
                                             </div>
                                         </td>
-                                        <td style="font-size: 30px; font-weight: <?php echo array_sum($subtotals) > 0 ? '800' : 'normal'; ?>; color: <?php echo array_sum($subtotals) > 0 ? '#dc3545' : 'black'; ?>">
-                                            ₱<?php echo number_format(array_sum($subtotals), 2); ?></td>
+                                        <td style="font-size: 30px; font-weight: 
+                                        <?php echo array_sum($subtotals) > 0 ? '800' : 'normal'; ?>; color: 
+                                        <?php echo array_sum($subtotals) > 0 ? '#dc3545' : 'black'; ?>">
+
+                                        </td>
                                         <td>
-                                            <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+                                            <a href="javascript:void(0);" id="delete-all-button" class="btn btn-danger" style="display: none;">Remove All</a>
+                                            <button type="submit" class="btn btn-primary" id="checkout-button">Proceed to Checkout</button>
                                         </td>
                                     <?php endif; ?>
                                     </td>
@@ -196,6 +192,9 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
     <!--===============================================================================================-->
     <script src="assets/js/cart_datatable.js"></script>
     <!--===============================================================================================-->
+    <script src="ajax/remove_allcart.js"></script>
+    <script src="ajax/get_total_price.js"></script>
+
     <!-- SWEETALERT FUNCTION -->
     <script>
         // CANT REDIRECT IF EMPTY THE SELECTED PRODUCT
@@ -224,22 +223,6 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
             if (!validateForm()) {
                 event.preventDefault();
             }
-        });
-
-
-
-        // SELECT ALL PRODUCT IN CART
-        document.addEventListener("DOMContentLoaded", function() {
-            const selectAllCheckbox = document.getElementById("select-all");
-            const productCheckboxes = document.querySelectorAll(".product-checkbox");
-
-            selectAllCheckbox.addEventListener("change", function() {
-                const isChecked = this.checked;
-
-                productCheckboxes.forEach(function(checkbox) {
-                    checkbox.checked = isChecked;
-                });
-            });
         });
     </script>
 
