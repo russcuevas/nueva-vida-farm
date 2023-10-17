@@ -148,17 +148,24 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                     </div>
                     <div class="">
                         <?php if ($hasItemsInCart) : ?>
-                            <div class="text-center mt-2">
-                                <h3>Total Price: <span id="total-price" style="font-size: 30px; font-weight: normal; color: black;">₱0.00</span></h3>
+                            <div class="d-flex justify-content-between flex-column flex-md-row my-2">
+                                <div class="d-flex flex-column flex-md-row gap-2">
+                                    <span>Select all : <input type="checkbox" id="select-all"></span>
+                                    <div class="d-flex">
+                                        <a href="javascript:void(0);" id="delete-all-button" class="btn btn-danger" style="display: none;">Remove All</a>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row gap-2">
+                                    <h3>Total Price: <span id="total-price" style="font-size: 30px; font-weight: normal; color: black;">₱0.00</span></h3>
+                                    <button type="submit" class="btn btn-primary" id="checkout-button">Proceed to Checkout</button>
+                                </div>
+                                <div>
+
+                                </div>
                             </div>
                             <td style="font-size: 30px; font-weight: 
                                 <?php echo array_sum($subtotals) > 0 ? '800' : 'normal'; ?>; color: 
                                 <?php echo array_sum($subtotals) > 0 ? '#dc3545' : 'black'; ?>">
-                            </td>
-                            <td>
-                                <button type="submit" class="btn btn-primary" id="checkout-button">Proceed to Checkout</button>
-                                <a href="javascript:void(0);" id="delete-all-button" class="btn btn-danger" style="display: none;">Remove All</a>
-                                <span>Select all : <input type="checkbox" id="select-all"></span>
                             </td>
                         <?php endif; ?>
                     </div>
