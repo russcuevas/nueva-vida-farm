@@ -106,7 +106,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                     <th>Product Price</th>
                                     <th>Product Size</th>
                                     <th>Product Quantity</th>
-                                    <th>Available Stocks</th>
+                                    <th>Available</th>
                                     <th>Product Subtotal</th>
                                     <th>Action</th>
                                 </tr>
@@ -133,7 +133,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                         <td>₱<?php echo $orderItem['product_price']; ?></td>
                                         <td><?php echo $orderItem['product_size']; ?></td>
                                         <td>
-                                            <input type="number" style="cursor: pointer" class="quantity-input" name="product_quantity[<?php echo $orderItem['product_id']; ?>]" value="<?php echo $orderItem['quantity']; ?>" min="1" max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>" required data-order-item-id="<?php echo $orderItem['order_item_id']; ?>" data-product-id="<?php echo $orderItem['product_id']; ?>" onchange="updateDatabase(this);" onkeydown="preventTyping(event, this);">
+                                            <input type="number" style="cursor: pointer; width: 50px; border: 2px solid green; border-radius: 10px;" class="quantity-input" name="product_quantity[<?php echo $orderItem['product_id']; ?>]" value="<?php echo $orderItem['quantity']; ?>" min="1" max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>" required data-order-item-id="<?php echo $orderItem['order_item_id']; ?>" data-product-id="<?php echo $orderItem['product_id']; ?>" onchange="updateDatabase(this);" onkeydown="preventTyping(event, this);">
                                         </td>
                                         <td><?php echo $orderItem['product_stocks'] ?></td>
                                         <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo $subtotal; ?></span></td>
@@ -150,14 +150,14 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                         <?php if ($hasItemsInCart) : ?>
                             <div class="d-flex justify-content-between flex-column flex-md-row my-2">
                                 <div class="d-flex flex-column flex-md-row gap-2">
-                                    <span>Select all : <input type="checkbox" id="select-all"></span>
+                                    <span style="font-size: 20px; margin-top: 10px"><input type="checkbox" id="select-all"> Select all</span>
                                     <div class="d-flex">
-                                        <a href="javascript:void(0);" id="delete-all-button" class="btn btn-danger" style="display: none;">Remove All</a>
+                                        <a href="javascript:void(0);" id="delete-all-button" class="btn btn-danger" style="display: none; padding: 10px;">Remove All</a>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-column flex-md-row gap-2">
                                     <h3>Total Price: <span id="total-price" style="font-size: 30px; font-weight: normal; color: black;">₱0.00</span></h3>
-                                    <button type="submit" class="btn btn-primary" id="checkout-button">Proceed to Checkout</button>
+                                    <button type="submit" class="btn btn-success" id="checkout-button">Proceed to Checkout</button>
                                 </div>
                                 <div>
 
