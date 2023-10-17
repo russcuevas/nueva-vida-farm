@@ -3,7 +3,7 @@ $(document).ready(function () {
         "dom": '<lf<t>ip<l>',
         "ordering": true,
         "info": false,
-        "paging": true,
+        "paging": false,
         "bLengthChange": false,
         "pageLength": -1,
         "searching": true,
