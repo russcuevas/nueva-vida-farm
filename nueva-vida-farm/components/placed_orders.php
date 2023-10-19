@@ -36,7 +36,7 @@ if (isset($_POST['placeorder'])) {
 
         $orderedProductsString = implode("<br>", $orderedProductNames);
 
-        $order_date = date('Y-m-d H:i:s A');
+        $order_date = date('Y-m-d H:i:s');
         $insertOrderQuery = "INSERT INTO tbl_order (reference_number, payment_method, customer_id, order_date, total_amount, product_id, total_quantity, total_products)
         VALUES (:reference_number, :payment_method, :customer_id, :order_date, :total_amount, :product_id, :total_quantity, :total_products)";
         $stmt = $conn->prepare($insertOrderQuery);
@@ -54,7 +54,7 @@ if (isset($_POST['placeorder'])) {
 
         $initialStatus = "Pending";
 
-        $update_date = date('Y-m-d H:i:s A');
+        $update_date = date('Y-m-d H:i:s');
 
         $insertStatusQuery = "INSERT INTO tbl_orderstatus (status, order_id, update_date)
         VALUES (:status, :order_id, :update_date)";

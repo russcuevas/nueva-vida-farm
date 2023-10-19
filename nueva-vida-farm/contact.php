@@ -74,7 +74,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
         <li><a href="order_status">Order Status</a></li>
     </ul>
 
-    <div class="container-md d-flex justify-content-center align-items-center flex-column flex-lg-row p-0 p-md-5">
+    <div class="container-md d-flex flex-column flex-lg-row">
         <div class="col w-100">
             <div class="mapouter">
                 <div class="gmap_canvas"><iframe style="filter: grayscale(100%) invert(92%) contrast(83%);" class="gmap_iframe" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q= Galamay Amo, San Jose, Batangas&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe></div>
@@ -100,8 +100,8 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
             </div>
         </div>
         <form action="functions/contact.php" method="POST" id="contactForm">
-            <div class="col w-100 bg-white">
-                <div class="d-flex flex-column px-3 py-5 p-md-5 gap-4">
+            <div class="col w-100">
+                <div class="d-flex flex-column px-3 py-5 p-md-5 gap-4" id="contactBox">
                     <h1>CONTACT US</h1>
                     <div class="d-flex flex-column flex-md-row justify-content-start justify-content-md-between">
                         <h5><span style="margin-right: 5px;"><i class="fa-solid fa-location-dot"></i></span>nuevavidafarmsinc@gmail.com</h5>

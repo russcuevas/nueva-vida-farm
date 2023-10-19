@@ -120,7 +120,7 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <?php echo $formattedDate . '<br>' . $formattedTime; ?>
                                     </td>
                                     <td>
-                                        <a href="functions/remove_completed.php?report_id=<?php echo $reports['report_id'] ?>" onclick="return confirm('Are you sure you want to delete this order?')" class="btn btn-danger">Delete</a>
+                                        <a href="functions/remove_completed.php?report_id=<?php echo $reports['report_id'] ?>" onclick="return confirm('Are you sure you want to delete this transaction')" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

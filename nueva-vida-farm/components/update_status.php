@@ -34,11 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($order_status === 'Ready to pick') {
             $user_entered_datetime = $_POST['update_date'];
             $timestamp = strtotime($user_entered_datetime);
-            $newUpdateDate = date('Y-m-d H:i:s A', $timestamp);
+            $newUpdateDate = date('Y-m-d H:i:s', $timestamp);
         } elseif ($order_status === 'Pending') {
-            $newUpdateDate = date('Y-m-d H:i:s A', strtotime($order_date));
+            $newUpdateDate = date('Y-m-d H:i:s', strtotime($order_date));
         } elseif ($order_status === 'Completed') {
-            $newUpdateDate = date('Y-m-d H:i:s A', strtotime('now'));
+            $newUpdateDate = date('Y-m-d H:i:s', strtotime('now'));
         }
 
         $conn->beginTransaction();

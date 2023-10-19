@@ -12,6 +12,11 @@ if (isset($_SESSION['customer_id'])) {
 $get = "SELECT * FROM `tbl_product`";
 $stmt = $conn->query($get);
 $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// DISPLAY CARTS COUNTS
+$getCartCount = "SELECT COUNT(*) AS cart_count FROM `tbl_orderitem` WHERE `customer_id` = $customer_id";
+$stmtCartCount = $conn->query($getCartCount);
+$cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +45,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .hidden-product {
             display: none;
         }
+        
     </style>
 </head>
 
@@ -50,7 +56,8 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
-                <span id="cart-count" style="position: absolute; right: -10px; top: -5px; font-size: 12px; font-style: normal; color: red;">
+                <span style="position: absolute; right: -10px; top: -5px; font-size: 12px; font-style: normal; color: red;">
+                    (<?= $cartCount['cart_count'] ?>)
                 </span>
             </i>
 
@@ -120,7 +127,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                     <div class="d-flex flex-row gap-2">
                                         <h4>SIZE : </h4>
-                                        <input type="text" style="width: 133px; margin-bottom: 25px; font-weight: 900; cursor: default; background-color: black; border:none; font-size: 20px; color: white;" name="product_size[]" value="<?php echo $products['product_size']; ?>" readonly>
+                                        <input type="text" style="width: 165px; margin-bottom: 25px; font-weight: 900; cursor: default; background-color: black; border:none; font-size: 20px; color: white;" name="product_size[]" value="<?php echo $products['product_size']; ?>" readonly>
                                     </div>
                                     <div class="d-flex flex-row gap-2">
                                         <h4>Qty</h4>
@@ -128,7 +135,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                 </div>
                                 <a href="buy_now?product_id=<?php echo $products['product_id']; ?>&quantity=1" class="buy_now_link" style="text-decoration: none; color: black;">BUY NOW</a>
-                                <button type="submit">ADD TO CART</button>
+                                <button style="color: black" type="submit">ADD TO CART</button>
                             </div>
                         </form>
                     </div>
@@ -149,7 +156,6 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="assets/js/HoldOn.min.js"></script>
     <script src="ajax/add_to_cart.js"></script>
-    <script src="ajax/get_count_cart.js"></script>
     <script src="assets/js/home.js"></script>
     <!--===============================================================================================-->
     <script src="assets/js/sweetalert2/dist/sweetalert2.min.js"></script>

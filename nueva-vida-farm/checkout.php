@@ -43,7 +43,6 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
     header('location: cart');
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>

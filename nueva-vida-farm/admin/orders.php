@@ -194,7 +194,7 @@ foreach ($orders as $order) {
                                                 </td>
                                                 <form action="../components/update_status.php" method="POST" class="orderForm">
                                                     <td>
-                                                        <select name="order_status" style="border: none; background-color: #91ca9e; padding: 10px; border-radius: 10px; font-weight: 900;" class="drop-down orderStatusSelect">
+                                                        <select name="order_status" style="border: none; padding: 10px; border-radius: 10px; font-weight: 900; background-color: <?php echo $currentStatus === 'Pending' ? '#91ca9e' : 'orange'; ?>" class="drop-down orderStatusSelect">
                                                             <?php $currentStatus = reset($ordersGroup)['order_status']; ?>
                                                             <?php if ($currentStatus === 'Pending') : ?>
                                                                 <option value="Pending" selected>Pending</option>
@@ -209,7 +209,7 @@ foreach ($orders as $order) {
 
                                                         <div class="datetimeLocalContainer" style="display: none;">
                                                             <label for="update_date">Pick up date:</label>
-                                                            <input type="datetime-local" class="form-control" name="update_date" class="update_date">
+                                                            <input type="datetime-local" style="width: 210px;" class="form-control" name="update_date" class="update_date">
                                                             <button type="submit" class="btn btn-success mt-1">Submit</button>
                                                         </div>
 

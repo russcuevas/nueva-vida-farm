@@ -11,23 +11,26 @@ function updateAvailableStock(productID, stock) {
 }
 
 function fetchAllAvailableStock() {
-    $.ajax({
-        url: 'functions/get_product_stocks.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            data.forEach(function (product) {
-                updateAvailableStock(product.product_id, product.product_stocks);
-            });
-        },
-        error: function () {
-            console.log('Reload your page');
-            alert('Reload your page');
-        }
-    });
+    setTimeout(function() {
+        $.ajax({
+            url: 'functions/get_product_stocks.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                data.forEach(function (product) {
+                    updateAvailableStock(product.product_id, product.product_stocks);
+                });
+            },
+            error: function () {
+                console.log('Reload your page');
+                alert('Reload your page');
+            }
+        });
+    }, 5000);
 }
 
-setInterval(fetchAllAvailableStock, 1500);
+
+setInterval(fetchAllAvailableStock, 5000);
 fetchAllAvailableStock();
 
 
@@ -81,15 +84,13 @@ $(document).ready(function () {
                     });
                     setTimeout(function () {
                         location.reload();
-                    }, 2000);
+                    }, 3000);
                 }
             },
             error: function (errorThrown) {
                 setTimeout(function () {
                     HoldOn.close();
                 }, 3000);
-
-                alert("Try again : " + errorThrown);
             }
         });
     });

@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 
     $reference_number = generateReferenceNumber();
     $payment_method = $_POST['payment_method'];
-    $order_date = date('Y-m-d H:i:s A');
+    $order_date = date('Y-m-d H:i:s');
     $total_quantity = $quantity;
 
     $insertOrderSQL = "INSERT INTO tbl_order (reference_number, payment_method, customer_id, order_date, total_amount, product_id, total_quantity, total_products)
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
         $stmt = $conn->prepare($insertStatusQuery);
         $stmt->bindParam(':status', $initialStatus);
         $stmt->bindParam(':order_id', $order_id);
-        $update_date = date('Y-m-d H:i:s A');
+        $update_date = date('Y-m-d H:i:s');
         $stmt->bindParam(':update_date', $update_date);
 
 
@@ -186,7 +186,6 @@ function generateReferenceNumber()
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="assets/css/HoldOn.min.css">
 </head>
 
 <body class="animate__animated animate__fadeInDown">
@@ -269,7 +268,6 @@ function generateReferenceNumber()
     </div>
 
     <script src="assets/js/checkout.js"></script>
-    <script src="assets/js/HoldOn.min.js"></script>
 </body>
 
 </html>
