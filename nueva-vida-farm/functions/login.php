@@ -16,12 +16,11 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         $stmt->execute([$email]);
         $customer = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($customer && sha1($password) === $customer['password']) {
+        if ($customer && password_verify($password, $customer['password'])) {
             session_start();
             $_SESSION['customer_id'] = $customer['customer_id'];
             $_SESSION['login_success'] = true;
             $response['status'] = 'success';
-
         } else {
             $response['message'] = 'Invalid credentials';
             $response['status'] = 'error';

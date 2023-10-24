@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $hashed_password = sha1($password);
     $address = $_POST['address'];
     $phone = $_POST['phone'];
 
@@ -23,8 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             if (strlen($password) < 8 || strlen($password) > 12) {
                 $response['status'] = 'error';
-                $response['message'] = 'Password must atleast 8-12 characters';
+                $response['message'] = 'Password must be between 8-12 characters';
             } else {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
                 $stmt = $conn->prepare("INSERT INTO tbl_customer (first_name, last_name, email, password, address, phone) VALUES (?, ?, ?, ?, ?, ?)");
                 $stmt->execute([$first_name, $last_name, $email, $hashed_password, $address, $phone]);
                 $response['status'] = 'success';
@@ -32,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-
 } else {
     header('location: ../home');
 }

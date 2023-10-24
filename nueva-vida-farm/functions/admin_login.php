@@ -1,5 +1,4 @@
 <?php
-
 include '../database/connection.php';
 
 $response = array();
@@ -17,7 +16,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         $stmt->execute([$email]);
         $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($admin && sha1($password) === $admin['password']) {
+        if ($admin && password_verify($password, $admin['password'])) {
             session_start();
             $_SESSION['admin_id'] = $admin['staff_id'];
             $_SESSION["login_success"] = true;
