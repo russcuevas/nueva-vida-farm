@@ -25,6 +25,11 @@ nav img {
   height: 60px;
 }
 
+#item-total {
+  display: flex !important;
+  align-items: center !important;
+}
+
 #checkout {
   border: 1px solid black;
   width: 100%;
@@ -56,6 +61,20 @@ nav img {
 
   #checkout {
     border: none;
+  }
+
+  #item-div {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+  }
+
+  #item-div p {
+    margin: 5px 0;
+  }
+
+  #item-div span {
+    margin: 3px 0;
   }
 }
 

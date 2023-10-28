@@ -100,13 +100,8 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                         <table id="example" class="table table-dark table-hover table-striped position-relative">
                             <thead class="table-success">
                                 <tr>
-                                    <th>Select
-                                    </th>
-                                    <th>Product Name</th>
-                                    <th>Product Image</th>
-                                    <th>Product Price</th>
-                                    <th>Product Size</th>
-                                    <th>Product Quantity</th>
+                                    <th>Select </th>
+                                    <th>Products</th>
                                     <th>Available</th>
                                     <th>Product Subtotal</th>
                                     <th>Action</th>
@@ -129,13 +124,18 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                         <td>
                                             <input class="product-checkbox" type="checkbox" name="selected_products[]" value="<?php echo $orderItem['product_id']; ?>">
                                         </td>
-                                        <td><?php echo $orderItem['product_name']; ?></td>
-                                        <td><img style="border-radius: 10px;" src="assets/images/products/<?php echo $orderItem['product_image']; ?>" alt=""></td>
-                                        <td>₱<?php echo $orderItem['product_price']; ?></td>
-                                        <td><?php echo $orderItem['product_size']; ?></td>
-                                        <td>
-                                            <input type="number" style="cursor: pointer; width: 50px; border: 2px solid green; border-radius: 10px;" class="quantity-input" name="product_quantity[<?php echo $orderItem['product_id']; ?>]" value="<?php echo $orderItem['quantity']; ?>" min="1" max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>" required data-order-item-id="<?php echo $orderItem['order_item_id']; ?>" data-product-id="<?php echo $orderItem['product_id']; ?>" onchange="updateDatabase(this);" onkeydown="preventTyping(event, this);">
+                                        <td id="item-total">
+                                            <img style="border-radius: 10px; margin-right: 10px;" src="assets/images/products/<?php echo $orderItem['product_image']; ?>" alt="">
+                                            <div id="item-div">
+                                                <p><?php echo $orderItem['product_name']; ?> (<?php echo $orderItem['product_price']; ?>)</p>
+                                                <p>Size: <?php echo $orderItem['product_size']; ?></p>
+                                                <div>
+                                                    <span>Quantity:</span>
+                                                    <input type="number" style="cursor: pointer; width: 50px; border: 2px solid green; border-radius: 10px;" class="quantity-input" name="product_quantity[<?php echo $orderItem['product_id']; ?>]" value="<?php echo $orderItem['quantity']; ?>" min="1" max="<?php echo $orderItem['quantity'] + $orderItem['product_stocks']; ?>" required data-order-item-id="<?php echo $orderItem['order_item_id']; ?>" data-product-id="<?php echo $orderItem['product_id']; ?>" onchange="updateDatabase(this);" onkeydown="preventTyping(event, this);">
+                                                </div>
+                                            </div>
                                         </td>
+
                                         <td><?php echo $orderItem['product_stocks'] ?></td>
                                         <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo $subtotal; ?></span></td>
                                         <td>
@@ -164,7 +164,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
 
                                 </div>
                             </div>
-                            <td style="font-size: 30px; font-weight: 
+                            <td class="no-items" style="font-size: 30px; font-weight: 
                                 <?php echo array_sum($subtotals) > 0 ? '800' : 'normal'; ?>; color: 
                                 <?php echo array_sum($subtotals) > 0 ? '#dc3545' : 'black'; ?>">
                             </td>

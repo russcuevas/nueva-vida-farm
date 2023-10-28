@@ -5,9 +5,8 @@ $(document).ready(function () {
 
         $('.product-checkbox:checked').each(function () {
             var $row = $(this).closest('tr');
-            var quantity = parseInt($row.find('.quantity-input').val());
-            var price = parseFloat($row.find('td:eq(3)').text().replace('₱', ''));
-            total += quantity * price;
+            var subtotal = parseFloat($row.find('td:eq(3)').text().replace('₱', ''));
+            total += subtotal;
             hasSelectedProducts = true;
         });
 
