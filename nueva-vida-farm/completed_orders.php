@@ -39,6 +39,8 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!--===============================================================================================-->
     <link rel="stylesheet" href="assets/js/sweetalert2/dist/sweetalert2.css" />
 </head>
@@ -81,11 +83,11 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="p-0 p-sm-3 p-md-5 overflow-hidden" id="cart">
         <div class="col">
-            <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3" style="background-color: #404040; color: white;">
-                <h1>Completed Orders</h1>
+            <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3">
+                <h1>Completed Orders <i class="fa-solid fa-check-double"></i></h1>
             </div>
 
-            <div class="p-3 m-0" style="background-color: #404040; color: white;">
+            <div class="p-3 m-0">
 
                 <div class="table-responsive">
                     <table id="example" class="table table-dark table-hover table-striped position-relative">

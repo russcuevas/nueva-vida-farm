@@ -53,6 +53,8 @@ foreach ($orders as $order) {
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!--===============================================================================================-->
     <link rel="stylesheet" href="assets/js/sweetalert2/dist/sweetalert2.css" />
 </head>
@@ -95,11 +97,11 @@ foreach ($orders as $order) {
 
     <div class="p-0 p-sm-3 p-md-5 overflow-hidden" id="cart">
         <div class="col">
-            <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3" style="background-color: rgba(240, 240, 240, 1);">
-                <h1>Order Status</h1>
+            <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3">
+                <h1>Order Status <i class="fa-solid fa-truck-pickup"></i></h1>
             </div>
 
-            <div class="p-3 m-0" style="background-color: rgba(240, 240, 240, 1);">
+            <div class="p-3 m-0">
 
                 <label for="statusFilter">Filter by Status:</label>
                 <select id="statusFilter">
@@ -111,7 +113,7 @@ foreach ($orders as $order) {
                 <br>
 
                 <span id="completedOrdersLink">
-                    <a href="javascript:void(0);" style="text-decoration: none;" id="markAsSeenLink">Completed Orders
+                    <a href="javascript:void(0);" class="btn btn-dark mt-1" style="text-decoration: none;" id="markAsSeenLink">Check completed orders
                         <span id="completedUnread" class="badge" style="font-size: 15px;"></span>
                     </a>
                 </span>
