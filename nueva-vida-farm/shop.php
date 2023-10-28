@@ -52,7 +52,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
 <body class="animate__animated animate__fadeIn">
 
     <nav class="navbar px-3 py-3 px-md-5">
-        <h2>Nueva Vida Farm</h2>
+        <img src="./assets/images/dashboard/logo.png" alt="" style="cursor: pointer;" onclick="window.location.href = './home'">
 
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
@@ -84,10 +84,10 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
     </ul>
 
     <div class="container p-0">
-        <h1 style="text-align: center; color: white;">Order Here!</h1>
+        <h1 style="text-align: center; color: black;">Order Here!</h1>
 
         <div class="mb-3">
-            <label for="sizeFilter" class="form-label" style="color: white;">Filter by Size:</label>
+            <label for="sizeFilter" class="form-label" style="color: black;">Filter by Size:</label>
             <select id="sizeFilter" class="form-select">
                 <option value="ALL">All Sizes</option>
                 <option value="SMALL">Small</option>
@@ -134,8 +134,8 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                         <input type="number" style="cursor: pointer; border: 2px solid green; border-radius: 10px;" name="quantity" class="quantity" value="1" min="1" max="<?php echo min($maxQuantity, 999); ?>" onkeydown="preventTyping(event)" oninput="handleInput(this)">
                                     </div>
                                 </div>
-                                <a href="buy_now?product_id=<?php echo $products['product_id']; ?>&quantity=1" class="buy_now_link" style="text-decoration: none; color: black;">BUY NOW</a>
-                                <button style="color: black" type="submit">ADD TO CART</button>
+                                <a href="buy_now?product_id=<?php echo $products['product_id']; ?>&quantity=1" class="buy_now_link" style="text-decoration: none;">BUY NOW</a>
+                                <button type="submit">ADD TO CART</button>
                             </div>
                         </form>
                     </div>

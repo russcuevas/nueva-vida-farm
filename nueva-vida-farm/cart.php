@@ -46,6 +46,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!--===============================================================================================-->
     <link rel="shortcut icon" href="assets/favicon/egg.png" type="image/x-icon">
     <!--===============================================================================================-->
@@ -55,7 +56,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
 
 <body class="animate__animated animate__fadeIn">
     <nav class="navbar px-3 py-3 px-md-5">
-        <h2>Nueva Vida Farm</h2>
+        <img src="./assets/images/dashboard/logo.png" alt="" style="cursor: pointer;" onclick="window.location.href = './home'">
 
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
@@ -88,11 +89,11 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
 
     <div class="p-0 p-sm-3 p-md-5 oveflow-hidden" id="cart">
         <div class="col">
-            <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3" style="background-color: #404040; color: white;">
-                <h1>Cart</h1>
+            <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3">
+                <h1>My cart <i class="fa-solid fa-cart-shopping"></i></h1>
             </div>
 
-            <div class="p-3 m-0" style="background-color: #404040; color: white;">
+            <div class="p-3 m-0">
 
                 <form id="checkout-form" action="checkout" method="POST">
                     <div class="table-responsive" style="overflow: auto; height: 400px;">
@@ -129,7 +130,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                             <input class="product-checkbox" type="checkbox" name="selected_products[]" value="<?php echo $orderItem['product_id']; ?>">
                                         </td>
                                         <td><?php echo $orderItem['product_name']; ?></td>
-                                        <td><img src="assets/images/products/<?php echo $orderItem['product_image']; ?>" alt=""></td>
+                                        <td><img style="border-radius: 10px;" src="assets/images/products/<?php echo $orderItem['product_image']; ?>" alt=""></td>
                                         <td>₱<?php echo $orderItem['product_price']; ?></td>
                                         <td><?php echo $orderItem['product_size']; ?></td>
                                         <td>
@@ -146,7 +147,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                             </tbody>
                         </table>
                     </div>
-                    <div class="">
+                    <div class="" id="checkout">
                         <?php if ($hasItemsInCart) : ?>
                             <div class="d-flex justify-content-between flex-column flex-md-row my-2">
                                 <div class="d-flex flex-column flex-md-row gap-2">

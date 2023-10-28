@@ -1,40 +1,43 @@
 body {
-    background-color: #404040 !important;
+    background-color: rgba(240,240,240, 1) !important;
     font-family: Roboto, sans-serif !important;
-}
-
+  }
 /* <!--===============================================================================================--> */
 nav {
-    background-color: black;
-    color: white !important;
-}
-
-nav i {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  nav i {
     font-size: 25px;
     transition: color 0.2s ease-in;
     cursor: pointer;
-}
-
-nav i:hover {
-    color: #C8EC56;
-}
-
+  }
+  
+  nav i:hover {
+    color: #049547;
+  }
+  
+  nav img{
+    width: 60px;
+    height: 60px;
+  }
 /* <!--===============================================================================================--> */
 #lists li {
     list-style: none;
-}
-
-#lists li a {
+  }
+  
+  #lists li a {
     text-decoration: none;
-    color: white;
+    color: black;
     transition: color 0.2s ease-in;
-}
-
-#lists li a:hover {
-    color: #C8EC56;
-}
-
-@media (max-width: 768px) {
+  }
+  
+  #lists li a:hover {
+    color: #049547;
+  }
+  
+  @media (max-width: 768px) {
     #lists {
       margin: 0px;
     }
@@ -46,13 +49,13 @@ nav i:hover {
 /* <!--===============================================================================================--> */
 #profileButton {
     cursor: pointer;
-}
-
-#profileButton:hover {
-    color: #C8EC56;
-}
-
-#profileDropdown {
+  }
+  
+  #profileButton:hover {
+    color: #049547;
+  }
+  
+  #profileDropdown {
     right: 0;
     top: 60px;
     width: 200px;
@@ -61,22 +64,21 @@ nav i:hover {
     padding: 20px;
     border-radius: 15px;
     z-index: 9999;
-}
-
-#profileDropdown {
+  }
+  
+  #profileDropdown {
     gap: 10px 0px;
-}
-
-#profileDropdown a {
+  }
+  
+  #profileDropdown a {
     font-size: 20px;
     text-decoration: none;
     color: black;
-}
-
-#profileDropdown a:hover {
+  }
+  
+  #profileDropdown a:hover {
     color: #049547;
-}
-
+  }
 /* <!--===============================================================================================--> */
 @media (min-width: 576px) {
     #cart{

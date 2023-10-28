@@ -13,9 +13,10 @@ profileButton.addEventListener("click", () => {
 
 const cart = document.querySelector(".bi-bag");
 const cartBadge = document.querySelector(".bi-bag span");
+cartBadge.style.transition = 'color 0.2s ease-in';
 
 cart.addEventListener("mouseenter", () => {
-  cartBadge.style.color = "#C8EC56";
+  cartBadge.style.color = "#049547";
 });
 
 cart.addEventListener("mouseleave", () => {

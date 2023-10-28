@@ -63,7 +63,7 @@ foreach ($orders as $order) {
     </div>
 
     <nav class="navbar px-3 py-3 px-md-5">
-        <h2>Nueva Vida Farm</h2>
+        <img src="./assets/images/dashboard/logo.png" alt="" style="cursor: pointer;" onclick="window.location.href = './home'">
 
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">
@@ -95,11 +95,11 @@ foreach ($orders as $order) {
 
     <div class="p-0 p-sm-3 p-md-5 overflow-hidden" id="cart">
         <div class="col">
-            <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3" style="background-color: #404040; color: white;">
+            <div class="d-flex px-3 pt-3 pt-sm-0 px-sm-3" style="background-color: rgba(240, 240, 240, 1);">
                 <h1>Order Status</h1>
             </div>
 
-            <div class="p-3 m-0" style="background-color: #404040; color: white;">
+            <div class="p-3 m-0" style="background-color: rgba(240, 240, 240, 1);">
 
                 <label for="statusFilter">Filter by Status:</label>
                 <select id="statusFilter">
