@@ -146,6 +146,8 @@ if (isset($_POST['submit'])) {
 
 
         if ($stmt->execute()) {
+            session_start();
+            $_SESSION['success_buy_now'] = true;
             header('location: order_status');
             exit;
         } else {

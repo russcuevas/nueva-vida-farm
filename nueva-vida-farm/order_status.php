@@ -218,6 +218,7 @@ foreach ($orders as $order) {
         unset($_SESSION['remove_orders']);
     }
     ?>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const statusFilter = document.getElementById('statusFilter');
@@ -239,6 +240,49 @@ foreach ($orders as $order) {
         });
     </script>
 
+    <!-- PLACED ORDER SUCCESSFULLY -->
+    <script>
+        window.onload = function() {
+            const success_orders =
+                '<?php echo isset($_SESSION["success_orders"]) ? $_SESSION["success_orders"] : "" ?>';
+
+            if (success_orders) {
+                Swal.fire({
+                    icon: "success",
+                    text: "Placed order successfully",
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
+
+                <?php $_SESSION["success_orders"] = false; ?>
+            }
+        };
+    </script>
+
+    <!-- PLACED ORDER BUY NOW ONE ITEM ONLY -->
+    <script>
+        window.onload = function() {
+            const success_buy_now =
+                '<?php echo isset($_SESSION["success_buy_now"]) ? $_SESSION["success_buy_now"] : "" ?>';
+
+            if (success_buy_now) {
+                Swal.fire({
+                    icon: "success",
+                    text: "Placed order successfully",
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
+
+                <?php $_SESSION["success_buy_now"] = false; ?>
+            }
+        };
+    </script>
+
+    <!-- DATA TABLE FILTER BY STATUS ORDER -->
     <script>
         $(document).ready(function() {
             var table = $('#example').DataTable({
