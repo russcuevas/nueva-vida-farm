@@ -51,7 +51,7 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <nav class="navbar px-3 py-3 px-md-5">
-        <h2>Nueva Vida Farm</h2>
+        <img src="./assets/images/dashboard/logo.png" alt="" style="cursor: pointer;" onclick="window.location.href = './home'">
 
         <div class="d-flex align-items-center justify-content-center flex-row gap-3">
             <i class="bi bi-bag" style="position: relative; cursor: pointer;" onclick="window.location.href = 'cart';">

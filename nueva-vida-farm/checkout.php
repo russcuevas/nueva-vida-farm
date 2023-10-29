@@ -63,7 +63,7 @@ if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 
-<body style="color: #404040" class="animate__animated animate__fadeInDown">
+<body class="animate__animated animate__fadeInDown">
 
     <div class="d-flex flex-row align-items-center p-2" id="navigation">
         <span class="material-symbols-outlined" id="backButton">
