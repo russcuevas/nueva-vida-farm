@@ -42,7 +42,7 @@ if (isset($_SESSION['customer_id'])) {
 
                 <button type="submit" class="mt-5">Submit</button>
                 <div class="d-flex justify-content-center mt-2">
-                    <a href="register">Dont have an account? Click here..</a>
+                    <a href="register" style="font-weight: 900;">Dont have an account? Click here..</a>
                 </div>
             </form>
 

@@ -45,7 +45,6 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
         .hidden-product {
             display: none;
         }
-        
     </style>
 </head>
 

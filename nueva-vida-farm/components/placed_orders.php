@@ -78,13 +78,13 @@ if (isset($_POST['placeorder'])) {
     $stmt = $conn->prepare($updateTotalAmountQuery);
     $stmt->bindParam(':total_price', $totalPrice);
     $stmt->bindParam(':reference_number', $reference_number);
-    $stmt->execute();
 
-
-    session_start();
-    $_SESSION['success_orders'] = true;
-    header('location: ../order_status');
-    exit;
+    if ($stmt->execute()) {
+        session_start();
+        $_SESSION['success_buy_now'] = true;
+        header('location: ../order_status');
+        exit;
+    }
 } else {
     header('location: ../login');
 }

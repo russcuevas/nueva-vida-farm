@@ -240,27 +240,6 @@ foreach ($orders as $order) {
         });
     </script>
 
-    <!-- PLACED ORDER SUCCESSFULLY -->
-    <script>
-        window.onload = function() {
-            const success_orders =
-                '<?php echo isset($_SESSION["success_orders"]) ? $_SESSION["success_orders"] : "" ?>';
-
-            if (success_orders) {
-                Swal.fire({
-                    icon: "success",
-                    text: "Placed order successfully",
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
-
-                <?php $_SESSION["success_orders"] = false; ?>
-            }
-        };
-    </script>
-
     <!-- PLACED ORDER BUY NOW ONE ITEM ONLY -->
     <script>
         window.onload = function() {
@@ -270,7 +249,7 @@ foreach ($orders as $order) {
             if (success_buy_now) {
                 Swal.fire({
                     icon: "success",
-                    text: "Placed order successfully",
+                    title: "Placed order successfully",
                     toast: true,
                     position: "top-end",
                     showConfirmButton: false,

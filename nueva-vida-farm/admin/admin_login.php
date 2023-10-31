@@ -30,7 +30,7 @@ if (isset($_SESSION['admin_id'])) {
 <body class="animate__animated animate__fadeIn">
     <div class="vh-100 d-flex justify-content-center align-items-center" id="mainContainer">
         <div class="d-flex flex-row">
-            <form action="../functions/admin_login.php" method="POST" class="d-flex flex-column p-5 loginForm" style="background-color: black;" id="loginContainer">
+            <form action="../functions/admin_login.php" method="POST" class="d-flex flex-column p-5 loginForm" id="loginContainer">
                 <h1>Welcome to Nueva Vida Farm</h1>
                 <h2>Admin Panel</h2>
 

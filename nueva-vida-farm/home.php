@@ -95,7 +95,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="py-3 px-3 px-md-5">
             <?php if (empty($product)) : ?>
-                <div style="text-align: center; color: red; font-size: 40px;">No Products Available</div>
+                <div style="text-align: center; color: red; font-size: 40px; border: 2px solid red;">No Products Available</div>
             <?php else : ?>
                 <div class="swiper">
                     <div class="swiper-wrapper">
@@ -103,7 +103,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="swiper-slide">
                                 <img src="assets/images/products/<?php echo $products['product_image']; ?>" alt="">
                                 <div class="swiper-content">
-                                    <h2><?php echo $products['product_name']; ?> <span>(<?php echo $products['product_size'] ?>)</span></h2>
+                                    <h2><?php echo $products['product_name']; ?> <br> <span>(<?php echo $products['product_size'] ?>)</span></h2>
                                     <h4 style="color: red;">₱<?php echo $products['product_price']; ?></h4>
                                 </div>
                             </div>

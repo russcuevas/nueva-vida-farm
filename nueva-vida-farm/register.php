@@ -59,7 +59,7 @@ if (isset($_SESSION['customer_id'])) {
 
                 <button type="submit" class="mt-5">Submit</button>
                 <div class="d-flex justify-content-center mt-2">
-                    <a href="login">Already have an account? Login here...</a>
+                    <a href="login" style="font-weight: 900;">Already have an account? Login here...</a>
                 </div>
             </form>
 

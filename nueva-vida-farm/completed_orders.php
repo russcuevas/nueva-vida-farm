@@ -122,7 +122,7 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <?php echo $formattedDate . '<br>' . $formattedTime; ?>
                                     </td>
                                     <td>
-                                        <a href="functions/remove_completed.php?report_id=<?php echo $reports['report_id'] ?>" onclick="return confirm('Are you sure you want to delete this transaction')" class="btn btn-danger">Delete</a>
+                                        <a href="#" class="btn btn-danger delete-transaction" data-reportid="<?php echo $reports['report_id'] ?>">Delete</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -145,6 +145,29 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
         setTimeout(() => {
             document.querySelector('#spinnerContainer').style.display = 'none';
         }, 1200);
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.delete-transaction').on('click', function(e) {
+                e.preventDefault();
+
+                var reportId = $(this).data('reportid');
+
+                Swal.fire({
+                    title: 'Delete Transaction',
+                    text: 'Are you sure you want to delete this transaction?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'functions/remove_completed.php?report_id=' + reportId;
+                    }
+                });
+            });
+        });
     </script>
     <?php
     if (isset($_SESSION['delete_completed'])) {

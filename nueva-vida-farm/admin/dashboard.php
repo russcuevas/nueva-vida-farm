@@ -55,7 +55,7 @@ $stmtTotalProducts->execute();
 $resultTotalProducts = $stmtTotalProducts->fetch(PDO::FETCH_ASSOC);
 $totalProducts = $resultTotalProducts['total_products'];
 
-$sqlTotalAmountSum = "SELECT SUM(total_amount) AS total_sum FROM tbl_reports";
+$sqlTotalAmountSum = "SELECT SUM(total_amount) AS total_sum FROM tbl_reports WHERE is_Deleted = 1";
 $stmtTotalAmountSum = $conn->prepare($sqlTotalAmountSum);
 $stmtTotalAmountSum->execute();
 $totalAmountSumResult = $stmtTotalAmountSum->fetch(PDO::FETCH_ASSOC);
@@ -154,7 +154,7 @@ $totalAmountSum = $totalAmountSumResult['total_sum'];
                         <div class="box d-flex justify-content-between flex-column p-3 bg-white rounded">
                             <div class="d-flex flex-column">
                                 <h1>Total sales</h1>
-                                <!-- Display the total sum here -->
+                                <!-- Display the total sum considering is_Deleted === 1 -->
                                 <h3 style="color: #BB2525; font-weight: 900;">₱<?php echo number_format($totalAmountSum, 2); ?></h3>
                             </div>
                             <!-- <a href="#">View</a> -->
@@ -246,7 +246,7 @@ $totalAmountSum = $totalAmountSumResult['total_sum'];
             if (login_success) {
                 Swal.fire({
                     icon: "success",
-                    text: "Login successfully!",
+                    title: "Login successfully!",
                     toast: true,
                     position: "top-end",
                     showConfirmButton: false,
