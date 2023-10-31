@@ -87,6 +87,10 @@ $userReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <h1>Completed Orders <i class="fa-solid fa-check-double"></i></h1>
             </div>
 
+            <div class="breadcrumbs">
+                <a href="order_status" style="margin-left: 20px; text-decoration: none;">Order status</a> <span> / Completed orders</span>
+            </div>
+
             <div class="p-3 m-0">
 
                 <div class="table-responsive">

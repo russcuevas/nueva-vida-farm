@@ -8,10 +8,11 @@ if (isset($_SESSION['customer_id'])) {
     header('location: login');
 }
 
-// DISPLAY PRODUCTS
-$get = "SELECT * FROM `tbl_product`";
+// DISPLAY PRODUCTS IN ALPHABETICAL ORDER
+$get = "SELECT * FROM `tbl_product` ORDER BY product_name ASC";
 $stmt = $conn->query($get);
 $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 // DISPLAY CARTS COUNTS
 $getCartCount = "SELECT COUNT(*) AS cart_count FROM `tbl_orderitem` WHERE `customer_id` = $customer_id";

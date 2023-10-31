@@ -243,7 +243,7 @@ $product = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <tr>
                                                 <td><?php echo $products['product_id'] ?></td>
                                                 <td><?php echo $products['product_name'] ?></td>
-                                                <td><img src="../assets/images/products/<?php echo $products['product_image'] ?>" alt=""></td>
+                                                <td><img style="border-radius: 10px;" src="../assets/images/products/<?php echo $products['product_image'] ?>" alt=""></td>
                                                 <td><?php echo $products['product_size'] ?></td>
                                                 <td>₱<?php echo $products['product_price'] ?></td>
                                                 <td><?php echo $products['product_stocks'] ?></td>
