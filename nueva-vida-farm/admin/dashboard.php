@@ -166,55 +166,20 @@ $totalAmountSum = $totalAmountSumResult['total_sum'];
 
 
             <div class="container pt-4 pt-md-5 mb-4">
-
                 <div class="d-flex flex-column gap-3" id="tableContainer">
-
                     <div class="d-flex w-100 px-3 py-4" id="tableTitle">
-                        <h1 class="mt-1">Recent Orders</h1>
+                        <h1 class="mt-1">Sales analytics</h1>
                     </div>
-
                     <div class="m-0 p-0 p-md-3">
-                        <div class="table-responsive" style="overflow: scroll; height: 390px;">
-                            <table id="example" class="table table-hover table-bordered">
-                                <thead class="table-success">
-                                    <tr>
-                                        <th>Reference Number</th>
-                                        <th>Payment Method</th>
-                                        <th>Customer Name</th>
-                                        <th>Total Products</th>
-                                        <th>Total Amount</th>
-                                        <th>Ordered Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($groupedOrders as $reference_number => $ordersGroup) : ?>
-                                        <tr>
-                                            <td style="color: #BB2525; font-weight: 900;"><?php echo $reference_number; ?></td>
-                                            <td><?php echo reset($ordersGroup)['payment_method']; ?></td>
-                                            <td><?php echo reset($ordersGroup)['customer_name']; ?></td>
-                                            <td>
-                                                <?php foreach ($ordersGroup as $order) : ?>
-                                                    <?php if ($order === end($ordersGroup)) : ?>
-                                                        <?php echo $order['total_products'] . '<br>'; ?>
-                                                    <?php endif; ?>
-                                                <?php endforeach; ?>
-                                            </td>
-                                            <td>₱<?php echo reset($ordersGroup)['total_amount']; ?></td>
-                                            <?php
-                                            $orderDateTimestamp = strtotime(reset($ordersGroup)['order_date']);
-                                            $formattedDate = date('F/d/Y', $orderDateTimestamp);
-                                            $formattedTime = date('h:i A', $orderDateTimestamp);
-                                            ?>
-                                            <td>
-                                                <?php echo $formattedDate; ?><br>
-                                                <?php echo $formattedTime; ?>
-                                            </td>
-                                            <td style="color: #FF9B50; font-weight: 900;"><?php echo reset($ordersGroup)['order_status']; ?>⌛</td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                        <div>
+                            <p> Select year:
+                                <select id="yearSelector">
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                            </p>
+                            <canvas id="myChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -232,12 +197,15 @@ $totalAmountSum = $totalAmountSumResult['total_sum'];
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         new DataTable('#example');
     </script>
     <!--===============================================================================================-->
     <script src="../assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
     <!--===============================================================================================-->
+    <script src="../ajax/monthly_analytics.js"></script>
     <script>
         window.onload = function() {
             const login_success =
