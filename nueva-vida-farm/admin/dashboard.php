@@ -173,7 +173,7 @@ $totalAmountSum = $totalAmountSumResult['total_sum'];
                     <div class="m-0 p-0 p-md-3">
                         <div>
                             <p> Select year:
-                                <select id="yearSelector">
+                                <select id="yearSelector" style="border-radius: 5px;">
                                     <option value="2023">2023</option>
                                     <option value="2024">2024</option>
                                     <option value="2025">2025</option>
@@ -184,6 +184,7 @@ $totalAmountSum = $totalAmountSumResult['total_sum'];
                     </div>
                 </div>
             </div>
+
         </div>
         <!--===============================================================================================-->
     </div>

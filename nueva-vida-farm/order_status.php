@@ -174,7 +174,7 @@ foreach ($orders as $order) {
                                         </td>
                                         <td>
                                             <?php if (reset($ordersGroup)['status'] !== 'Completed') : ?>
-                                                <a class="btn btn-danger" href="components/remove_order.php?order_id=<?php echo reset($ordersGroup)['order_id'] ?>">Cancel Orders</a>
+                                                <a class="btn btn-danger cancel-order-btn" href="components/remove_order.php?order_id=<?php echo reset($ordersGroup)['order_id'] ?>">Cancel Orders</a>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -197,6 +197,7 @@ foreach ($orders as $order) {
     <script src="assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
     <script src="ajax/unseen_completed.js"></script>
     <script src="ajax/seen_completed.js"></script>
+    <script src="ajax/remove_order.js"></script>
     <script>
         setTimeout(() => {
             document.querySelector('#spinnerContainer').style.display = 'none';
@@ -218,7 +219,6 @@ foreach ($orders as $order) {
         unset($_SESSION['remove_orders']);
     }
     ?>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const statusFilter = document.getElementById('statusFilter');
