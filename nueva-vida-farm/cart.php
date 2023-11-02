@@ -137,7 +137,7 @@ $cartCount = $stmtCartCount->fetch(PDO::FETCH_ASSOC);
                                         </td>
 
                                         <td><?php echo $orderItem['product_stocks'] ?></td>
-                                        <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo $subtotal; ?></span></td>
+                                        <td>₱<span id="product-subtotal-<?php echo $orderItem['order_item_id']; ?>"><?php echo number_format((float)$subtotal, 2, '.', ''); ?></span></td>
                                         <td>
                                             <a href="#" class="btn btn-danger btn-remove">Remove</a>
                                             <input type="hidden" name="order_item_id" value="<?php echo $orderItem['order_item_id']; ?>">

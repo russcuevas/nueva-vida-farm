@@ -11,13 +11,13 @@ tbl_user_reports
 
 Admin page:
 Log in as admin
-Can update the inventory
-Can update the order status
-View monthly reports
-Generate PDF and Excel reports
+Can update the inventory - CREATE READ UPDATE AND DELETE
+Can update the order status - PENDING READY TO PICK COMPLETED AND CAN CANCEL ORDERS
+View monthly reports - VIEW AND EXPORT EXCEL AND PDF MONTHLY OR YEARLY SALES
+View analytics reports - ALL MONTHS YEARLY
 
 Customers page: 
-Log in
+Log in as customer
 View products available 
 Add to cart and quantity 
-Order details then tracking ready to pick pending and notify when it is completed
+Order details then tracking ready to pick pending and notify when it is completed also can cancel orders
