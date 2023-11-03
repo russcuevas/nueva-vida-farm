@@ -63,6 +63,7 @@ foreach ($orders as $order) {
     <!--===============================================================================================-->
     <link rel="stylesheet" href="../assets/js/sweetalert2/dist/sweetalert2.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .pendingSubmitButton {
             display: flex;
@@ -72,6 +73,16 @@ foreach ($orders as $order) {
 
         .pendingSubmitButton button {
             margin: 2px;
+        }
+
+        .table-success tr th {
+            vertical-align: middle;
+            text-wrap: nowrap;
+        }
+
+        table tbody tr td {
+            text-wrap: nowrap;
+            padding: 0px;
         }
     </style>
 
