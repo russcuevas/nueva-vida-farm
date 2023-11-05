@@ -60,15 +60,35 @@ $(document).ready(function () {
 
 
     $('#export-pdf').on('click', function () {
-        var selectedMonth = $('#filterMonth').val();
-        var selectedYear = $('#filterYear').val();
-        downloadPDF(selectedMonth, selectedYear);
+        Swal.fire({
+            icon: 'question',
+            title: 'Export PDF?',
+            showCancelButton: true,
+            confirmButtonText: 'Export',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var selectedMonth = $('#filterMonth').val();
+                var selectedYear = $('#filterYear').val();
+                downloadPDF(selectedMonth, selectedYear);
+            }
+        });
     });
 
     $('#export-excel').on('click', function () {
-        var selectedMonth = $('#filterMonth').val();
-        var selectedYear = $('#filterYear').val();
-        exportExcel(selectedMonth, selectedYear);
+        Swal.fire({
+            icon: 'question',
+            title: 'Export Excel?',
+            showCancelButton: true,
+            confirmButtonText: 'Export',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var selectedMonth = $('#filterMonth').val();
+                var selectedYear = $('#filterYear').val();
+                exportExcel(selectedMonth, selectedYear);
+            }
+        })
     });
 
     function downloadPDF(selectedMonth, selectedYear) {
