@@ -93,7 +93,14 @@ $(document).ready(function () {
         });
 
         if (filteredData.length === 0) {
-            alert('No data found in table');
+            Swal.fire({
+                icon: "error",
+                title: "No data found",
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+            });
             return;
         }
 
@@ -162,7 +169,16 @@ $(document).ready(function () {
 
         drawTable();
 
-        pdf.save('sales.pdf');
+        Swal.fire({
+            icon: "success",
+            title: "Export pdf successfully",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+        }).then(function () {
+            pdf.save('sales.pdf');
+        });
     }
 
     function calculateTotalSales(data) {
@@ -184,41 +200,78 @@ $(document).ready(function () {
         var table = $('#example').DataTable();
         var allData = table.rows().data().toArray();
 
-        var filteredData = allData;
+        var filteredData = allData.filter(function (rowData) {
+            var orderDate = rowData[4];
+            var dateParts = orderDate.split('/');
+            var dataYear = parseInt(dateParts[2], 10);
+            var dataMonth = dateParts[0];
+
+            if (
+                (selectedMonth === "" && selectedYear !== "" && dataYear === parseInt(selectedYear, 10)) ||
+                (selectedMonth !== "" && selectedYear === "" && dataMonth === selectedMonth) ||
+                (selectedMonth !== "" && selectedYear !== "" && dataYear === parseInt(selectedYear, 10) && dataMonth === selectedMonth) ||
+                (selectedMonth === "" && selectedYear === "")
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        if (filteredData.length === 0) {
+            Swal.fire({
+                icon: "error",
+                title: "No data found",
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+            });
+            return;
+        }
+
+        var monthsWithData = allData.reduce((acc, rowData) => {
+            var orderDate = rowData[4];
+            var dateParts = orderDate.split('/');
+            var dataYear = parseInt(dateParts[2], 10);
+            var dataMonth = dateParts[0];
+
+            if (!acc[dataMonth]) {
+                acc[dataMonth] = new Set();
+            }
+            acc[dataMonth].add(dataYear);
+
+            return acc;
+        }, {});
+
+        if (selectedMonth !== "" && selectedYear === "") {
+            var selectedMonthHasDataForAllYears = [...monthsWithData[selectedMonth]].length === new Set(allData.map(row => row[4].split('/')[2])).size;
+            if (!selectedMonthHasDataForAllYears) {
+                Swal.fire({
+                    icon: "error",
+                    title: "No data found",
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
+                return;
+            }
+        }
+
         var totalSales = calculateTotalSales(filteredData);
-        var monthlyTotals = calculateMonthlyTotals(allData);
+        var monthlyTotals = calculateMonthlyTotals(filteredData);
 
         var excelData = [];
 
-        if (selectedMonth !== "" || selectedYear !== "") {
-            filteredData = allData.filter(function (rowData) {
-                var orderDate = rowData[4];
-                var dateParts = orderDate.split('/');
-                var dataYear = parseInt(dateParts[2], 10);
-                var dataMonth = dateParts[0];
-
-                if (selectedMonth === "" && selectedYear !== "") {
-                    return dataYear === parseInt(selectedYear, 10);
-                } else if (selectedMonth !== "" && selectedYear === "") {
-                    return dataMonth === selectedMonth;
-                } else if (selectedMonth !== "" && selectedYear !== "") {
-                    return dataYear === parseInt(selectedYear, 10) && dataMonth === selectedMonth;
-                } else {
-                    return true;
-                }
+        filteredData.forEach(function (rowData) {
+            var excelRow = [];
+            rowData.forEach(function (columnData) {
+                var cellData = columnData.replace(/<br\s*\/?>/gi, ' ').trim();
+                excelRow.push(cellData);
             });
-
-            totalSales = calculateTotalSales(filteredData);
-
-            filteredData.forEach(function (rowData) {
-                var excelRow = [];
-                rowData.forEach(function (columnData) {
-                    var cellData = columnData.replace(/<br\s*\/?>/gi, ' ').trim();
-                    excelRow.push(cellData);
-                });
-                excelData.push(excelRow);
-            });
-        }
+            excelData.push(excelRow);
+        });
 
         if (selectedMonth !== "" || selectedYear !== "") {
             excelData.push(['', '', '', '', 'Total Sales for ' + selectedMonth + '/' + selectedYear, totalSales.toFixed(2), '']);
@@ -231,7 +284,14 @@ $(document).ready(function () {
         }
 
         if (excelData.length === 0) {
-            alert('No data found in table');
+            Swal.fire({
+                icon: "error",
+                title: "No data found",
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+            });
             return;
         }
 
@@ -239,8 +299,16 @@ $(document).ready(function () {
         var worksheet = XLSX.utils.aoa_to_sheet(excelData);
 
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-
-        XLSX.writeFile(workbook, 'sales.xlsx');
+        Swal.fire({
+            icon: "success",
+            title: "Export excel successfully",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+        }).then(function () {
+            XLSX.writeFile(workbook, 'sales.xlsx');
+        });
     }
 
 
