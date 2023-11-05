@@ -67,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $total_products_row = $get_total_products_stmt->fetch();
                 $total_products = $total_products_row['total_products'];
 
-                $insert_report_sql = "INSERT INTO tbl_reports (order_id, reference_number, payment_method, customer_id, order_date, total_amount, total_products, is_Deleted, status, update_date) 
-                VALUES (:order_id, :reference_number, :payment_method, :customer_id, :order_date, :total_amount, :total_products, :is_Deleted, :status, :update_date)";
+                $insert_report_sql = "INSERT INTO tbl_reports (order_id, reference_number, payment_method, customer_id, order_date, total_amount, total_products, total_quantity, status, update_date) 
+                VALUES (:order_id, :reference_number, :payment_method, :customer_id, :order_date, :total_amount, :total_products, :total_quantity, :status, :update_date)";
                 $insert_report_stmt = $conn->prepare($insert_report_sql);
                 $insert_report_stmt->bindParam(':order_id', $latest_order_id);
                 $insert_report_stmt->bindParam(':reference_number', $reference_number);
@@ -77,9 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $insert_report_stmt->bindParam(':order_date', $order_date);
                 $insert_report_stmt->bindParam(':total_amount', $total_amount);
                 $insert_report_stmt->bindParam(':total_products', $total_products);
-
-                $is_Deleted = 1;
-                $insert_report_stmt->bindParam(':is_Deleted', $is_Deleted);
+                $insert_report_stmt->bindParam(':total_quantity', $total_quantity);
                 $insert_report_stmt->bindParam(':status', $order_status);
                 $insert_report_stmt->bindParam(':update_date', $newUpdateDate);
 

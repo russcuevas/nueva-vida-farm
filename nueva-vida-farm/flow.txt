@@ -1,84 +1,13 @@
-FLOW GUIDE /
 
 DATABASE TABLE OF THE SYSTEM
-
-*DATABASE NAME : ordersystem*
-
-*tbl_product :
-product_id - int(50) - (Primary Key)
-product_name - varchar(255)
-product_image - varchar(255)
-product_size - varchar(255)	
-product_price - varchar(255)
-product_stocks - int(11)
-product_status - varchar(255)
-
-
-*tbl_admin :
-staff_id - int(50) - (Primary Key)
-email - varchar(255)
-password - varchar(255) - (Hash secure)
-
-*tbl_customer :
-customer_id - int(50) - (Primary Key)
-first_name - varchar(255)
-last_name - varchar(255)
-email - varchar(255)
-password - varchar(255) - (Hash secure)
-phone - varchar(11)
-address - varchar(255)
-
-*tbl_orderitem :
-order_item_id - int(11)	- (Primary Key)
-customer_id - int(11) - (Foreign Key) to `tbl_customer`
-product_id - int(11) - (Foreign Key) to `tbl_product`
-quantity - int(11)
-
-*tbl_orderstatus :
-status_id - int(11) - (Primary Key)
-status - varchar(255)
-update_date - timestamp
-order_id - int(11) - (Foreign Key) to `tbl_order`
-
-*tbl_order :
-order_id - int(11) - (Primary Key)
-reference_number - varchar(255)
-payment_method - varchar(255)
-customer_id - int(11) - (Foreign Key) to `tbl_customer`
-order_date - timestamp
-total_amount - decimal(10,2)
-total_products - varchar(255)
-product_id - int(11) - (Foreign Key) to `tbl_product`
-total_quantity - int(11)
-
-*tbl_reports :
-report_id - int(11) - (Primary Key)
-order_id - int(11)
-reference_number - varchar(255)
-payment_method - varchar(255)
-customer_id - int(11) - (Foreign Key) to `tbl_customer`
-order_date - timestamp
-total_amount - decimal(10,2)	
-total_products - varchar(255)
-is_Deleted - int(11)
-status - varchar(255)
-update_date - timestamp
-
-
-
-*tbl_user_reports : 
-report_id - int(11) - (Primary Key)
-order_id - int(11)
-reference_number - varchar(255)
-payment_method - varchar(255)
-customer_id - int(11) - (Foreign Key) to `tbl_customer`
-order_date - timestamp
-total_amount - decimal(10,2)	
-total_products - varchar(255)
-is_Seen - tinyint(1)
-status - varchar(255)
-update_date - timestamp
-
+tbl_product
+tbl_admin
+tbl_customer
+tbl_orderitem
+tbl_orderstatus
+tbl_order
+tbl_reports
+tbl_user_reports
 
 Admin page:
 Log in as admin
@@ -92,51 +21,3 @@ Log in as customer
 View products available 
 Add to cart and quantity 
 Order details then tracking ready to pick pending and notify when it is completed also can cancel orders
-
-END OF FLOW GUIDE /
-
-
-
-FUNCTIONS AND EXPLANATIONS OF EVERY PAGE /
-
-//Page:
-ADMIN PANEL
-Login page: can login by the email and password that is the developer created
-Can logout
-
-**Dashboard: Welcoming admin, see total products, see all time sales then sales analytics for all years and all months filter by years
-
-**Inventory: Add product, view product, update product, delete product, if the admin delete product while it has existing orders then it will return the product total quantity to product stocks that is being ordered by the same reference number so that the stocks will manage properly, and also if the user is order it will automatically update the product stocks like if it is 100 it will become 99 or 98 depends on the user ordered quantity then if the product stocks become 1-4 it will show low stocks then if 0 it will not be available and it will not display to user side
-5-etc will Available
-
-**Orders: in orders all the user orders can update product order status if it is ready to pick and can set pick up date time and date, also it can back to pending if the admin wants it, and completed is not display it is displayed in reports and the admin will complete it if the transaction is already good like the user must show the reference number of their order so that the admin can search it easily in the search bar of orders then if the reference number show then the user give the amount of total price then the admin must update it completed, also can see if pending and ready to pick by clicking the button pending or ready to pick,
-
-**Reports: can filter by all months and all years and also can filter by the exact months and exact years of the admin wants to export it will generate pdf and excel if the admin click the export, and then if it is export it will soft delete and not display in the system but in database it is set is_Deleted only not will permanently delete so that in the future it has a reference in all total sales if the admin wants
-
-
-////Page:
-USER SIDE
-**Auth page registration and login page:
-Can register
-Can login
-Cart count
-
-Can logout
-
-**Home : in the home page it contains the functionality to display a product name size and price that is existing and add by the admin in this display it has a swiper js if the product is 6 it only featured 6 products in the homepage but user can click the view all to see all products
-
-**Contact : in the contact page it will show location then the phone number of the Nueva vida farm then if you fill up the form it will send in the email of nueva-vida-farm
-
-**Shop : in the shop page it contains the products that is available the product stocks price name size and the quantity that user will order or add to cart
-then it has a filter by size so that the user need size will show like if the user wants medium small large or double yolk and in this the default show is All sizes it is real time updating the available stocks if the user add to cart it will show example the size is 99 it will show 98 if the user add to cart 1 on the choose product then user can also buy now if user wants only 1 product and no need to add to cart
-
-**Cart : in the cart page it contains the add to cart product user can remove the selected cart by checking the box then click remove then in the cart also show the available stocks then product subtotal on how many quantity that the user orders then total price all the total selected products will compute the total price user can also update the quantity and it will auto compute the product subtotal then minus the available products, user can also remove all and select all cart if the user remove the cart the order quantity will retain in the product stocks in the admin panel
-
-**Proceed to checkout : in the proceed to checkout page it contains the cart items that is selected by the user like if the user check one box it will pass in the proceed to checkout showing the product name size price multiply by the quantity selected by the user and in my information contains the users details customer name customer phone customer email customer address then the choose method CASH ON PICKUP
-
-**Order status : after proceeding to checkout in the order status page it shows user reference number user tracking the order status total amount and total products that is ordered then the pick up date if pending it will show please wait for the pick up date and if it is ready to pick it will update automatically then the user will show the pick up date that is set by the admin so that the user will go to the farm to pick up it in the said date then the user can cancel the orders if it is pending and ready to pick but once it is completed user cant cancel if the user cancel orders it will return all the total quantity of the said orders back to the product stocks of the product being ordered also user can filter by status pending or ready to pick if the user wants to see only pending or ready to pick then also user can check completed orders and real time if the admin make it completed then the user is not totally read it it will show in the side of completed orders (1) Unread if the unread total is 1 then if the user click it will become seen and not display it 
-
-**Completed orders : in the completed orders user can see the transaction being completed so that user has a copy of it if the user wants to delete every transaction it has an delete action for the user but it wont affect the reports of admin
-
-END OF FUNCTIONS EVERY PAGE/
-

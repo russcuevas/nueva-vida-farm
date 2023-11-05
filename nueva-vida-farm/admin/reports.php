@@ -16,12 +16,12 @@ $sql = "SELECT
     order_date,
     total_amount,
     total_products,
-    is_Deleted,
+    total_quantity,
     status,
     update_date
 FROM tbl_reports r
-LEFT JOIN tbl_customer c ON r.customer_id = c.customer_id
-WHERE is_Deleted = 1;";
+LEFT JOIN tbl_customer c ON r.customer_id = c.customer_id;
+";
 $stmt = $conn->query($sql);
 $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -33,6 +33,7 @@ foreach ($reports as $report) {
     }
     $groupedReports[$reference_number][] = $report;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +56,6 @@ foreach ($reports as $report) {
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="../assets/js/sweetalert2/dist/sweetalert2.css" />
     <style>
         .no-line-breaks {
             white-space: nowrap;
@@ -126,10 +126,11 @@ foreach ($reports as $report) {
                         <div>
                             <div class="d-flex flex-row justify-content-between">
                                 <h6 style="font-size: 20px;">Month and year : </h6>
-                                <div class="d-flex gap-1">
-                                    <button id="export-all" class="btn btn-success">Export <i class="fa-regular fa-file-pdf"></i> <i class="fa-regular fa-file-excel"></i></button>
-                                </div>
 
+                                <div class="d-flex gap-1">
+                                    <button id="export-pdf" class="btn btn-primary">Export <i class="fa-regular fa-file-pdf"></i></button>
+                                    <button id="export-excel" class="btn btn-success">Export <i class="fa-regular fa-file-excel"></i></button>
+                                </div>
 
 
                             </div>
@@ -179,7 +180,7 @@ foreach ($reports as $report) {
                                 </thead>
                                 <tbody>
                                     <?php foreach ($groupedReports as $reference_number => $reportsGroup) : ?>
-                                        <?php if (reset($reportsGroup)['is_Deleted'] === 1) : ?>
+                                        <?php if (reset($reportsGroup)['status'] === 'Completed') : ?>
                                             <tr>
                                                 <td style="color: #BB2525; font-weight: 900"><?php echo $reference_number; ?></td>
                                                 <td><?php echo reset($reportsGroup)['payment_method']; ?></td>
@@ -229,8 +230,6 @@ foreach ($reports as $report) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="../assets/js/reports.js"></script>
-    <script src="../assets/js/sweetalert2/dist/sweetalert2.min.js"></script>
-
 
     <script>
         window.jsPDF = window.jspdf.jsPDF;

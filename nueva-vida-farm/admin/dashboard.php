@@ -55,7 +55,7 @@ $stmtTotalProducts->execute();
 $resultTotalProducts = $stmtTotalProducts->fetch(PDO::FETCH_ASSOC);
 $totalProducts = $resultTotalProducts['total_products'];
 
-$sqlTotalAmountSum = "SELECT SUM(total_amount) AS total_sum FROM tbl_reports WHERE is_Deleted = 1";
+$sqlTotalAmountSum = "SELECT SUM(total_amount) AS total_sum FROM tbl_reports";
 $stmtTotalAmountSum = $conn->prepare($sqlTotalAmountSum);
 $stmtTotalAmountSum->execute();
 $totalAmountSumResult = $stmtTotalAmountSum->fetch(PDO::FETCH_ASSOC);

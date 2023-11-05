@@ -59,49 +59,17 @@ $(document).ready(function () {
     }
 
 
-    $('#export-all').on('click', function () {
+    $('#export-pdf').on('click', function () {
         var selectedMonth = $('#filterMonth').val();
         var selectedYear = $('#filterYear').val();
-
-        Swal.fire({
-            title: 'Warning',
-            text: 'Are you sure you want to export and delete data cannot be undo?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, export and delete',
-            cancelButtonText: 'No, cancel',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                exportPDFAndExcel(selectedMonth, selectedYear);
-                deleteData(selectedMonth, selectedYear);
-            }
-        });
+        downloadPDF(selectedMonth, selectedYear);
     });
 
-    function exportPDFAndExcel(selectedMonth, selectedYear) {
-        downloadPDF(selectedMonth, selectedYear);
+    $('#export-excel').on('click', function () {
+        var selectedMonth = $('#filterMonth').val();
+        var selectedYear = $('#filterYear').val();
         exportExcel(selectedMonth, selectedYear);
-    }
-
-
-    function deleteData(selectedMonth, selectedYear) {
-        $.ajax({
-            type: 'POST',
-            url: '../functions/delete_export.php',
-            data: {
-                selectedMonth: selectedMonth,
-                selectedYear: selectedYear
-            },
-            success: function (response) {
-                console.log(response);
-            },
-            error: function () {
-                console.log();
-            }
-        });
-    }
-
-
+    });
 
     function downloadPDF(selectedMonth, selectedYear) {
         var table = $('#example').DataTable();
@@ -125,14 +93,7 @@ $(document).ready(function () {
         });
 
         if (filteredData.length === 0) {
-            Swal.fire({
-                icon: 'error',
-                title: 'No data found',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
+            alert('No data found in table');
             return;
         }
 
@@ -202,17 +163,6 @@ $(document).ready(function () {
         drawTable();
 
         pdf.save('sales.pdf');
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Export successful',
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        }).then(() => {
-            location.reload();
-        });
     }
 
     function calculateTotalSales(data) {
@@ -234,64 +184,41 @@ $(document).ready(function () {
         var table = $('#example').DataTable();
         var allData = table.rows().data().toArray();
 
-        var filteredData = allData.filter(function (rowData) {
-            var orderDate = rowData[4];
-            var dateParts = orderDate.split('/');
-            var dataYear = parseInt(dateParts[2], 10);
-            var dataMonth = dateParts[0];
-
-            if (
-                (selectedMonth === "" && selectedYear !== "" && dataYear === parseInt(selectedYear, 10)) ||
-                (selectedMonth !== "" && selectedYear === "" && dataMonth === selectedMonth) ||
-                (selectedMonth !== "" && selectedYear !== "" && dataYear === parseInt(selectedYear, 10) && dataMonth === selectedMonth) ||
-                (selectedMonth === "" && selectedYear === "")
-            ) {
-                return true;
-            } else {
-                return false;
-            }
-        });
-
-        if (filteredData.length === 0) {
-            // alert('No data found');
-            return;
-        }
-
-        var monthsWithData = allData.reduce((acc, rowData) => {
-            var orderDate = rowData[4];
-            var dateParts = orderDate.split('/');
-            var dataYear = parseInt(dateParts[2], 10);
-            var dataMonth = dateParts[0];
-
-            if (!acc[dataMonth]) {
-                acc[dataMonth] = new Set();
-            }
-            acc[dataMonth].add(dataYear);
-
-            return acc;
-        }, {});
-
-        if (selectedMonth !== "" && selectedYear === "") {
-            var selectedMonthHasDataForAllYears = [...monthsWithData[selectedMonth]].length === new Set(allData.map(row => row[4].split('/')[2])).size;
-            if (!selectedMonthHasDataForAllYears) {
-                // alert('No data found');
-                return;
-            }
-        }
-
+        var filteredData = allData;
         var totalSales = calculateTotalSales(filteredData);
-        var monthlyTotals = calculateMonthlyTotals(filteredData);
+        var monthlyTotals = calculateMonthlyTotals(allData);
 
         var excelData = [];
 
-        filteredData.forEach(function (rowData) {
-            var excelRow = [];
-            rowData.forEach(function (columnData) {
-                var cellData = columnData.replace(/<br\s*\/?>/gi, ' ').trim();
-                excelRow.push(cellData);
+        if (selectedMonth !== "" || selectedYear !== "") {
+            filteredData = allData.filter(function (rowData) {
+                var orderDate = rowData[4];
+                var dateParts = orderDate.split('/');
+                var dataYear = parseInt(dateParts[2], 10);
+                var dataMonth = dateParts[0];
+
+                if (selectedMonth === "" && selectedYear !== "") {
+                    return dataYear === parseInt(selectedYear, 10);
+                } else if (selectedMonth !== "" && selectedYear === "") {
+                    return dataMonth === selectedMonth;
+                } else if (selectedMonth !== "" && selectedYear !== "") {
+                    return dataYear === parseInt(selectedYear, 10) && dataMonth === selectedMonth;
+                } else {
+                    return true;
+                }
             });
-            excelData.push(excelRow);
-        });
+
+            totalSales = calculateTotalSales(filteredData);
+
+            filteredData.forEach(function (rowData) {
+                var excelRow = [];
+                rowData.forEach(function (columnData) {
+                    var cellData = columnData.replace(/<br\s*\/?>/gi, ' ').trim();
+                    excelRow.push(cellData);
+                });
+                excelData.push(excelRow);
+            });
+        }
 
         if (selectedMonth !== "" || selectedYear !== "") {
             excelData.push(['', '', '', '', 'Total Sales for ' + selectedMonth + '/' + selectedYear, totalSales.toFixed(2), '']);
@@ -315,7 +242,6 @@ $(document).ready(function () {
 
         XLSX.writeFile(workbook, 'sales.xlsx');
     }
-
 
 
 
